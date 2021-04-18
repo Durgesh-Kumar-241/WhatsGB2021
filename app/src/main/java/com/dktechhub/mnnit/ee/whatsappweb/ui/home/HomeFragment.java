@@ -92,7 +92,7 @@ public class HomeFragment extends Fragment {
         {
             wb.goBack();
             return;
-        }else getActivity().onBackPressed();
+        }else getActivity().finish();
     }
 
 }
