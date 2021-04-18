@@ -7,39 +7,41 @@
     android:isScrollContainer="true"
     android:orientation="vertical">
 
-    <CheckBox
-        android:id="@+id/checkBox2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Photos"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/images"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="407dp"
+        android:layout_height="685dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
         app:layoutManager="GridLayoutManager"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/select_all"
         tools:itemCount="4"
-        tools:layout_editor_absoluteX="0dp"
         tools:listitem="@layout/item_status">
 
     </androidx.recyclerview.widget.RecyclerView>
 
     <CheckBox
-        android:id="@+id/checkBox3"
+        android:id="@+id/select_all"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Videos"
-        app:layout_constraintTop_toBottomOf="@+id/videos"
-        tools:layout_editor_absoluteX="16dp" />
+        android:layout_marginTop="5dp"
+        android:text="Select All"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/videos"
-        android:layout_width="match_parent"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox2"
-        tools:itemCount="4"
-        tools:layout_editor_absoluteX="0dp"
-        tools:listitem="@layout/item_status" />
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="60dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/stat_sys_download" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,10 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StatusItemAdapter extends RecyclerView.Adapter {
+public class StatusItemAdapter extends RecyclerView.Adapter<StatusItemAdapter.ViewHolder> {
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context=parent.getContext();
         LayoutInflater inflator = LayoutInflater.from(context);
         View AppView = inflator.inflate(R.layout.item_status,parent,false);
@@ -26,8 +26,21 @@ public class StatusItemAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.iconView.setImageBitmap(mList.get(position).thumbnail);
+        holder.checkBox.setChecked(mList.get(position).isSelected);
+        holder.iconView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listner.onIconClicked(mList.get(position));
+            }
+        });
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listner.onCheckBoxClicked(mList.get(position));
+            }
+        });
     }
 
     @Override
@@ -53,5 +66,22 @@ public class StatusItemAdapter extends RecyclerView.Adapter {
     {
         this.mList.addAll(items);
     }
+    public void addStatusItem(Status item)
+    {
+        this.mList.add(item);
+    }
     private List<Status> mList = new ArrayList<>();
+    StatusItemAdapterListner listner;
+    public StatusItemAdapter(StatusItemAdapterListner listner)
+    {this.listner=listner;
+
+    }
+    public List<Status> getmList()
+    {
+        return  this.mList;
+    }
+    public interface StatusItemAdapterListner{
+        void onCheckBoxClicked(Status status);
+        void onIconClicked(Status status);
+    }
 }

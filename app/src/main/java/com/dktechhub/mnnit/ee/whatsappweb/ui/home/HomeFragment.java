@@ -7,16 +7,11 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.dktechhub.mnnit.ee.whatsappweb.MainActivity;
 import com.dktechhub.mnnit.ee.whatsappweb.R;
 
 import java.util.HashMap;
@@ -97,7 +92,7 @@ public class HomeFragment extends Fragment {
         {
             wb.goBack();
             return;
-        }
+        }else getActivity().onBackPressed();
     }
 
 }
