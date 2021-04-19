@@ -23,7 +23,7 @@ public class MainActivityNew extends AppCompatActivity {
      Fragment fragment1 ;
     Fragment fragment2 ;
     Fragment fragment3 ;
-    ViewPager viewPager;
+    CustomViewPager viewPager;
     final FragmentManager fm = getSupportFragmentManager();
 
 
