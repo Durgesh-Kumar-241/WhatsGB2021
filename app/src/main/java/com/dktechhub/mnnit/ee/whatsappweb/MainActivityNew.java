@@ -85,6 +85,8 @@ public class MainActivityNew extends AppCompatActivity {
         if (requestCode == WRITE_EXTERNAL_STORAGE_CODE) {
             if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "Permission denined,Reading external storage is necessary for the app to work properly", Toast.LENGTH_SHORT).show();
+            } else {
+
             }
         }
     }

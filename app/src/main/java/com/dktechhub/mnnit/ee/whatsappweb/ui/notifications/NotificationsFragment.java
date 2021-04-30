@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.dktechhub.mnnit.ee.whatsappweb.R;
 import com.dktechhub.mnnit.ee.whatsappweb.Status;
@@ -37,7 +38,7 @@ public class NotificationsFragment extends Fragment {
     FloatingActionButton fab;
     StatusItemAdapter photoAdapter;
     CheckBox selectAll;
-
+    SwipeRefreshLayout swipeRefreshLayout;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -45,6 +46,8 @@ public class NotificationsFragment extends Fragment {
         photos=root.findViewById(R.id.images);
         //videos=root.findViewById(R.id.videos);
         fab=root.findViewById(R.id.floatingActionButton);
+        swipeRefreshLayout=root.findViewById(R.id.swipeRefreshLayout);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +89,27 @@ public class NotificationsFragment extends Fragment {
             }
         }).execute();
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
         return root;
+    }
+
+
+    public void refresh()
+    {
+        photoAdapter.getmList().clear();
+        new Loader(new OnLoadCompleteListener() {
+            @Override
+            public void onLoaded(Status status) {
+                photoAdapter.addStatusItem(status);
+                photoAdapter.notifyDataSetChanged();
+            }
+        }).execute();
     }
 
     public void selectAll()

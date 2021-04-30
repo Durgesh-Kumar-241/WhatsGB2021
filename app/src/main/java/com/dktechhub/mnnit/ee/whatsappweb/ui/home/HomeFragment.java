@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.dktechhub.mnnit.ee.whatsappweb.R;
 
@@ -34,9 +35,11 @@ public class HomeFragment extends Fragment {
         });
         wb = root.findViewById(R.id.webView);
         pbar = root.findViewById(R.id.progressBar);
+
         wb.setWebChromeClient(new WebChromeClient());
         wb.setWebViewClient(new webClient());
         wb.getSettings().setLoadWithOverviewMode(true);
+        wb.getSettings().setUseWideViewPort(true);
         wb.getSettings().setJavaScriptEnabled(true);
        // wb.getSettings().setBuiltInZoomControls(true);
         wb.getSettings().setSavePassword(true);
@@ -60,6 +63,8 @@ public class HomeFragment extends Fragment {
         headers.put("upgrade-insecure-requests", "1");
         headers.put("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36 Edg/89.0.774.76");
         wb.loadUrl("https://web.whatsapp.com", headers);
+
+
         return root;
     }
     public class WebChromeClient extends android.webkit.WebChromeClient{
