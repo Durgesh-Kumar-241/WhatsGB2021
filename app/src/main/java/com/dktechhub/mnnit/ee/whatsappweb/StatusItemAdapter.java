@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StatusItemAdapter extends RecyclerView.Adapter<StatusItemAdapter.ViewHolder> {
+
+    boolean inSelectionMode = false;
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -32,7 +34,9 @@ public class StatusItemAdapter extends RecyclerView.Adapter<StatusItemAdapter.Vi
         holder.iconView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listner.onIconClicked(mList.get(position));
+                if(inSelectionMode)
+                    listner.onCheckBoxClicked(mList.get(position));
+                else listner.onIconClicked(mList.get(position));
             }
         });
         holder.checkBox.setOnClickListener(new View.OnClickListener() {
@@ -41,6 +45,17 @@ public class StatusItemAdapter extends RecyclerView.Adapter<StatusItemAdapter.Vi
                 listner.onCheckBoxClicked(mList.get(position));
             }
         });
+        holder.iconView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                inSelectionMode=!inSelectionMode;
+                notifyDataSetChanged();
+                return false;
+            }
+        });
+        if(!inSelectionMode)
+        holder.checkBox.setVisibility(View.GONE);
+        else holder.checkBox.setVisibility(View.VISIBLE);
     }
 
     @Override

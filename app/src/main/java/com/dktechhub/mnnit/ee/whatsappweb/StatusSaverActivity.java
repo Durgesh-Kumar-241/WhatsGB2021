@@ -1,19 +1,16 @@
-package com.dktechhub.mnnit.ee.whatsappweb.ui.dashboard;
+package com.dktechhub.mnnit.ee.whatsappweb;
 
 import android.app.ProgressDialog;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.FileUtils;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,25 +19,23 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.dktechhub.mnnit.ee.whatsappweb.R;
-import com.dktechhub.mnnit.ee.whatsappweb.Status;
-import com.dktechhub.mnnit.ee.whatsappweb.StatusItemAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-public class StatusFragment extends Fragment {
+public class StatusSaverActivity extends AppCompatActivity {
 
 
     RecyclerView photos;
@@ -48,20 +43,25 @@ public class StatusFragment extends Fragment {
     FloatingActionButton fab;
     StatusItemAdapter photoAdapter;
     CheckBox selectAll;
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    SwipeRefreshLayout swipeRefreshLayout;
 
-        View root = inflater.inflate(R.layout.fragment_status, container, false);
-        photos=root.findViewById(R.id.images);
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_status);
+
+        photos=findViewById(R.id.images);
+        swipeRefreshLayout=findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setEnabled(false);
         //videos=root.findViewById(R.id.videos);
-        fab=root.findViewById(R.id.floatingActionButton);
+        fab=findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 save();
             }
         });
-        selectAll=root.findViewById(R.id.select_all);
+        selectAll=findViewById(R.id.select_all);
         selectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -73,18 +73,18 @@ public class StatusFragment extends Fragment {
         photoAdapter=new StatusItemAdapter(new StatusItemAdapter.StatusItemAdapterListner() {
             @Override
             public void onCheckBoxClicked(Status status) {
-                StatusFragment.this.onCheckBoxClicked(status);
+                StatusSaverActivity.this.onCheckBoxClicked(status);
             }
 
             @Override
             public void onIconClicked(Status status) {
-                StatusFragment.this.onCheckBoxClicked(status);
+               StatusSaverActivity.this.onIconClicked(status);
             }
         });
         //StatusItemAdapter videosAdapter=new StatusItemAdapter();
 
 
-        photos.setLayoutManager(new GridLayoutManager(getContext(),4));
+        photos.setLayoutManager(new GridLayoutManager(this,3));
         photos.setAdapter(photoAdapter);
         //videos.setLayoutManager(new GridLayoutManager(getContext(),4));
         //videos.setAdapter(videosAdapter);
@@ -94,10 +94,13 @@ public class StatusFragment extends Fragment {
                 photoAdapter.addStatusItem(status);
                 photoAdapter.notifyDataSetChanged();
             }
+
         }).execute();
-        return root;
+
+
     }
-    public class Loader extends AsyncTask<Void,com.dktechhub.mnnit.ee.whatsappweb.Status,Void> {
+
+    public static class Loader extends AsyncTask<Void,com.dktechhub.mnnit.ee.whatsappweb.Status,Void> {
         ArrayList<com.dktechhub.mnnit.ee.whatsappweb.Status> statuses;
         OnLoadCompleteListener onLoadCompleteListener;
 
@@ -116,18 +119,20 @@ public class StatusFragment extends Fragment {
                 File[] all = f.listFiles();
                 Log.d("File List", Arrays.toString(all));
                 if(all!=null) {
-                    for (File f1 : all) {Bitmap thumb;
+                    for (File f1 : all) {Bitmap thumb;String mime;
                         if (isImage(f1.getAbsolutePath())) {
                             thumb = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(f1.getAbsolutePath()), 512, 384);
+                            mime="image/*";
                             //(new com.dktechhub.mnnit.ee.whatsappweb.Status(f.getAbsolutePath(), thumb));
                            // thumb = ThumbnailUtils.createImageThumbnail(f1.getAbsolutePath(), MediaStore.Audio.Thumbnails.MINI_KIND);
                         }else {
                              thumb = ThumbnailUtils.createVideoThumbnail(f1.getAbsolutePath(), MediaStore.Video.Thumbnails.MINI_KIND);
                             //publishProgress(new com.dktechhub.mnnit.ee.whatsappweb.Status(f.getAbsolutePath(), thumb));
+                            mime="video/*";
 
                     }if(thumb!=null)
                         {
-                            publishProgress(new com.dktechhub.mnnit.ee.whatsappweb.Status(f1.getAbsolutePath(), thumb,f1.getName()));
+                            publishProgress(new com.dktechhub.mnnit.ee.whatsappweb.Status(f1.getAbsolutePath(), thumb,f1.getName(),mime));
                         }
                 }
 
@@ -175,6 +180,19 @@ public class StatusFragment extends Fragment {
         photoAdapter.notifyDataSetChanged();
     }
 
+    public void onIconClicked(Status status)
+    {
+        Toast.makeText(this, "Opening..."+status.name, Toast.LENGTH_SHORT).show();
+        Intent i = new Intent();
+        Uri uri = FileProvider.getUriForFile(getApplicationContext(),BuildConfig.APPLICATION_ID+".provider", new File(status.source));
+        i.setAction(Intent.ACTION_VIEW);
+
+        i.setDataAndType(uri,status.mime);
+        i.putExtra(Intent.EXTRA_STREAM,uri);
+        i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivity(i);
+    }
+
     public void save()
     {
         new Saver(this.selected).execute();
@@ -190,7 +208,7 @@ public class StatusFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog=new ProgressDialog(getActivity());
+            progressDialog=new ProgressDialog(StatusSaverActivity.this);
             progressDialog.setMessage("Saving..please wait....");
             progressDialog.setCancelable(false);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -236,6 +254,7 @@ public class StatusFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             progressDialog.cancel();
+            deselectAll();
         }
     }
 
@@ -247,6 +266,7 @@ public class StatusFragment extends Fragment {
             photoAdapter.notifyDataSetChanged();
             selected.add(t);
         }
+        selectAll.setChecked(true);
     }
 
     public void deselectAll()
@@ -257,5 +277,6 @@ public class StatusFragment extends Fragment {
             photoAdapter.notifyDataSetChanged();
             selected.remove(t);
         }
+        selectAll.setChecked(false);
     }
 }
