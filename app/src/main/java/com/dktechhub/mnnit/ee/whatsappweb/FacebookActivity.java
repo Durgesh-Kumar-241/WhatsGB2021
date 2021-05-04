@@ -1,27 +1,19 @@
 package com.dktechhub.mnnit.ee.whatsappweb;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
-import android.widget.Toast;
-
-import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceManager;
 
 import java.util.HashMap;
 
-public class MainFragment extends AppCompatActivity {
-
-
+public class FacebookActivity extends AppCompatActivity {
     ProgressBar pbar;
     WebView wb;
     @Override
@@ -29,12 +21,10 @@ public class MainFragment extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         applyTheme();
         setContentView(R.layout.fragment_main);
-
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
-
         wb = findViewById(R.id.webView);
         pbar = findViewById(R.id.progressBar);
 
@@ -50,20 +40,13 @@ public class MainFragment extends AppCompatActivity {
         wb.getSettings().setAllowFileAccess(true);
         wb.setSoundEffectsEnabled(true);
 
-        wb.getSettings().setUserAgentString("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36 Edg/89.0.774.76");
-        HashMap<String, String> headers = new HashMap<>();
-        headers.put("authority", "web.whatsapp.com");
-        headers.put("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
-        headers.put("accept-encoding", "gzip, deflate, br");
-        headers.put("accept-language", "en-US,en;q=0.9,hi;q=0.8");
-        headers.put("sec-fetch-dest", "document");
-        headers.put("sec-fetch-mode", "navigate");
-        headers.put("sec-fetch-site", "none");
-        headers.put("sec-fetch-user", "?1");
-        headers.put("upgrade-insecure-requests", "1");
-        headers.put("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36 Edg/89.0.774.76");
-        wb.loadUrl("https://web.whatsapp.com", headers);
+        //wb.getSettings().setUserAgentString("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36 Edg/89.0.774.76");
+
+        //headers.put("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36 Edg/89.0.774.76");
+        wb.loadUrl("https://m.facebook.com");
+
     }
+
 
     @Override
     public void onBackPressed() {
@@ -109,5 +92,4 @@ public class MainFragment extends AppCompatActivity {
         }
         else setTheme(R.style.Theme_AppCompat_Light);
     }
-
 }

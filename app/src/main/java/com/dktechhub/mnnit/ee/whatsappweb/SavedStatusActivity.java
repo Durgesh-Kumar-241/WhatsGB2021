@@ -2,6 +2,7 @@ package com.dktechhub.mnnit.ee.whatsappweb;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
@@ -23,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -44,6 +46,7 @@ public class SavedStatusActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        applyTheme();
         setContentView(R.layout.fragment_saved_status);
         photos=findViewById(R.id.images);
         //videos=root.findViewById(R.id.videos);
@@ -80,7 +83,7 @@ public class SavedStatusActivity extends AppCompatActivity {
         //StatusItemAdapter videosAdapter=new StatusItemAdapter();
 
 
-        photos.setLayoutManager(new GridLayoutManager(this,3));
+        photos.setLayoutManager(new GridLayoutManager(this,2));
         photos.setAdapter(photoAdapter);
 
         new Loader(new OnLoadCompleteListener() {
@@ -269,5 +272,15 @@ public class SavedStatusActivity extends AppCompatActivity {
             deselectAll();
             refresh();
         }
+    }
+    public void applyTheme()
+    {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean dark_theme = sharedPreferences.getBoolean("dark_theme",false);
+        if(dark_theme)
+        {
+            //setTheme(R.style.ThemeOverlay_AppCompat_Dark);
+        }
+        else setTheme(R.style.Theme_AppCompat_Light);
     }
 }

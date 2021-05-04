@@ -6,159 +6,367 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:isScrollContainer="true"
     android:orientation="vertical"
     android:paddingTop="?attr/actionBarSize"
     android:visibility="visible">
 
-    <TableLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
+        android:layout_gravity="center">
 
-        <TableRow
+
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:gravity="center">
 
-            <LinearLayout
-                android:id="@+id/whatsappweb"
-                android:layout_width="110dp"
-                android:layout_height="150dp"
-                android:layout_margin="2dp"
-                android:layout_marginBottom="2dp"
-                android:orientation="vertical">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/imageView"
-                        android:layout_width="100dp"
-                        android:layout_height="90dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/iconwhats" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/whatsappweb"
+                    android:layout_width="110dp"
+                    android:layout_height="150dp"
+                    android:layout_margin="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="#B06DEC4B"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/itemsharedname"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/imageView"
+                            android:layout_width="100dp"
+                            android:layout_height="90dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/iconwhats" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:text="Whatsapp web"
-                        android:textSize="14sp" />
+                        android:orientation="vertical">
 
+                        <TextView
+                            android:id="@+id/itemsharedname"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:text="Whatsapp web"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
 
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center">
-
-            <LinearLayout
-
-                android:id="@+id/statussaver"
-                android:layout_width="110dp"
-                android:layout_height="150dp"
-                android:layout_margin="2dp"
-                android:layout_marginBottom="2dp"
-                android:orientation="vertical">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-
-                        android:layout_width="100dp"
-                        android:layout_height="90dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/tu" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <Space
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+
+                    android:id="@+id/directchat"
+                    android:layout_width="110dp"
+                    android:layout_height="150dp"
+                    android:layout_margin="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="#B06DEC4B"
                     android:orientation="vertical">
 
-                    <TextView
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
+                        <ImageView
+
+                            android:layout_width="100dp"
+                            android:layout_height="90dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_menu_send" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:text="Status Saver"
-                        android:textSize="14sp" />
+                        android:orientation="vertical">
 
+                        <TextView
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:text="Direct Chat"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
 
-            <Space
-                android:layout_width="31dp"
-                android:layout_height="wrap_content" />
+            </TableRow>
 
-            <LinearLayout
-
-                android:id="@+id/savedstatus"
-                android:layout_width="110dp"
-                android:layout_height="150dp"
-                android:layout_margin="2dp"
-                android:layout_marginBottom="2dp"
-                android:orientation="vertical">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-
-                        android:layout_width="100dp"
-                        android:layout_height="90dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/tm" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+
+                    android:id="@+id/statussaver"
+                    android:layout_width="110dp"
+                    android:layout_height="150dp"
+                    android:layout_margin="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="#B06DEC4B"
                     android:orientation="vertical">
 
-                    <TextView
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
+                        <ImageView
+
+                            android:layout_width="100dp"
+                            android:layout_height="90dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/tu" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:text="Saved statuses"
-                        android:textSize="14sp" />
+                        android:orientation="vertical">
 
+                        <TextView
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:text="Status Saver"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-        </TableRow>
 
-    </TableLayout>
+                <Space
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+
+                    android:id="@+id/savedstatus"
+                    android:layout_width="110dp"
+                    android:layout_height="150dp"
+                    android:layout_margin="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="#B06DEC4B"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+
+                            android:layout_width="100dp"
+                            android:layout_height="90dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/tm" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:text="Saved statuses"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <LinearLayout
+
+                    android:id="@+id/facebook"
+                    android:layout_width="110dp"
+                    android:layout_height="150dp"
+                    android:layout_margin="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="#B06DEC4B"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+
+                            android:layout_width="100dp"
+                            android:layout_height="90dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/facebook" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:text="Facebook"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+
+                    android:id="@+id/instagram"
+                    android:layout_width="110dp"
+                    android:layout_height="150dp"
+                    android:layout_margin="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="#B06DEC4B"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+
+                            android:layout_width="100dp"
+                            android:layout_height="90dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/insta" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:text="Instagram"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <LinearLayout
+
+                    android:id="@+id/settings"
+                    android:layout_width="110dp"
+                    android:layout_height="150dp"
+                    android:layout_margin="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="#B06DEC4B"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+
+                            android:layout_width="100dp"
+                            android:layout_height="90dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_menu_manage" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:text="Settings"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </TableRow>
+
+        </TableLayout>
+    </ScrollView>
 </LinearLayout>
