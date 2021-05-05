@@ -43,7 +43,7 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
-            SwitchPreference darktheme = findPreference("dark_theme");
+            /*SwitchPreference darktheme = findPreference("dark_theme");
             assert darktheme != null;
             darktheme.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
@@ -52,7 +52,7 @@ public class SettingsActivity extends AppCompatActivity {
                     onPreferenceChangeListener.onPreferenceChanged();
                     return true;
                 }
-            });
+            });*/
         }
         public SettingsFragment(OnPreferenceChangeListener onPreferenceChangeListener)
         {

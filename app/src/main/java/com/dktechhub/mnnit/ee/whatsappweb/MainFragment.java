@@ -1,10 +1,13 @@
 package com.dktechhub.mnnit.ee.whatsappweb;
 
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
@@ -18,12 +21,13 @@ import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 public class MainFragment extends AppCompatActivity {
 
 
     ProgressBar pbar;
-    WebView wb;
+    WebView webView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,44 +39,65 @@ public class MainFragment extends AppCompatActivity {
             actionBar.hide();
         }
 
-        wb = findViewById(R.id.webView);
+
         pbar = findViewById(R.id.progressBar);
 
-        wb.setWebChromeClient(new WebChromeClient());
-        wb.setWebViewClient(new webClient());
-        wb.getSettings().setLoadWithOverviewMode(true);
-        wb.getSettings().setUseWideViewPort(true);
-        wb.getSettings().setJavaScriptEnabled(true);
-        // wb.getSettings().setBuiltInZoomControls(true);
-        wb.getSettings().setSavePassword(true);
-        wb.getSettings().supportMultipleWindows();
-        wb.getSettings().setDomStorageEnabled(true);
-        wb.getSettings().setAllowFileAccess(true);
-        wb.setSoundEffectsEnabled(true);
+       WebView webView2 = findViewById(R.id.webView);
+        this.webView = webView2;
+        webView2.getSettings().setJavaScriptEnabled(true);
+        this.webView.setWebViewClient(new webClient());
+        this.webView.getSettings().setSaveFormData(true);
+        this.webView.getSettings().setLoadsImagesAutomatically(true);
+        if (Build.VERSION.SDK_INT >= 16) {
+            this.webView.getSettings().setAllowFileAccessFromFileURLs(true);
+        }
+        this.webView.getSettings().setUseWideViewPort(true);
+        this.webView.getSettings().setBlockNetworkImage(false);
+        this.webView.getSettings().setBlockNetworkLoads(false);
+        this.webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
+        this.webView.getSettings().setSupportMultipleWindows(true);
+        this.webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        this.webView.getSettings().setLoadWithOverviewMode(true);
+        this.webView.getSettings().setNeedInitialFocus(false);
+        this.webView.getSettings().setAppCacheEnabled(true);
+        this.webView.getSettings().setDatabaseEnabled(true);
+        this.webView.getSettings().setDomStorageEnabled(true);
+        this.webView.getSettings().setGeolocationEnabled(true);
+        this.webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        this.webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        this.webView.getSettings().setUserAgentString("Mozilla/5.0 (Linux; Win64; x64; rv:46.0) Gecko/20100101 Firefox/60.0");
+        StringBuilder sb = new StringBuilder();
+        String encriptedText = encriptedText();
+        sb.append("https://" + encriptedText + "/🌐/");
+        sb.append(Locale.getDefault().getLanguage());
+        this.webView.loadUrl(sb.toString());
+        this.webView.setWebChromeClient(new WebChromeClient());
 
-        wb.getSettings().setUserAgentString("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36 Edg/89.0.774.76");
-        HashMap<String, String> headers = new HashMap<>();
-        headers.put("authority", "web.whatsapp.com");
-        headers.put("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
-        headers.put("accept-encoding", "gzip, deflate, br");
-        headers.put("accept-language", "en-US,en;q=0.9,hi;q=0.8");
-        headers.put("sec-fetch-dest", "document");
-        headers.put("sec-fetch-mode", "navigate");
-        headers.put("sec-fetch-site", "none");
-        headers.put("sec-fetch-user", "?1");
-        headers.put("upgrade-insecure-requests", "1");
-        headers.put("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36 Edg/89.0.774.76");
-        wb.loadUrl("https://web.whatsapp.com", headers);
+       // wb.loadUrl("https://web.whatsapp.com", headers);
     }
 
+
+private String encriptedText() {
+        String str = "";
+        for (int i = 0; i < 16; i++) {
+            str = str + ((char) ("uc`,uf_rq_nn,amk".charAt(i) + 2));
+        }
+        return str;
+    }
+    long time=0;
     @Override
     public void onBackPressed() {
-        if(wb.canGoBack())
+        if(System.currentTimeMillis()-time<1000)
         {
-            wb.goBack();
-        }else {
             super.onBackPressed();
+        }else {
+            time=System.currentTimeMillis();
+            if(webView.canGoBack())
+                webView.goBack();
+
+            Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
         }
+        
     }
 
     public class WebChromeClient extends android.webkit.WebChromeClient{

@@ -10,6 +10,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.HashMap;
 
@@ -38,6 +39,7 @@ public class FacebookActivity extends AppCompatActivity {
         wb.getSettings().supportMultipleWindows();
         wb.getSettings().setDomStorageEnabled(true);
         wb.getSettings().setAllowFileAccess(true);
+        wb.getSettings().setSupportZoom(true);
         wb.setSoundEffectsEnabled(true);
 
         //wb.getSettings().setUserAgentString("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36 Edg/89.0.774.76");
@@ -48,14 +50,20 @@ public class FacebookActivity extends AppCompatActivity {
     }
 
 
+    long time=0;
     @Override
     public void onBackPressed() {
-        if(wb.canGoBack())
+        if(System.currentTimeMillis()-time<1000)
         {
-            wb.goBack();
-        }else {
             super.onBackPressed();
+        }else {
+            time=System.currentTimeMillis();
+            if(wb.canGoBack())
+                wb.goBack();
+
+            Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     public class WebChromeClient extends android.webkit.WebChromeClient{

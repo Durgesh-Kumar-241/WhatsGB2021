@@ -9,4 +9,9 @@
         <item>reply</item>
         <item>reply_all</item>
     </string-array>
+    <string-array name="storage_paths">
+        <item>/sdcard/Saved Statuses</item>
+        <item>/sdcard/Whatsapp web/Saved Statuses</item>
+        <item>/sdcard/Downloads</item>
+    </string-array>
 </resources>
