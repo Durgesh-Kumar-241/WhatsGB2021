@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -21,12 +22,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
 
 public class MainActivityNew extends AppCompatActivity {
-     Fragment fragment1 ;
-    Fragment fragment2 ;
-    Fragment fragment3 ;
+    PermissionDetector permissionDetector;
    LinearLayout whatsappweb,statussaver,savedstatus,directChat,settings,facebook,instagram;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +37,8 @@ public class MainActivityNew extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
+        permissionDetector=new PermissionDetector(this);
+        permissionDetector.checkPermissions();
         whatsappweb=findViewById(R.id.whatsappweb);
         statussaver=findViewById(R.id.statussaver);
         savedstatus=findViewById(R.id.savedstatus);
@@ -93,7 +95,7 @@ public class MainActivityNew extends AppCompatActivity {
                startActivity(intent);
            }
        });
-        checkPermissions();
+
 
 
 
@@ -106,24 +108,9 @@ public class MainActivityNew extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == WRITE_EXTERNAL_STORAGE_CODE) {
-            if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Permission denined,Reading external storage is necessary for the app to work properly", Toast.LENGTH_SHORT).show();
-            } else {
-
-            }
-        }
+        permissionDetector.onRequestPermissionsResult( requestCode, permissions,  grantResults);
     }
-    private static final int WRITE_EXTERNAL_STORAGE_CODE = 257;
-    public void checkPermissions()
-    {
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M&&checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
-        {
-            requestPermissions(new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE},WRITE_EXTERNAL_STORAGE_CODE);
-        }
 
-
-    }
     public void applyTheme()
     {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);

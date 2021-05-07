@@ -16,7 +16,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -42,10 +44,11 @@ public class StatusSaverActivity extends AppCompatActivity {
 
     RecyclerView photos;
     ArrayList<Status> selected=new ArrayList<>();
-    FloatingActionButton fab;
+    FloatingActionButton saveButton,shareButton;
     StatusItemAdapter photoAdapter;
-    CheckBox selectAll;
+    CheckedTextView selectAll;
     SwipeRefreshLayout swipeRefreshLayout;
+    TextView noItemsTextView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,24 +56,41 @@ public class StatusSaverActivity extends AppCompatActivity {
         applyTheme();
         setContentView(R.layout.fragment_status);
 
-        photos=findViewById(R.id.images);
+        photos=findViewById(R.id.recyclerview);
         swipeRefreshLayout=findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setEnabled(false);
         //videos=root.findViewById(R.id.videos);
-        fab=findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(new View.OnClickListener() {
+        saveButton=findViewById(R.id.saveButton);
+        shareButton=findViewById(R.id.shareButton);
+        noItemsTextView=findViewById(R.id.noItemsTextView);
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 save();
             }
         });
-        selectAll=findViewById(R.id.select_all);
-        selectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                    selectAll();
-                else deselectAll();
+            public void onClick(View v) {
+                share();
+            }
+        });
+        selectAll=findViewById(R.id.selectAllTextVIew);
+        selectAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectAll.setChecked(!selectAll.isChecked());
+                if(selectAll.isChecked()){
+                    photoAdapter.inSelectionMode=true;
+
+                    selectAll.setCheckMarkDrawable(R.drawable.w0);
+                selectAll();}
+                else {
+                    photoAdapter.inSelectionMode=false;
+                    selectAll.setCheckMarkDrawable(R.drawable.w1);
+                    deselectAll();
+                }
+                photoAdapter.listner.onSelectionModeChanged(photoAdapter.inSelectionMode);
             }
         });
         photoAdapter=new StatusItemAdapter(new StatusItemAdapter.StatusItemAdapterListner() {
@@ -82,6 +102,18 @@ public class StatusSaverActivity extends AppCompatActivity {
             @Override
             public void onIconClicked(Status status) {
                StatusSaverActivity.this.onIconClicked(status);
+            }
+
+            @Override
+            public void onSelectionModeChanged(boolean selectionMode) {
+                if(selectionMode)
+                {
+                    saveButton.setVisibility(View.VISIBLE);
+                    shareButton.setVisibility(View.VISIBLE);
+                }else{
+                    saveButton.setVisibility(View.GONE);
+                    shareButton.setVisibility(View.GONE);
+                }
             }
         });
         //StatusItemAdapter videosAdapter=new StatusItemAdapter();
@@ -96,6 +128,22 @@ public class StatusSaverActivity extends AppCompatActivity {
             public void onLoaded(Status status) {
                 photoAdapter.addStatusItem(status);
                 photoAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onLoadCompleted() {
+                if(photoAdapter.getItemCount()==0)
+                {
+                    noItemsTextView.setVisibility(View.VISIBLE);
+                    photos.setVisibility(View.GONE);
+                    swipeRefreshLayout.setVisibility(View.GONE);
+                    selectAll.setVisibility(View.GONE);
+                }else {
+                    noItemsTextView.setVisibility(View.GONE);
+                    photos.setVisibility(View.VISIBLE);
+                    swipeRefreshLayout.setVisibility(View.VISIBLE);
+                    selectAll.setVisibility(View.VISIBLE);
+                }
             }
 
         }).execute();
@@ -126,10 +174,13 @@ public class StatusSaverActivity extends AppCompatActivity {
                         if (isImage(f1.getAbsolutePath())) {
                             thumb = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(f1.getAbsolutePath()), 512, 384);
                             mime="image/*";
+
                             //(new com.dktechhub.mnnit.ee.whatsappweb.Status(f.getAbsolutePath(), thumb));
                            // thumb = ThumbnailUtils.createImageThumbnail(f1.getAbsolutePath(), MediaStore.Audio.Thumbnails.MINI_KIND);
                         }else {
-                             thumb = ThumbnailUtils.createVideoThumbnail(f1.getAbsolutePath(), MediaStore.Video.Thumbnails.MINI_KIND);
+                            //thumb = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(f1.getAbsolutePath()), 512, 384);
+                            thumb = ThumbnailUtils.createVideoThumbnail(f1.getAbsolutePath(), MediaStore.Video.Thumbnails.MINI_KIND);
+
                             //publishProgress(new com.dktechhub.mnnit.ee.whatsappweb.Status(f.getAbsolutePath(), thumb));
                             mime="video/*";
 
@@ -164,12 +215,15 @@ public class StatusSaverActivity extends AppCompatActivity {
             return null;
         }
 
-
-
-
+        @Override
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+            onLoadCompleteListener.onLoadCompleted();
+        }
     }
     public interface OnLoadCompleteListener{
         void onLoaded(Status status);
+        void onLoadCompleted();
     }
 
     public void onCheckBoxClicked(Status status)
@@ -197,8 +251,45 @@ public class StatusSaverActivity extends AppCompatActivity {
     }
 
     public void save()
-    {
+    {   if(selected.size()!=0)
         new Saver(this.selected).execute();
+    }
+
+    public void share()
+    {
+        if(selected.size()!=0)
+        {
+            try{
+                if(selected.size()==1) {
+                    Intent i = new Intent(Intent.ACTION_SEND);
+                    //  i.setDataAndType( FileProvider.getUriForFile(getApplicationContext(),BuildConfig.APPLICATION_ID+".provider", apkPath2),"*/*");
+                    i.setType("*/*");
+                    Uri uri = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", new File(selected.get(0).source));
+                    Log.d("Invite", uri.toString());
+                    i.putExtra(Intent.EXTRA_STREAM, uri);
+                    i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    startActivity(Intent.createChooser(i, "Choose a way:"));
+                }else{
+                    Intent i = new Intent(Intent.ACTION_SEND_MULTIPLE);
+                    //  i.setDataAndType( FileProvider.getUriForFile(getApplicationContext(),BuildConfig.APPLICATION_ID+".provider", apkPath2),"*/*");
+                    i.setType("*/*");
+                    ArrayList<Uri> filesToSend=new ArrayList<>();
+                    for(Status status:selected)
+                    {
+                        filesToSend.add(FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", new File(status.source)));
+                    }
+                    //Log.d("Invite", uri.toString());
+                    //i.putExtra(Intent.EXTRA_STREAM, uri);
+                    i.putParcelableArrayListExtra(Intent.EXTRA_STREAM,filesToSend);;
+                    i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    startActivity(Intent.createChooser(i, "Choose a way:"));
+                }
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+                Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
     public class Saver extends AsyncTask<Void,Void,Void>{
         ArrayList<com.dktechhub.mnnit.ee.whatsappweb.Status> selected;

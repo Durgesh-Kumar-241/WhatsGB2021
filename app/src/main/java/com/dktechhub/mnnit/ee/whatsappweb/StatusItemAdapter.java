@@ -49,6 +49,7 @@ public class StatusItemAdapter extends RecyclerView.Adapter<StatusItemAdapter.Vi
             @Override
             public boolean onLongClick(View v) {
                 inSelectionMode=!inSelectionMode;
+                listner.onSelectionModeChanged(inSelectionMode);
                 notifyDataSetChanged();
                 return false;
             }
@@ -56,6 +57,8 @@ public class StatusItemAdapter extends RecyclerView.Adapter<StatusItemAdapter.Vi
         if(!inSelectionMode)
         holder.checkBox.setVisibility(View.GONE);
         else holder.checkBox.setVisibility(View.VISIBLE);
+
+
     }
 
     @Override
@@ -98,5 +101,8 @@ public class StatusItemAdapter extends RecyclerView.Adapter<StatusItemAdapter.Vi
     public interface StatusItemAdapterListner{
         void onCheckBoxClicked(Status status);
         void onIconClicked(Status status);
+       void onSelectionModeChanged(boolean selectionMode);
     }
+
+
 }

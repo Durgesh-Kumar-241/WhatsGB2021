@@ -1,12 +1,26 @@
 package com.dktechhub.mnnit.ee.whatsappweb;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.DownloadManager;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.DownloadListener;
+import android.webkit.URLUtil;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
@@ -16,7 +30,9 @@ import java.util.HashMap;
 
 public class FacebookActivity extends AppCompatActivity {
     ProgressBar pbar;
-    WebView wb;
+    mWebView wb;
+    PermissionDetector permissionDetector;
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,27 +42,29 @@ public class FacebookActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
-        wb = findViewById(R.id.webView);
+        permissionDetector = new PermissionDetector(this);
+        ConnectionDetector.checkInternet(this);
+        permissionDetector.checkPermissions();
+        wb = new mWebView(findViewById(R.id.webView));
         pbar = findViewById(R.id.progressBar);
+        wb.setmWebViewListner(new mWebView.mWebViewInterface() {
+            @Override
+            public ProgressBar getProgressBar() {
+                return pbar;
+            }
 
-        wb.setWebChromeClient(new WebChromeClient());
-        wb.setWebViewClient(new webClient());
-        wb.getSettings().setLoadWithOverviewMode(true);
-        wb.getSettings().setUseWideViewPort(true);
-        wb.getSettings().setJavaScriptEnabled(true);
-        // wb.getSettings().setBuiltInZoomControls(true);
-        wb.getSettings().setSavePassword(true);
-        wb.getSettings().supportMultipleWindows();
-        wb.getSettings().setDomStorageEnabled(true);
-        wb.getSettings().setAllowFileAccess(true);
-        wb.getSettings().setSupportZoom(true);
-        wb.setSoundEffectsEnabled(true);
+            @Override
+            public Activity getActivity() {
+                return FacebookActivity.this;
+            }
+        });
+
+        wb.InitSettings(false,"*/*");
 
         //wb.getSettings().setUserAgentString("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36 Edg/89.0.774.76");
 
         //headers.put("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36 Edg/89.0.774.76");
         wb.loadUrl("https://m.facebook.com");
-
     }
 
 
@@ -66,29 +84,7 @@ public class FacebookActivity extends AppCompatActivity {
 
     }
 
-    public class WebChromeClient extends android.webkit.WebChromeClient{
-        @Override
-        public void onProgressChanged(WebView view, int newProgress) {
-            super.onProgressChanged(view, newProgress);
-            pbar.setVisibility(View.VISIBLE);
-            pbar.setProgress(newProgress);
-        }
 
-
-    }
-    public class webClient extends WebViewClient {
-        public boolean shouldOverrideUrlLoading(WebView webView,String url)
-        {
-            webView.loadUrl(url);
-            return true;
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            super.onPageFinished(view, url);
-            pbar.setVisibility(View.GONE);
-        }
-    }
 
     public void applyTheme()
     {
@@ -99,5 +95,17 @@ public class FacebookActivity extends AppCompatActivity {
             //setTheme(R.style.ThemeOverlay_AppCompat_Dark);
         }
         else setTheme(R.style.Theme_AppCompat_Light);
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        permissionDetector.onRequestPermissionsResult( requestCode, permissions,  grantResults);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        //super.onActivityResult();
+        super.onActivityResult(requestCode, resultCode, data);
+        this.wb.onActivityResult(requestCode, resultCode, data);
+
     }
 }

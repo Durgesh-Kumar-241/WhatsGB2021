@@ -16,7 +16,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -38,35 +40,52 @@ import java.util.Arrays;
 public class SavedStatusActivity extends AppCompatActivity {
     RecyclerView photos;
     ArrayList<Status> selected=new ArrayList<>();
-    FloatingActionButton fab;
+    FloatingActionButton deleteButton,shareButton;
     StatusItemAdapter photoAdapter;
-    CheckBox selectAll;
+    CheckedTextView selectAll;
     SwipeRefreshLayout swipeRefreshLayout;
+    TextView noItemsTextView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         applyTheme();
         setContentView(R.layout.fragment_saved_status);
-        photos=findViewById(R.id.images);
-        //videos=root.findViewById(R.id.videos);
-        fab=findViewById(R.id.floatingActionButton);
+        photos=findViewById(R.id.recyclerview);
         swipeRefreshLayout=findViewById(R.id.swipeRefreshLayout);
-
-        fab.setOnClickListener(new View.OnClickListener() {
+        swipeRefreshLayout.setEnabled(true);
+        //videos=root.findViewById(R.id.videos);
+        deleteButton=findViewById(R.id.deleteButton);
+        shareButton=findViewById(R.id.shareButton);
+        noItemsTextView=findViewById(R.id.noItemsTextView);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //save();
-                new deleter(selected).execute();
+                delete();
             }
         });
-        selectAll=findViewById(R.id.select_all);
-        selectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                    selectAll();
-                else deselectAll();
+            public void onClick(View v) {
+                share();
+            }
+        });
+        selectAll=findViewById(R.id.selectAllTextVIew);
+        selectAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectAll.setChecked(!selectAll.isChecked());
+                if(selectAll.isChecked()){
+                    photoAdapter.inSelectionMode=true;
+
+                    selectAll.setCheckMarkDrawable(R.drawable.w0);
+                    selectAll();}
+                else {
+                    photoAdapter.inSelectionMode=false;
+                    selectAll.setCheckMarkDrawable(R.drawable.w1);
+                    deselectAll();
+                }
+                photoAdapter.listner.onSelectionModeChanged(photoAdapter.inSelectionMode);
             }
         });
         photoAdapter=new StatusItemAdapter(new StatusItemAdapter.StatusItemAdapterListner() {
@@ -78,6 +97,18 @@ public class SavedStatusActivity extends AppCompatActivity {
             @Override
             public void onIconClicked(Status status) {
                 SavedStatusActivity.this.onIconClicked(status);
+            }
+
+            @Override
+            public void onSelectionModeChanged(boolean selectionMode) {
+                if(selectionMode)
+                {
+                    deleteButton.setVisibility(View.VISIBLE);
+                    shareButton.setVisibility(View.VISIBLE);
+                }else{
+                    deleteButton.setVisibility(View.GONE);
+                    shareButton.setVisibility(View.GONE);
+                }
             }
         });
         //StatusItemAdapter videosAdapter=new StatusItemAdapter();
@@ -91,6 +122,25 @@ public class SavedStatusActivity extends AppCompatActivity {
             public void onLoaded(Status status) {
                 photoAdapter.addStatusItem(status);
                 photoAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onLoadCompleted() {
+                if(photoAdapter.getItemCount()==0)
+                {
+                    noItemsTextView.setVisibility(View.VISIBLE);
+                    photos.setVisibility(View.GONE);
+                    swipeRefreshLayout.setVisibility(View.GONE);
+                    selectAll.setVisibility(View.GONE);
+                    deleteButton.setVisibility(View.GONE);
+                    shareButton.setVisibility(View.GONE);
+                }else {
+                    noItemsTextView.setVisibility(View.GONE);
+                    photos.setVisibility(View.VISIBLE);
+                    selectAll.setVisibility(View.VISIBLE);
+                    swipeRefreshLayout.setVisibility(View.VISIBLE);
+
+                }
             }
         }).execute();
 
@@ -113,6 +163,24 @@ public class SavedStatusActivity extends AppCompatActivity {
             public void onLoaded(Status status) {
                 photoAdapter.addStatusItem(status);
                 photoAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onLoadCompleted() {
+                if(photoAdapter.getItemCount()==0)
+                {
+                    noItemsTextView.setVisibility(View.VISIBLE);
+                    photos.setVisibility(View.GONE);
+                    selectAll.setVisibility(View.GONE);
+                    swipeRefreshLayout.setVisibility(View.GONE);
+                    deleteButton.setVisibility(View.GONE);
+                    shareButton.setVisibility(View.GONE);
+                }else {
+                    noItemsTextView.setVisibility(View.GONE);
+                    photos.setVisibility(View.VISIBLE);
+                    selectAll.setVisibility(View.VISIBLE);
+                    swipeRefreshLayout.setVisibility(View.VISIBLE);
+                }
             }
         }).execute();
     }
@@ -202,13 +270,18 @@ public class SavedStatusActivity extends AppCompatActivity {
             getStatuses();
             return null;
         }
-
+        @Override
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+            onLoadCompleteListener.onLoadCompleted();
+        }
 
 
 
     }
     public interface OnLoadCompleteListener{
         void onLoaded(Status status);
+        void onLoadCompleted();
     }
 
     public void onCheckBoxClicked(Status status)
@@ -234,10 +307,54 @@ public class SavedStatusActivity extends AppCompatActivity {
         i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivity(i);
     }
-    class deleter extends AsyncTask<Void,Void,Void>
+
+    public void delete()
+    {   if(selected.size()!=0)
+        new Deleter(this.selected).execute();
+    }
+
+    public void share()
+    {
+        if(selected.size()!=0)
+        {
+            try{
+                if(selected.size()==1) {
+                    Intent i = new Intent(Intent.ACTION_SEND);
+                    //  i.setDataAndType( FileProvider.getUriForFile(getApplicationContext(),BuildConfig.APPLICATION_ID+".provider", apkPath2),"*/*");
+                    i.setType("*/*");
+                    Uri uri = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", new File(selected.get(0).source));
+                    Log.d("Invite", uri.toString());
+                    i.putExtra(Intent.EXTRA_STREAM, uri);
+                    i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    startActivity(Intent.createChooser(i, "Choose a way:"));
+                }else{
+                    Intent i = new Intent(Intent.ACTION_SEND_MULTIPLE);
+                    //  i.setDataAndType( FileProvider.getUriForFile(getApplicationContext(),BuildConfig.APPLICATION_ID+".provider", apkPath2),"*/*");
+                    i.setType("*/*");
+                    ArrayList<Uri> filesToSend=new ArrayList<>();
+                    for(Status status:selected)
+                    {
+                        filesToSend.add(FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", new File(status.source)));
+                    }
+                    //Log.d("Invite", uri.toString());
+                    //i.putExtra(Intent.EXTRA_STREAM, uri);
+                    i.putParcelableArrayListExtra(Intent.EXTRA_STREAM,filesToSend);;
+                    i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    startActivity(Intent.createChooser(i, "Choose a way:"));
+                }
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+                Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+    class Deleter extends AsyncTask<Void,Void,Void>
     {   ArrayList<com.dktechhub.mnnit.ee.whatsappweb.Status> selected;
         ProgressDialog progressDialog;
-        public deleter(ArrayList<com.dktechhub.mnnit.ee.whatsappweb.Status> selected)
+        public Deleter(ArrayList<com.dktechhub.mnnit.ee.whatsappweb.Status> selected)
         {
             this.selected=selected;
         }
