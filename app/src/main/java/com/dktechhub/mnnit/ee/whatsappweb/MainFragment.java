@@ -164,7 +164,7 @@ public class MainFragment extends AppCompatActivity {
         {
             //setTheme(R.style.ThemeOverlay_AppCompat_Dark);
         }
-        else setTheme(R.style.Theme_AppCompat_Light);
+        else setTheme(R.style.Theme_MaterialComponents_Light);
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

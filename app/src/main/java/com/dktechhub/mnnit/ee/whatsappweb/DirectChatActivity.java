@@ -36,6 +36,7 @@ public class DirectChatActivity extends AppCompatActivity {
         send=findViewById(R.id.send);
         clear=findViewById(R.id.clear);
         ccp.registerPhoneNumberTextView(number);
+        ccp.enableHint(false);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         ccp.setDefaultCountryUsingNameCodeAndApply(sharedPreferences.getString("recent_country",ccp.getSelectedCountryName()));
         //Log.d("Number",sharedPreferences.getString("recent_country",ccp.getSelectedCountryName())+"loaded");
@@ -91,6 +92,6 @@ public class DirectChatActivity extends AppCompatActivity {
         {
             //setTheme(R.style.ThemeOverlay_AppCompat_Dark);
         }
-        else setTheme(R.style.Theme_AppCompat_Light);
+        else setTheme(R.style.Theme_MaterialComponents_Light);
     }
 }

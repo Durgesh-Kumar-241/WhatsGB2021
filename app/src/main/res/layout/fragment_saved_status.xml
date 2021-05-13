@@ -20,7 +20,8 @@
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_save" />
+        app:srcCompat="@android:drawable/ic_menu_delete"
+        android:focusable="true" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/shareButton"
@@ -35,7 +36,8 @@
         app:fabSize="mini"
         app:layout_constraintBottom_toTopOf="@+id/deleteButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_menu_share" />
+        app:srcCompat="@drawable/ic_menu_share"
+        android:focusable="true" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -58,8 +60,9 @@
             android:checkMark="@drawable/w1"
             android:gravity="center"
             android:paddingLeft="10dp"
-            android:text="Select all"
-            android:visibility="gone" />
+            android:text="@string/select_all"
+            android:visibility="gone"
+            android:paddingStart="10dp" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout"
@@ -80,10 +83,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:drawableTop="@drawable/ic_album"
             android:gravity="center"
-            android:text="No Items available"
+            android:text="@string/no_items_available"
             android:visibility="visible"
-            tools:visibility="visible" />
+            tools:visibility="visible"
+            app:drawableTopCompat="@drawable/ic_album" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,29 +3,19 @@ package com.dktechhub.mnnit.ee.whatsappweb;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.CheckedTextView;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
-import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -63,35 +53,22 @@ public class StatusSaverActivity extends AppCompatActivity {
         saveButton=findViewById(R.id.saveButton);
         shareButton=findViewById(R.id.shareButton);
         noItemsTextView=findViewById(R.id.noItemsTextView);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                save();
-            }
-        });
-        shareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                share();
-            }
-        });
+        saveButton.setOnClickListener(v -> save());
+        shareButton.setOnClickListener(v -> share());
         selectAll=findViewById(R.id.selectAllTextVIew);
-        selectAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectAll.setChecked(!selectAll.isChecked());
-                if(selectAll.isChecked()){
-                    photoAdapter.inSelectionMode=true;
+        selectAll.setOnClickListener(v -> {
+            selectAll.setChecked(!selectAll.isChecked());
+            if(selectAll.isChecked()){
+                photoAdapter.inSelectionMode=true;
 
-                    selectAll.setCheckMarkDrawable(R.drawable.w0);
-                selectAll();}
-                else {
-                    photoAdapter.inSelectionMode=false;
-                    selectAll.setCheckMarkDrawable(R.drawable.w1);
-                    deselectAll();
-                }
-                photoAdapter.listner.onSelectionModeChanged(photoAdapter.inSelectionMode);
+                selectAll.setCheckMarkDrawable(R.drawable.w0);
+            selectAll();}
+            else {
+                photoAdapter.inSelectionMode=false;
+                selectAll.setCheckMarkDrawable(R.drawable.w1);
+                deselectAll();
             }
+            photoAdapter.listner.onSelectionModeChanged(photoAdapter.inSelectionMode);
         });
         photoAdapter=new StatusItemAdapter(new StatusItemAdapter.StatusItemAdapterListner() {
             @Override
@@ -115,7 +92,7 @@ public class StatusSaverActivity extends AppCompatActivity {
                     shareButton.setVisibility(View.GONE);
                 }
             }
-        });
+        },this);
         //StatusItemAdapter videosAdapter=new StatusItemAdapter();
 
 
@@ -162,33 +139,44 @@ public class StatusSaverActivity extends AppCompatActivity {
         {
             try{
                 File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/WhatsApp/Media/.Statuses/");
-
-                if(!f.isDirectory())
+                File f2 =new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/WhatsApp Business/Media/.Statuses/");;
+                if(!f.isDirectory()&&!f2.isDirectory())
                 {   Log.d("File",f.toString());
                     return;
                 }
                 File[] all = f.listFiles();
+                File[] all2=f2.listFiles();
+
                 Log.d("File List", Arrays.toString(all));
                 if(all!=null) {
-                    for (File f1 : all) {Bitmap thumb;String mime;
+                    for (File f1 : all) {
                         if (isImage(f1.getAbsolutePath())) {
-                            thumb = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(f1.getAbsolutePath()), 512, 384);
-                            mime="image/*";
+                            publishProgress(new com.dktechhub.mnnit.ee.whatsappweb.Status(f1.getAbsolutePath(),f1.getName(),"image/*"));
 
-                            //(new com.dktechhub.mnnit.ee.whatsappweb.Status(f.getAbsolutePath(), thumb));
-                           // thumb = ThumbnailUtils.createImageThumbnail(f1.getAbsolutePath(), MediaStore.Audio.Thumbnails.MINI_KIND);
-                        }else {
-                            //thumb = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(f1.getAbsolutePath()), 512, 384);
-                            thumb = ThumbnailUtils.createVideoThumbnail(f1.getAbsolutePath(), MediaStore.Video.Thumbnails.MINI_KIND);
+                        }else if(isVideo(f1.getAbsolutePath())){
 
-                            //publishProgress(new com.dktechhub.mnnit.ee.whatsappweb.Status(f.getAbsolutePath(), thumb));
-                            mime="video/*";
+                            publishProgress(new com.dktechhub.mnnit.ee.whatsappweb.Status(f1.getAbsolutePath(),f1.getName(),"video/*"));
 
-                    }if(thumb!=null)
-                        {
-                            publishProgress(new com.dktechhub.mnnit.ee.whatsappweb.Status(f1.getAbsolutePath(), thumb,f1.getName(),mime));
+
                         }
+
                 }
+
+
+                }
+                if(all2!=null) {
+                    for (File f1 : all2) {
+                        if (isImage(f1.getAbsolutePath())) {
+                            //thumb = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(f1.getAbsolutePath()), 512,384);
+                            publishProgress(new com.dktechhub.mnnit.ee.whatsappweb.Status(f1.getAbsolutePath(),f1.getName(),"image/*"));
+
+                        }else if(isVideo(f1.getAbsolutePath())){
+
+                            publishProgress(new com.dktechhub.mnnit.ee.whatsappweb.Status(f1.getAbsolutePath(),f1.getName(),"video/*"));
+
+                        }
+
+                    }
 
 
                 }
@@ -196,13 +184,18 @@ public class StatusSaverActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+
+
         }
     public boolean isImage(String src)
     {
-        if(src.contains(".png")||src.contains(".jpg")){
-            return true;
-        }return false;
+        return src.contains(".png") || src.contains(".jpg");
     }
+        public boolean isVideo(String src)
+        {
+            return src.contains(".mp4");
+        }
+
         @Override
         protected void onProgressUpdate(com.dktechhub.mnnit.ee.whatsappweb.Status... values) {
             super.onProgressUpdate(values);
@@ -280,7 +273,7 @@ public class StatusSaverActivity extends AppCompatActivity {
                     }
                     //Log.d("Invite", uri.toString());
                     //i.putExtra(Intent.EXTRA_STREAM, uri);
-                    i.putParcelableArrayListExtra(Intent.EXTRA_STREAM,filesToSend);;
+                    i.putParcelableArrayListExtra(Intent.EXTRA_STREAM,filesToSend);
                     i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     startActivity(Intent.createChooser(i, "Choose a way:"));
                 }
@@ -381,6 +374,6 @@ public class StatusSaverActivity extends AppCompatActivity {
         {
             //setTheme(R.style.ThemeOverlay_AppCompat_Dark);
         }
-        else setTheme(R.style.Theme_AppCompat_Light);
+        else setTheme(R.style.Theme_MaterialComponents_Light);
     }
 }

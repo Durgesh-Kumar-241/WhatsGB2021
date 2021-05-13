@@ -1,6 +1,8 @@
 package com.dktechhub.mnnit.ee.whatsappweb;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +13,15 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class StatusItemAdapter extends RecyclerView.Adapter<StatusItemAdapter.ViewHolder> {
 
     boolean inSelectionMode = false;
+    Activity activity;
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -29,7 +34,7 @@ public class StatusItemAdapter extends RecyclerView.Adapter<StatusItemAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.iconView.setImageBitmap(mList.get(position).thumbnail);
+        Glide.with(this.activity).load(mList.get(position).source).centerCrop().placeholder(R.drawable.ic_album).into(holder.iconView);
         holder.checkBox.setChecked(mList.get(position).isSelected);
         holder.iconView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,9 +95,9 @@ public class StatusItemAdapter extends RecyclerView.Adapter<StatusItemAdapter.Vi
     }
     private List<Status> mList = new ArrayList<>();
     StatusItemAdapterListner listner;
-    public StatusItemAdapter(StatusItemAdapterListner listner)
+    public StatusItemAdapter(StatusItemAdapterListner listner, Activity activity)
     {this.listner=listner;
-
+this.activity=activity;
     }
     public List<Status> getmList()
     {

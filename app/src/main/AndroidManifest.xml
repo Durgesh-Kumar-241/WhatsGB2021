@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.dktechhub.mnnit.ee.whatsappweb">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -16,23 +17,23 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.WhatsappWeb">
-        <activity android:name=".InstagramActivity"
-            android:screenOrientation="userPortrait"></activity>
-        <activity android:name=".FacebookActivity"
-            android:screenOrientation="userPortrait"
-            />
+        android:theme="@style/Theme.MaterialComponents.Light"
+        tools:ignore="AllowBackup">
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:screenOrientation="userPortrait"/>
-        <activity android:name=".DirectChatActivity"
             android:screenOrientation="userPortrait"
-            android:label="Direct Chat"/>
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".DirectChatActivity"
+            android:label="Direct Chat"
+            android:screenOrientation="userPortrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".MainActivityNew"
+            android:label="@string/title_activity_main_new"
             android:screenOrientation="userPortrait"
-            android:label="@string/title_activity_main_new">
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,16 +42,19 @@
         </activity>
         <activity
             android:name=".MainFragment"
-            android:label="Whatsapp web"
-            android:screenOrientation="userPortrait"/>
+            android:label="@string/str_title_main_fragment"
+            android:screenOrientation="userPortrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".SavedStatusActivity"
-            android:label="Saved status"
-            android:screenOrientation="userPortrait"/>
+            android:label="@string/str_title_act_saved_status"
+            android:screenOrientation="userPortrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".StatusSaverActivity"
-            android:label="Recent status"
-            android:screenOrientation="userPortrait"/>
+            android:label="@string/str_title_act_status_saver"
+            android:screenOrientation="userPortrait"
+            tools:ignore="LockedOrientationActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

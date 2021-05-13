@@ -6,59 +6,90 @@
     android:layout_height="match_parent"
     tools:context=".DirectChatActivity">
 
-    <EditText
-        android:id="@+id/number"
+
+    <com.google.android.material.textfield.TextInputLayout
+
+        android:id="@+id/textInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="49dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
         android:layout_marginTop="100dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/button_back"
-        android:ems="10"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
         android:inputType="textPersonName|phone"
+        app:counterEnabled="true"
+        app:counterMaxLength="10"
+        app:errorEnabled="true"
+        app:helperText="Enter phone number"
+        app:helperTextEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/spinner"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+       >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/send"
         android:layout_width="104dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="51dp"
+        android:layout_marginTop="47dp"
         android:background="@drawable/colored_button_back"
         android:gravity="center"
-        android:text="Send"
+        android:text="@string/send"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/message" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
     <com.rilixtech.widget.countrycodepicker.CountryCodePicker
         android:id="@+id/spinner"
         android:layout_width="wrap_content"
         android:layout_height="42dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="104dp"
         android:background="@drawable/button_back"
         android:entries="@android:array/emailAddressTypes"
-        app:layout_constraintEnd_toStartOf="@+id/number"
+        app:layout_constraintEnd_toStartOf="@+id/textInputLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/message"
-        android:layout_width="287dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/button_back"
-        android:ems="10"
-        android:hint="Enter any message (Optional)"
+
+    <com.google.android.material.textfield.TextInputLayout
+
+        android:id="@+id/textInputLayout2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+
+        android:hint="@string/enter_any_message_optional"
         android:inputType="textPersonName"
+        app:helperTextEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/number" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/clear"
@@ -67,7 +98,7 @@
         android:layout_marginTop="25dp"
         android:background="@drawable/colored_button_back"
         android:gravity="center"
-        android:text="Clear"
+        android:text="@string/clear"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/send" />

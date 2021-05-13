@@ -12,8 +12,6 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,100 +29,126 @@
                 android:layout_height="match_parent"
                 android:gravity="center">
 
-                <LinearLayout
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/whatsappweb"
                     android:layout_width="130dp"
                     android:layout_height="150dp"
                     android:layout_margin="2dp"
                     android:layout_marginBottom="2dp"
-                    android:background="@drawable/colored_button_back"
-                    android:orientation="vertical">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:id="@+id/imageView"
-                            android:layout_width="100dp"
-                            android:layout_height="90dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/iconwhats" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:checkable="false"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:contentPadding="8dp">
 
                     <LinearLayout
+
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+
+
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/itemsharedname"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+
+                                android:layout_width="100dp"
+                                android:layout_height="90dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/iconwhats" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:gravity="center"
-                            android:maxLines="1"
-                            android:text="Whats web"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:typeface="monospace" />
+                            android:orientation="vertical">
 
+                            <TextView
+
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="@string/whats_web"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:typeface="monospace" />
+
+                        </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
+
+
+                </com.google.android.material.card.MaterialCardView>
+
 
                 <Space
                     android:layout_width="20dp"
                     android:layout_height="wrap_content" />
 
-                <LinearLayout
-
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/directchat"
                     android:layout_width="130dp"
                     android:layout_height="150dp"
                     android:layout_margin="2dp"
                     android:layout_marginBottom="2dp"
-                    android:background="@drawable/back"
-                    android:orientation="vertical">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-
-                            android:layout_width="100dp"
-                            android:layout_height="90dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/v_" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:checkable="false"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:contentPadding="8dp">
 
                     <LinearLayout
+
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+
+
                         android:orientation="vertical">
 
-                        <TextView
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
+                            <ImageView
+                                android:id="@+id/imageView"
+                                android:layout_width="100dp"
+                                android:layout_height="90dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/v_" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:gravity="center"
-                            android:maxLines="1"
-                            android:text="Direct Chat"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:typeface="monospace" />
+                            android:orientation="vertical">
 
+                            <TextView
+                                android:id="@+id/itemsharedname"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="@string/direct_chat"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:typeface="monospace" />
+
+                        </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
+
+
+                </com.google.android.material.card.MaterialCardView>
 
             </TableRow>
 
@@ -133,100 +157,126 @@
                 android:layout_height="match_parent"
                 android:gravity="center">
 
-                <LinearLayout
-
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/statussaver"
-                    android:layout_width="110dp"
+                    android:layout_width="130dp"
                     android:layout_height="150dp"
                     android:layout_margin="2dp"
                     android:layout_marginBottom="2dp"
-                    android:background="@drawable/back"
-                    android:orientation="vertical">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-
-                            android:layout_width="100dp"
-                            android:layout_height="90dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/tu" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:checkable="false"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:contentPadding="8dp">
 
                     <LinearLayout
+
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+
+
                         android:orientation="vertical">
 
-                        <TextView
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
+                            <ImageView
+
+                                android:layout_width="100dp"
+                                android:layout_height="90dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/tu" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:gravity="center"
-                            android:maxLines="1"
-                            android:text="Status Saver"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:typeface="monospace" />
+                            android:orientation="vertical">
 
+                            <TextView
+
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="@string/status_saver"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:typeface="monospace" />
+
+                        </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
+
+
+                </com.google.android.material.card.MaterialCardView>
 
                 <Space
                     android:layout_width="20dp"
                     android:layout_height="wrap_content" />
 
-                <LinearLayout
-
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/savedstatus"
-                    android:layout_width="110dp"
+                    android:layout_width="130dp"
                     android:layout_height="150dp"
                     android:layout_margin="2dp"
                     android:layout_marginBottom="2dp"
-                    android:background="@drawable/back"
-                    android:orientation="vertical">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-
-                            android:layout_width="100dp"
-                            android:layout_height="90dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/tm" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:checkable="false"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:contentPadding="8dp">
 
                     <LinearLayout
+
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+
+
                         android:orientation="vertical">
 
-                        <TextView
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
+                            <ImageView
+
+                                android:layout_width="100dp"
+                                android:layout_height="90dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/tm" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:gravity="center"
-                            android:maxLines="1"
-                            android:text="Saved statuses"
-                            android:textSize="14sp" android:textStyle="bold"
-                            android:typeface="monospace"/>
+                            android:orientation="vertical">
 
+                            <TextView
+
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="@string/saved_status"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:typeface="monospace" />
+
+                        </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
+
+
+                </com.google.android.material.card.MaterialCardView>
+
             </TableRow>
 
             <TableRow
@@ -234,99 +284,126 @@
                 android:layout_height="match_parent"
                 android:gravity="center">
 
-                <LinearLayout
-
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/facebook"
-                    android:layout_width="110dp"
+                    android:layout_width="130dp"
                     android:layout_height="150dp"
                     android:layout_margin="2dp"
                     android:layout_marginBottom="2dp"
-                    android:background="@drawable/back"
-                    android:orientation="vertical">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-
-                            android:layout_width="100dp"
-                            android:layout_height="90dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/facebook" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:checkable="false"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:contentPadding="8dp">
 
                     <LinearLayout
+
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+
+
                         android:orientation="vertical">
 
-                        <TextView
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
+                            <ImageView
+
+                                android:layout_width="100dp"
+                                android:layout_height="90dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/facebook" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:gravity="center"
-                            android:maxLines="1"
-                            android:text="Facebook"
-                            android:textSize="14sp" android:textStyle="bold"
-                            android:typeface="monospace"/>
+                            android:orientation="vertical">
 
+                            <TextView
+
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="@string/facebook"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:typeface="monospace" />
+
+                        </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
+
+
+                </com.google.android.material.card.MaterialCardView>
 
                 <Space
                     android:layout_width="20dp"
                     android:layout_height="wrap_content" />
 
-                <LinearLayout
-
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/instagram"
-                    android:layout_width="110dp"
+                    android:layout_width="130dp"
                     android:layout_height="150dp"
                     android:layout_margin="2dp"
                     android:layout_marginBottom="2dp"
-                    android:background="@drawable/back"
-                    android:orientation="vertical">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-
-                            android:layout_width="100dp"
-                            android:layout_height="90dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/in2" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:checkable="false"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:contentPadding="8dp">
 
                     <LinearLayout
+
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+
+
                         android:orientation="vertical">
 
-                        <TextView
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
+                            <ImageView
+
+                                android:layout_width="100dp"
+                                android:layout_height="90dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/in2" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:gravity="center"
-                            android:maxLines="1"
-                            android:text="Instagram"
-                            android:textSize="14sp" android:textStyle="bold"
-                            android:typeface="monospace"/>
+                            android:orientation="vertical">
 
+                            <TextView
+
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="@string/instagram"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:typeface="monospace" />
+
+                        </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
+
+
+                </com.google.android.material.card.MaterialCardView>
+
             </TableRow>
 
             <TableRow
@@ -336,52 +413,63 @@
                 android:visibility="visible"
                 tools:visibility="visible">
 
-                <LinearLayout
-
-                    android:id="@+id/settings"
-                    android:layout_width="110dp"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/browser"
+                    android:layout_width="130dp"
                     android:layout_height="150dp"
                     android:layout_margin="2dp"
                     android:layout_marginBottom="2dp"
-                    android:background="@drawable/back"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-
-                            android:layout_width="100dp"
-                            android:layout_height="90dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/a2r" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:checkable="false"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:contentPadding="8dp">
 
                     <LinearLayout
+
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+
+
                         android:orientation="vertical">
 
-                        <TextView
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
+                            <ImageView
+
+                                android:layout_width="100dp"
+                                android:layout_height="90dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/bros" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:gravity="center"
-                            android:maxLines="1"
-                            android:text="Settings"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:typeface="monospace" />
+                            android:orientation="vertical">
 
+                            <TextView
+
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="@string/browser"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:typeface="monospace" />
+
+                        </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
+
+
+                </com.google.android.material.card.MaterialCardView>
             </TableRow>
 
         </TableLayout>

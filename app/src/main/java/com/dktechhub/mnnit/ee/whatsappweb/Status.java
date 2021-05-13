@@ -18,4 +18,10 @@ public Status(String source,Bitmap thumbnail,String name,String mime)
     this(source,thumbnail,name);
     this.mime=mime;
 }
+    public Status(String source,String name,String mime)
+    {
+        this.source=source;
+        this.name=name;
+        this.mime=mime;
+    }
 }

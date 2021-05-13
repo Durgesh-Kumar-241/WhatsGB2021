@@ -4,14 +4,14 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.dktechhub.mnnit.ee.whatsappweb",
-  "variantName": "processReleaseResources",
+  "applicationId": "com.dktechhub.whatsappstatussaver",
+  "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 8,
-      "versionName": "8.0",
+      "versionCode": 1,
+      "versionName": "1.0",
       "outputFile": "app-release.apk"
     }
   ]

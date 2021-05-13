@@ -93,6 +93,9 @@ public class mWebView  {
 
             this.webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
             this.webView.getSettings().setUserAgentString("Mozilla/5.0 (Linux; Win64; x64; rv:46.0) Gecko/20100101 Firefox/60.0");
+            this.webView.setInitialScale(25);
+            webView.getSettings().setSupportZoom(true);
+
         }
         this.webView.getSettings().setUseWideViewPort(true);
         this.webView.getSettings().setBlockNetworkImage(false);
@@ -142,7 +145,8 @@ public class mWebView  {
                     resetCallback = false;
                     dialog.dismiss();
                     Intent albumIntent = new Intent(Intent.ACTION_PICK);
-                    albumIntent.setType(mime);
+                    albumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
+                    //albumIntent.setType(mime);
                     activity.startActivityForResult(albumIntent, REQUEST_CODE_ALBUM);
                 }
             });

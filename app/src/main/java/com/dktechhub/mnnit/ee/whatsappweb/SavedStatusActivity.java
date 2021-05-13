@@ -3,29 +3,19 @@ package com.dktechhub.mnnit.ee.whatsappweb;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.CheckedTextView;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
-import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -110,7 +100,7 @@ public class SavedStatusActivity extends AppCompatActivity {
                     shareButton.setVisibility(View.GONE);
                 }
             }
-        });
+        },this);
         //StatusItemAdapter videosAdapter=new StatusItemAdapter();
 
 
@@ -210,7 +200,6 @@ public class SavedStatusActivity extends AppCompatActivity {
     }
 
     public class Loader extends AsyncTask<Void, Status,Void> {
-        ArrayList<com.dktechhub.mnnit.ee.whatsappweb.Status> statuses;
         OnLoadCompleteListener onLoadCompleteListener;
 
         Loader(OnLoadCompleteListener onLoadCompleteListener){
@@ -229,21 +218,20 @@ public class SavedStatusActivity extends AppCompatActivity {
                 Log.d("File List", Arrays.toString(all));
                 if(all!=null) {
                     for (File f1 : all) {
-                        Bitmap thumb;String mime;
+                       String mime;
                         if (isImage(f1.getAbsolutePath())) {
-                            thumb = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(f1.getAbsolutePath()), 512, 384);
+                           // thumb = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(f1.getAbsolutePath()),512,384);
                             //(new com.dktechhub.mnnit.ee.whatsappweb.Status(f.getAbsolutePath(), thumb));
                             // thumb = ThumbnailUtils.createImageThumbnail(f1.getAbsolutePath(), MediaStore.Audio.Thumbnails.MINI_KIND);
                             mime="image/*";
                         }else {
-                            thumb = ThumbnailUtils.createVideoThumbnail(f1.getAbsolutePath(), MediaStore.Video.Thumbnails.MINI_KIND);
+                           // thumb = ThumbnailUtils.createVideoThumbnail(f1.getAbsolutePath(), MediaStore.Video.Thumbnails.MINI_KIND);
                             //publishProgress(new com.dktechhub.mnnit.ee.whatsappweb.Status(f.getAbsolutePath(), thumb));
                             mime="video/*";
 
-                        }if(thumb!=null)
-                        {
-                            publishProgress(new com.dktechhub.mnnit.ee.whatsappweb.Status(f1.getAbsolutePath(), thumb,f1.getName(),mime));
                         }
+                            publishProgress(new com.dktechhub.mnnit.ee.whatsappweb.Status(f1.getAbsolutePath(), f1.getName(),mime));
+
                     }
 
 
@@ -255,9 +243,7 @@ public class SavedStatusActivity extends AppCompatActivity {
         }
         public boolean isImage(String src)
         {
-            if(src.contains(".png")||src.contains(".jpg")){
-                return true;
-            }return false;
+            return src.contains(".png") || src.contains(".jpg");
         }
         @Override
         protected void onProgressUpdate(com.dktechhub.mnnit.ee.whatsappweb.Status... values) {
@@ -338,7 +324,7 @@ public class SavedStatusActivity extends AppCompatActivity {
                     }
                     //Log.d("Invite", uri.toString());
                     //i.putExtra(Intent.EXTRA_STREAM, uri);
-                    i.putParcelableArrayListExtra(Intent.EXTRA_STREAM,filesToSend);;
+                    i.putParcelableArrayListExtra(Intent.EXTRA_STREAM,filesToSend);
                     i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     startActivity(Intent.createChooser(i, "Choose a way:"));
                 }
@@ -398,6 +384,6 @@ public class SavedStatusActivity extends AppCompatActivity {
         {
             //setTheme(R.style.ThemeOverlay_AppCompat_Dark);
         }
-        else setTheme(R.style.Theme_AppCompat_Light);
+        else setTheme(R.style.Theme_MaterialComponents_Light);
     }
 }
