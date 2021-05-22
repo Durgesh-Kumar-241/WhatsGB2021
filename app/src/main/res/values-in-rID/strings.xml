@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Whats Web</string>
+    <string name="clear">" Bersih"</string>
+    <string name="enter_any_message_optional">Masukkan pesan apa pun (Opsional)</string>
+    <string name="send">Kirim</string>
+    <string name="take_picture">Mengambil gambar</string>
+    <string name="gallery">" Galeri"</string>
+    <string name="select_all">Pilih Semua</string>
+    <string name="no_items_available">Tidak ada Item yang tersedia</string>
+    <string name="browser">ˈbrouzər</string>
+    <string name="instagram">ˈinstəˌɡram</string>
+    <string name="facebook">ˈfāsbo͝ok</string>
+    <string name="saved_status">Status disimpan</string>
+    <string name="status_saver">Penghemat status</string>
+    <string name="direct_chat">Obrolan langsung</string>
+    <string name="action_settings">Pengaturan</string>
+    <string name="str_title_main_fragment">Web Whatsapp</string>
+    <string name="str_title_act_status_saver">Status terkini</string>
+    <string name="enter_phone_number">Masukkan nomor telepon</string>
+</resources>

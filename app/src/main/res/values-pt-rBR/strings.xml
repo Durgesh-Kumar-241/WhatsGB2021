@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Whats Web</string>
+    <string name="clear">Clara</string>
+    <string name="enter_any_message_optional">Insira qualquer mensagem (opcional)</string>
+    <string name="send">Mandar</string>
+    <string name="take_picture">Tire uma foto</string>
+    <string name="gallery">Galeria</string>
+    <string name="select_all">Selecionar tudo</string>
+    <string name="no_items_available">Nenhum item disponível</string>
+    <string name="browser">brouzər</string>
+    <string name="instagram">ˈinstəˌɡram</string>
+    <string name="facebook">ˈfāsbo͝ok</string>
+    <string name="saved_status">Status salvo</string>
+    <string name="status_saver">Protetor de status</string>
+    <string name="direct_chat">Chat direto</string>
+    <string name="action_settings">Definiçõesind</string>
+    <string name="str_title_main_fragment">Whatsapp web</string>
+    <string name="str_title_act_status_saver">Status recente</string>
+    <string name="enter_phone_number">Digite o número do telefone</string>
+</resources>

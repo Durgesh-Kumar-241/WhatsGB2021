@@ -1,10 +1,13 @@
 package com.dktechhub.mnnit.ee.whatsappweb;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -13,6 +16,7 @@ import android.widget.CheckedTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
@@ -39,8 +43,12 @@ public class SavedStatusActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        applyTheme();
         setContentView(R.layout.fragment_saved_status);
+
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M&&checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
+        {
+            requestPermissions(new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO},WRITE_EXTERNAL_STORAGE_CODE);
+        }
         photos=findViewById(R.id.recyclerview);
         swipeRefreshLayout=findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setEnabled(true);
@@ -376,14 +384,13 @@ public class SavedStatusActivity extends AppCompatActivity {
             refresh();
         }
     }
-    public void applyTheme()
-    {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean dark_theme = sharedPreferences.getBoolean("dark_theme",false);
-        if(dark_theme)
-        {
-            //setTheme(R.style.ThemeOverlay_AppCompat_Dark);
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == WRITE_EXTERNAL_STORAGE_CODE) {
+            if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permission denined,Reading external storage is necessary for the app to work properly", Toast.LENGTH_SHORT).show();
+            }
         }
-        else setTheme(R.style.Theme_MaterialComponents_Light);
     }
+    private static final int WRITE_EXTERNAL_STORAGE_CODE = 257;
 }

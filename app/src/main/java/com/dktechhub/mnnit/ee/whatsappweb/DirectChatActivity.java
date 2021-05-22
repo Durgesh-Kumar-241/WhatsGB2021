@@ -15,6 +15,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.rilixtech.widget.countrycodepicker.Country;
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
@@ -25,17 +28,20 @@ public class DirectChatActivity extends AppCompatActivity {
     EditText number,message;
     CountryCodePicker ccp;
     SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        applyTheme();
+
         setContentView(R.layout.activity_direct_chat);
+        //MobileAds.initialize(this);
         ccp=findViewById(R.id.spinner);
         number=findViewById(R.id.number);
         message=findViewById(R.id.message);
         send=findViewById(R.id.send);
         clear=findViewById(R.id.clear);
         ccp.registerPhoneNumberTextView(number);
+
         ccp.enableHint(false);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         ccp.setDefaultCountryUsingNameCodeAndApply(sharedPreferences.getString("recent_country",ccp.getSelectedCountryName()));
@@ -51,10 +57,13 @@ public class DirectChatActivity extends AppCompatActivity {
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clear();
+                number.setText("");
+                message.setText("");
             }
         });
-
+        AdView mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     public void send()
@@ -79,19 +88,6 @@ public class DirectChatActivity extends AppCompatActivity {
         sharedPreferences.edit().putString("recent_country",ccp.getSelectedCountryNameCode()).apply();
         sharedPreferences.edit().putString("recent_number",number.getText().toString()).apply();
     }
-    public void clear()
-    {
-        number.setText("");
-        message.setText("");
-    }
-    public void applyTheme()
-    {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean dark_theme = sharedPreferences.getBoolean("dark_theme",false);
-        if(dark_theme)
-        {
-            //setTheme(R.style.ThemeOverlay_AppCompat_Dark);
-        }
-        else setTheme(R.style.Theme_MaterialComponents_Light);
-    }
+
+
 }

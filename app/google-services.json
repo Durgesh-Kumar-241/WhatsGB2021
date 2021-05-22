@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1033979331903",
+    "project_id": "whatsapp-web-e75ae",
+    "storage_bucket": "whatsapp-web-e75ae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033979331903:android:8be5a86c911eb862e97f8a",
+        "android_client_info": {
+          "package_name": "com.dktechhub.mnnit.ee.whatsappweb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033979331903-t6seocjae9ckp87p3ivsvbu88dh09tub.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQx-LY2aP1wJF2kBWnLktBw259a96_Jeg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033979331903-t6seocjae9ckp87p3ivsvbu88dh09tub.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
