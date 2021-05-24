@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +26,7 @@ public class MainActivityNew extends AppCompatActivity {
     //PermissionDetector permissionDetector;
     private final String[] allPermissions=new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO};
 
-    com.google.android.material.card.MaterialCardView whatsappweb,statussaver,savedstatus,directChat,settings,facebook,instagram;
+    com.google.android.material.card.MaterialCardView whatsappweb,statussaver,savedstatus,directChat,settings,facebook,instagram,twitter;
     //private FirebaseAnalytics mFirebaseAnalytics;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -42,6 +43,7 @@ public class MainActivityNew extends AppCompatActivity {
         settings=findViewById(R.id.browser);
         facebook=findViewById(R.id.facebook);
         instagram=findViewById(R.id.instagram);
+        twitter=findViewById(R.id.twitter);
         facebook.setOnClickListener(v -> openBrowser("https://m.facebook.com",false));
         instagram.setOnClickListener(v -> openBrowser("https://www.instagram.com",false));
         whatsappweb.setOnClickListener(v -> {
@@ -65,13 +67,14 @@ public class MainActivityNew extends AppCompatActivity {
            Intent intent=new Intent(MainActivityNew.this,DirectChatActivity.class);
            startActivity(intent);
        });
-       settings.setOnClickListener(v -> openBrowser("https://www.google.com",false));
+       settings.setOnClickListener(v -> openBrowser("https://web.telegram.org/",false));
+        twitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openBrowser("https://twitter.com",false);
+            }
+        });
 
-
-
-        AdView mAdView = findViewById(R.id.adView4);
-         AdRequest adRequest = new AdRequest.Builder().build();
-          mAdView.loadAd(adRequest);
     }
 
     public void openBrowser(String url,boolean requestdesktopSite)

@@ -29,9 +29,13 @@
     <string name="mainBanner" translatable="false">ca-app-pub-5621307103177472/4596441043</string>
     <string name="mainFrgaBanner" translatable="false">ca-app-pub-5621307103177472/4639413891</string>
     <string name="directChatBanner" translatable="false">ca-app-pub-5621307103177472/5952495563</string>
+    <string name="interstitial_ad_unit_id" translatable="false">ca-app-pub-5621307103177472/3477573137</string>
+    <string name="app_open" translatable="false">ca-app-pub-5621307103177472/4599083118</string>
     -->
 
     <string name="mainBanner" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
     <string name="mainFrgaBanner" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
     <string name="directChatBanner" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="interstitial_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="app_open" translatable="false">ca-app-pub-3940256099942544/3419835294</string>
 </resources>

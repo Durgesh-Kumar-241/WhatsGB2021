@@ -4,31 +4,36 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.DownloadListener;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
 import android.webkit.PermissionRequest;
+import android.webkit.URLUtil;
 import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,6 +54,7 @@ public class MainFragment extends AppCompatActivity {
     WebView webView;
     boolean requestDesktopSite;
     String url;
+    ProgressBar progressBar;
     ActionBar actionBar;
     //protected static final String LANGUAGE_DEFAULT_ISO3 = "eng";
     public static final String PACKAGE_NAME_DOWNLOAD_MANAGER = "com.android.providers.downloads";
@@ -96,12 +102,12 @@ public class MainFragment extends AppCompatActivity {
         url=getIntent().getStringExtra("url");
 
         this.webView = findViewById(R.id.webView);
+
+        progressBar=findViewById(R.id.progressBar);
         InitSettings();
         webView.loadUrl(url);
 
-        AdView mAdView = findViewById(R.id.adView2);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+
 
     }
 
@@ -162,7 +168,7 @@ public class MainFragment extends AppCompatActivity {
     }
 
 
-    public static class webClient extends WebViewClient {
+    public class webClient extends WebViewClient {
         private final boolean requestDesktopSite;
         public webClient(boolean requestDesktopSite)
         {
@@ -180,6 +186,17 @@ public class MainFragment extends AppCompatActivity {
                 view.evaluateJavascript("document.querySelector('meta[name=\"viewport\"]').setAttribute('content', 'width=1024px, initial-scale=' + (document.documentElement.clientWidth / 1024));", null);
         }
 
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            progressBar.setVisibility(View.GONE);
+        }
 
     }
 
@@ -195,73 +212,11 @@ public class MainFragment extends AppCompatActivity {
         }
 
         @Override
-        public void onShowCustomView(View view, CustomViewCallback callback) {
-            super.onShowCustomView(view, callback);
+        public void onProgressChanged(WebView view, int newProgress) {
+
+            super.onProgressChanged(view, newProgress);
+            progressBar.setProgress(newProgress);
         }
-
-        @Override
-        public void onHideCustomView() {
-            super.onHideCustomView();
-        }
-
-        @Override
-        public void onCloseWindow(WebView window) {
-            super.onCloseWindow(window);
-        }
-
-        @Override
-        public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-            builder.setTitle(url+" says");
-            builder.setCancelable(false);
-            builder.setMessage(message);
-            builder.setPositiveButton("OK", (dialog, which) -> result.confirm());
-            builder.create().show();
-           // builder.setNegativeButton("Cancel", (dialog, which) -> result.cancel());
-            return true;
-        }
-
-        @Override
-        public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-            builder.setTitle(url+" says");
-            builder.setCancelable(false);
-            builder.setMessage(message);
-            builder.setPositiveButton("OK", (dialog, which) -> result.confirm());
-            builder.setNegativeButton("Cancel", (dialog, which) -> result.cancel());
-            builder.create().show();
-            return true;
-        }
-
-        @Override
-        public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, JsPromptResult result) {
-            //return super.onJsPrompt(view, url, message, defaultValue, result);
-            AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-            builder.setTitle(url+" says");
-            builder.setCancelable(false);
-
-            builder.setMessage(message);
-            builder.setPositiveButton("OK", (dialog, which) -> result.confirm());
-            builder.setNegativeButton("Cancel", (dialog, which) -> result.cancel());
-            builder.create().show();
-            return true;
-        }
-
-        @Override
-        public boolean onJsBeforeUnload(WebView view, String url, String message, JsResult result) {
-            return super.onJsBeforeUnload(view, url, message, result);
-        }
-
-        @Override
-        public void onPermissionRequest(PermissionRequest request) {
-            super.onPermissionRequest(request);
-        }
-
-        @Override
-        public void onPermissionRequestCanceled(PermissionRequest request) {
-            super.onPermissionRequestCanceled(request);
-        }
-
 
 
         @SuppressWarnings("unused")
@@ -304,9 +259,7 @@ public class MainFragment extends AppCompatActivity {
         this.webView.setWebViewClient(new webClient(requestDesktopSite));
         this.webView.getSettings().setSaveFormData(true);
         this.webView.getSettings().setLoadsImagesAutomatically(true);
-        if (Build.VERSION.SDK_INT >= 16) {
-            this.webView.getSettings().setAllowFileAccessFromFileURLs(true);
-        }
+        this.webView.getSettings().setAllowFileAccessFromFileURLs(true);
         if (requestDesktopSite) {
 
             this.webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
@@ -314,8 +267,6 @@ public class MainFragment extends AppCompatActivity {
             this.webView.setInitialScale(25);
             webView.getSettings().setSupportZoom(true);
             webView.getSettings().setBuiltInZoomControls(true);
-
-
         }
         this.webView.getSettings().setUseWideViewPort(true);
         this.webView.getSettings().setBlockNetworkImage(false);
@@ -331,6 +282,27 @@ public class MainFragment extends AppCompatActivity {
         this.webView.getSettings().setGeolocationEnabled(true);
         this.webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         this.webView.setWebChromeClient(new WebChromeClient());
+        webView.setDownloadListener(new DownloadListener() {
+                                        @Override
+                                        public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
+                                            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+                                            request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimetype));
+                                            request.setDescription("Downloading file...");
+                                            request.addRequestHeader("cookie", CookieManager.getInstance().getCookie(url));
+                                            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+                                            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(url, contentDisposition, mimetype));
+                                            DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+                                            dm.enqueue(request);
+                                            Toast.makeText(getApplicationContext(), "Downloading...", Toast.LENGTH_SHORT).show();
+                                            registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+                                        }
+                                        final BroadcastReceiver onComplete = new BroadcastReceiver() {
+                                            @Override
+                                            public void onReceive(Context context, Intent intent) {
+                                                Toast.makeText(getApplicationContext(), "Downloading Complete", Toast.LENGTH_SHORT).show();
+                                            }
+                                        };
+                                    } );
     }
 
 
@@ -418,14 +390,13 @@ public class MainFragment extends AppCompatActivity {
         i.addCategory(Intent.CATEGORY_OPENABLE);
 
         if (allowMultiple) {
-            if (Build.VERSION.SDK_INT >= 18) {
-                i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-            }
+            i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         }
 
         i.setType(mUploadableFileTypes);
-        startActivityForResult(Intent.createChooser(i, getFileUploadPromptLabel()), mRequestCodeFilePicker);
-
+        //startActivityForResult(Intent.createChooser(i, getFileUploadPromptLabel()), mRequestCodeFilePicker);
+        Intent shareIntent = Intent.createChooser(i, getFileUploadPromptLabel());
+        startActivityForResult(shareIntent,mRequestCodeFilePicker);
     }
 
     /**
@@ -446,14 +417,7 @@ public class MainFragment extends AppCompatActivity {
      * @return whether file uploads can be used
      */
     public static boolean isFileUploadAvailable(final boolean needsCorrectMimeType) {
-        if (Build.VERSION.SDK_INT == 19) {
-            final String platformVersion = (Build.VERSION.RELEASE == null) ? "" : Build.VERSION.RELEASE;
-
-            return !needsCorrectMimeType && (platformVersion.startsWith("4.4.3") || platformVersion.startsWith("4.4.4"));
-        }
-        else {
-            return true;
-        }
+        return true;
     }
 
     @Override
@@ -472,15 +436,13 @@ public class MainFragment extends AppCompatActivity {
                             if (intent.getDataString() != null) {
                                 dataUris = new Uri[]{Uri.parse(intent.getDataString())};
                             } else {
-                                if (Build.VERSION.SDK_INT >= 16) {
-                                    if (intent.getClipData() != null) {
-                                        final int numSelectedFiles = intent.getClipData().getItemCount();
+                                if (intent.getClipData() != null) {
+                                    final int numSelectedFiles = intent.getClipData().getItemCount();
 
-                                        dataUris = new Uri[numSelectedFiles];
+                                    dataUris = new Uri[numSelectedFiles];
 
-                                        for (int i = 0; i < numSelectedFiles; i++) {
-                                            dataUris[i] = intent.getClipData().getItemAt(i).getUri();
-                                        }
+                                    for (int i = 0; i < numSelectedFiles; i++) {
+                                        dataUris[i] = intent.getClipData().getItemAt(i).getUri();
                                     }
                                 }
                             }
@@ -503,4 +465,55 @@ public class MainFragment extends AppCompatActivity {
         }
     }
 
+
+
+
+
+
+
+
+
+    @SuppressLint("NewApi")
+    public static boolean handleDownload(final Context context, final String fromUrl, final String toFilename) {
+
+        final DownloadManager.Request request = new DownloadManager.Request(Uri.parse(fromUrl));
+        request.allowScanningByMediaScanner();
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, toFilename);
+
+        final DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+        try {
+            try {
+                dm.enqueue(request);
+            }
+            catch (SecurityException e) {
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+                dm.enqueue(request);
+            }
+
+            return true;
+        }
+        // if the download manager app has been disabled on the device
+        catch (IllegalArgumentException e) {
+            // show the settings screen where the user can enable the download manager app again
+            openAppSettings(context);
+
+            return false;
+        }
+    }
+
+    @SuppressLint("NewApi")
+    private static void openAppSettings(final Context context) {
+
+        try {
+            final Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            intent.setData(Uri.parse("package:" + MainFragment.PACKAGE_NAME_DOWNLOAD_MANAGER));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            context.startActivity(intent);
+
+        }
+        catch (Exception ignored) {
+        }
+    }
 }
