@@ -4,12 +4,12 @@
 
     <item
         android:id="@+id/refresh"
-        android:icon="@android:drawable/ic_popup_sync"
-        android:title="Refresh"
+        android:icon="@drawable/ic_baseline_refresh_24"
+        android:title="@string/refresh"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/fullscreen"
-        android:icon="@android:drawable/ic_menu_view"
-        android:title="Go full screen"
+        android:icon="@drawable/ic_baseline_open_in_full_24"
+        android:title="@string/go_full_screen"
         app:showAsAction="ifRoom" />
 </menu>
