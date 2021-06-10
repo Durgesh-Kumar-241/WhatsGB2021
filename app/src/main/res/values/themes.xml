@@ -2,12 +2,23 @@
     <!-- Base application theme. -->
 
 
-    <style name="NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="light" parent="Theme.MaterialComponents.Light">
+        <item name="colorPrimary">@color/colorprimary</item>
+        <item name="colorPrimaryVariant">@color/color_statusbar</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+
+
     </style>
 
-    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <color name="white">#F9FBE7</color>
+    <color name="teal_200">#CE93D8</color>
+    <color name="teal_700">#7B1FA2</color>
+    <color name="black">#000000</color>
 </resources>

@@ -1,4 +1,4 @@
-package com.dktechhub.mnnit.ee.whatsweb;
+package com.dktechhub.mnnit.ee.whatswebcloner;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -133,8 +133,8 @@ public class StatusSaverActivity extends AppCompatActivity {
 
     }
 
-    public static class Loader extends AsyncTask<Void,com.dktechhub.mnnit.ee.whatsweb.Status,Void> {
-        ArrayList<com.dktechhub.mnnit.ee.whatsweb.Status> statuses;
+    public static class Loader extends AsyncTask<Void,com.dktechhub.mnnit.ee.whatswebcloner.Status,Void> {
+        ArrayList<com.dktechhub.mnnit.ee.whatswebcloner.Status> statuses;
         OnLoadCompleteListener onLoadCompleteListener;
 
         Loader(OnLoadCompleteListener onLoadCompleteListener){
@@ -156,11 +156,11 @@ public class StatusSaverActivity extends AppCompatActivity {
                 if(all!=null) {
                     for (File f1 : all) {
                         if (isImage(f1.getAbsolutePath())) {
-                            publishProgress(new com.dktechhub.mnnit.ee.whatsweb.Status(f1.getAbsolutePath(),f1.getName(),"image/*"));
+                            publishProgress(new com.dktechhub.mnnit.ee.whatswebcloner.Status(f1.getAbsolutePath(),f1.getName(),"image/*"));
 
                         }else if(isVideo(f1.getAbsolutePath())){
 
-                            publishProgress(new com.dktechhub.mnnit.ee.whatsweb.Status(f1.getAbsolutePath(),f1.getName(),"video/*"));
+                            publishProgress(new com.dktechhub.mnnit.ee.whatswebcloner.Status(f1.getAbsolutePath(),f1.getName(),"video/*"));
 
 
                         }
@@ -173,11 +173,11 @@ public class StatusSaverActivity extends AppCompatActivity {
                     for (File f1 : all2) {
                         if (isImage(f1.getAbsolutePath())) {
                             //thumb = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(f1.getAbsolutePath()), 512,384);
-                            publishProgress(new com.dktechhub.mnnit.ee.whatsweb.Status(f1.getAbsolutePath(),f1.getName(),"image/*"));
+                            publishProgress(new com.dktechhub.mnnit.ee.whatswebcloner.Status(f1.getAbsolutePath(),f1.getName(),"image/*"));
 
                         }else if(isVideo(f1.getAbsolutePath())){
 
-                            publishProgress(new com.dktechhub.mnnit.ee.whatsweb.Status(f1.getAbsolutePath(),f1.getName(),"video/*"));
+                            publishProgress(new com.dktechhub.mnnit.ee.whatswebcloner.Status(f1.getAbsolutePath(),f1.getName(),"video/*"));
 
                         }
 
@@ -202,7 +202,7 @@ public class StatusSaverActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onProgressUpdate(com.dktechhub.mnnit.ee.whatsweb.Status... values) {
+        protected void onProgressUpdate(com.dktechhub.mnnit.ee.whatswebcloner.Status... values) {
             super.onProgressUpdate(values);
             onLoadCompleteListener.onLoaded(values[0]);
         }
@@ -290,9 +290,9 @@ public class StatusSaverActivity extends AppCompatActivity {
         }
     }
     public class Saver extends AsyncTask<Void,Void,Void>{
-        ArrayList<com.dktechhub.mnnit.ee.whatsweb.Status> selected;
+        ArrayList<com.dktechhub.mnnit.ee.whatswebcloner.Status> selected;
         ProgressDialog progressDialog;
-        public Saver(ArrayList<com.dktechhub.mnnit.ee.whatsweb.Status> selected)
+        public Saver(ArrayList<com.dktechhub.mnnit.ee.whatswebcloner.Status> selected)
         {
             this.selected=selected;
         }
@@ -313,7 +313,7 @@ public class StatusSaverActivity extends AppCompatActivity {
             f.mkdirs();
             byte[] buffer = new byte[512];
 
-            for(com.dktechhub.mnnit.ee.whatsweb.Status temp:selected)
+            for(com.dktechhub.mnnit.ee.whatswebcloner.Status temp:selected)
             {
                 try{
                     FileInputStream is = new FileInputStream(temp.source);

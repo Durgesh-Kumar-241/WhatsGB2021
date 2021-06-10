@@ -1,4 +1,4 @@
-package com.dktechhub.mnnit.ee.whatsweb;
+package com.dktechhub.mnnit.ee.whatswebcloner;
 
 import android.graphics.Bitmap;
 

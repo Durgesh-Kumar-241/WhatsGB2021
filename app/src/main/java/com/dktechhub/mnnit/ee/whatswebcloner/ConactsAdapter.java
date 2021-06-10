@@ -1,4 +1,4 @@
-package com.dktechhub.mnnit.ee.whatsweb;
+package com.dktechhub.mnnit.ee.whatswebcloner;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -67,6 +67,7 @@ this.context=context;
     {
         this.all.add(contact);
     }
+
     public static class ChatViewHolder extends  RecyclerView.ViewHolder{
         
         public ImageView imageView;

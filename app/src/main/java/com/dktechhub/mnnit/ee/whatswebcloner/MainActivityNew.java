@@ -1,4 +1,4 @@
-package com.dktechhub.mnnit.ee.whatsweb;
+package com.dktechhub.mnnit.ee.whatswebcloner;
 
 import android.Manifest;
 import android.app.ActivityOptions;
@@ -26,7 +26,7 @@ import java.util.Locale;
 public class MainActivityNew extends AppCompatActivity {
     //PermissionDetector permissionDetector;
     private final String[] allPermissions=new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO};
-    com.google.android.material.card.MaterialCardView whatsappweb,statussaver,savedstatus,settings,facebook,instagram,twitter;
+    com.google.android.material.card.MaterialCardView whatsweb,statussaver,savedstatus, repeater, offline, direct, empty;
     //private FirebaseAnalytics mFirebaseAnalytics;
     FloatingActionButton fab;
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -36,17 +36,33 @@ public class MainActivityNew extends AppCompatActivity {
         setContentView(R.layout.activity_main_new);
         //mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         checkPermissions();
-        whatsappweb=findViewById(R.id.whatsappweb);
+        whatsweb =findViewById(R.id.whasweb);
         statussaver=findViewById(R.id.statussaver);
         savedstatus=findViewById(R.id.savedstatus);
-        settings=findViewById(R.id.browser);
-        facebook=findViewById(R.id.facebook);
-        instagram=findViewById(R.id.instagram);
-        twitter=findViewById(R.id.twitter);
+        repeater =findViewById(R.id.textr);
+        offline =findViewById(R.id.offline);
+        direct =findViewById(R.id.direct);
+        empty =findViewById(R.id.empty);
         fab=findViewById(R.id.fab);
-        facebook.setOnClickListener(v -> openBrowser("https://m.facebook.com",false,v));
-        instagram.setOnClickListener(v -> openBrowser("https://www.instagram.com",false,v));
-        whatsappweb.setOnClickListener(v -> {
+        offline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("market://details?id=com.dktechhub.mnnit.ee.whatswebcloner");
+                try {
+                    Intent i = new Intent(Intent.ACTION_VIEW, uri);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_NEW_DOCUMENT | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                    startActivity(i);
+                } catch (Exception e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.dktechhub.mnnit.ee.whatsweb")));
+                }            }
+        });
+        direct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivityNew.this,DirectChatActivity.class));
+            }
+        });
+        whatsweb.setOnClickListener(v -> {
             //whatsappweb.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fullscreengo));
             String encriptedText = encriptedText();
             StringBuilder sb = new StringBuilder();
@@ -71,12 +87,26 @@ public class MainActivityNew extends AppCompatActivity {
            startActivity(intent,options.toBundle());
        });
 
-       settings.setOnClickListener(v -> openBrowser("https://web.telegram.org/",false,v));
-        twitter.setOnClickListener(new View.OnClickListener() {
+       repeater.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               startActivity(new Intent(MainActivityNew.this,TextRepeater.class));
+           }
+       });
+        empty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openBrowser("https://twitter.com",false,v);
-            }
+                try {
+                    Intent intent = new Intent();
+                    intent.setAction("android.intent.action.SEND");
+                    intent.setType("text/plain");
+                    intent.setPackage("com.whatsapp");
+                    intent.putExtra("android.intent.extra.TEXT", "‏‏");
+                    intent.putExtra("jid", "@s.whatsapp.net");
+                    startActivity(intent);
+                } catch (Exception unused) {
+                    Toast.makeText(getBaseContext(), getString(R.string.errortryagainlater), Toast.LENGTH_LONG).show();
+                }            }
         });
 
 
@@ -165,46 +195,15 @@ public class MainActivityNew extends AppCompatActivity {
 
     public void onMenuItemClicked(MenuItem menuItem)
     {
-        switch (menuItem.getItemId())
-        {
-            case R.id.directchat:
-                //Intent intent=new Intent(MainActivityNew.this,DirectChatActivity.class);
-
-                startActivity(new Intent(MainActivityNew.this,DirectChatActivity.class));
-                break;
-            case R.id.textrepeater:
-                //Intent intent=new Intent(MainActivityNew.this,TextRepeater.class);
-                startActivity(new Intent(MainActivityNew.this,TextRepeater.class));
-                break;
-            case R.id.rateus:
-                Uri uri = Uri.parse("market://details?id=com.dktechhub.mnnit.ee.whatsappweb");
-                try{
-                    Intent i = new Intent(Intent.ACTION_VIEW,uri);
-                    i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_NEW_DOCUMENT | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                    startActivity(i);
-                }catch (Exception e)
-                {
-                    startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("https://play.google.com/store/apps/details?id=com.dktechhub.mnnit.ee.whatsappweb")));
-                } break;
-
-            case R.id.emptymessage:
-                try {
-                    Intent intent = new Intent();
-                    intent.setAction("android.intent.action.SEND");
-                    intent.setType("text/plain");
-                    intent.setPackage("com.whatsapp");
-                    intent.putExtra("android.intent.extra.TEXT", "‏‏");
-                    intent.putExtra("jid", "@s.whatsapp.net");
-                    startActivity(intent);
-                } catch (Exception unused) {
-                    Toast.makeText(this, getString(R.string.errortryagainlater), Toast.LENGTH_LONG).show();
-                }
-                break;
-            case R.id.offlineChat:
-                startActivity(new Intent(MainActivityNew.this,offlineChatActivity.class));
-                break;
-
-
+        if (menuItem.getItemId() == R.id.rateus) {
+            Uri uri = Uri.parse("market://details?id=com.dktechhub.mnnit.ee.whatswebcloner");
+            try {
+                Intent i = new Intent(Intent.ACTION_VIEW, uri);
+                i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_NEW_DOCUMENT | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                startActivity(i);
+            } catch (Exception e) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.dktechhub.mnnit.ee.whatsweb")));
+            }
         }
     }
 

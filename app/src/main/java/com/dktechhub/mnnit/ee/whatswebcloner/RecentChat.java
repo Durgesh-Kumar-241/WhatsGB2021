@@ -1,4 +1,4 @@
-package com.dktechhub.mnnit.ee.whatsweb;
+package com.dktechhub.mnnit.ee.whatswebcloner;
 
 public class RecentChat {
     String name,lastMessageTime,lastMessage;

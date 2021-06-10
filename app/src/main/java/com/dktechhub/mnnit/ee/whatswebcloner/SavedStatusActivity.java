@@ -1,4 +1,4 @@
-package com.dktechhub.mnnit.ee.whatsweb;
+package com.dktechhub.mnnit.ee.whatswebcloner;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -235,7 +235,7 @@ public class SavedStatusActivity extends AppCompatActivity {
                             mime="video/*";
 
                         }
-                            publishProgress(new com.dktechhub.mnnit.ee.whatsweb.Status(f1.getAbsolutePath(), f1.getName(),mime));
+                            publishProgress(new com.dktechhub.mnnit.ee.whatswebcloner.Status(f1.getAbsolutePath(), f1.getName(),mime));
 
                     }
 
@@ -251,7 +251,7 @@ public class SavedStatusActivity extends AppCompatActivity {
             return src.contains(".png") || src.contains(".jpg");
         }
         @Override
-        protected void onProgressUpdate(com.dktechhub.mnnit.ee.whatsweb.Status... values) {
+        protected void onProgressUpdate(com.dktechhub.mnnit.ee.whatswebcloner.Status... values) {
             super.onProgressUpdate(values);
             onLoadCompleteListener.onLoaded(values[0]);
         }
@@ -343,9 +343,9 @@ public class SavedStatusActivity extends AppCompatActivity {
 
 
     class Deleter extends AsyncTask<Void,Void,Void>
-    {   ArrayList<com.dktechhub.mnnit.ee.whatsweb.Status> selected;
+    {   ArrayList<com.dktechhub.mnnit.ee.whatswebcloner.Status> selected;
         ProgressDialog progressDialog;
-        public Deleter(ArrayList<com.dktechhub.mnnit.ee.whatsweb.Status> selected)
+        public Deleter(ArrayList<com.dktechhub.mnnit.ee.whatswebcloner.Status> selected)
         {
             this.selected=selected;
         }
@@ -362,7 +362,7 @@ public class SavedStatusActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            for (com.dktechhub.mnnit.ee.whatsweb.Status status : selected) {
+            for (com.dktechhub.mnnit.ee.whatswebcloner.Status status : selected) {
                 try {
                     new File(status.source).delete();
                 } catch (Exception e) {

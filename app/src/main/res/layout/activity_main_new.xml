@@ -38,7 +38,7 @@
                     android:gravity="center">
 
                     <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/whatsappweb"
+                        android:id="@+id/whasweb"
                         android:layout_width="130dp"
                         android:layout_height="150dp"
                         android:layout_margin="2dp"
@@ -64,11 +64,12 @@
 
                                     android:layout_width="100dp"
                                     android:layout_height="90dp"
+                                    android:background="@color/colorprimary"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/iconwhats" />
+                                    app:srcCompat="@drawable/newicon" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -102,7 +103,7 @@
                         android:layout_height="wrap_content" />
 
                     <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/browser"
+                        android:id="@+id/textr"
                         android:layout_width="130dp"
                         android:layout_height="150dp"
                         android:layout_margin="2dp"
@@ -128,11 +129,12 @@
 
                                     android:layout_width="100dp"
                                     android:layout_height="90dp"
+                                    android:background="@color/colorprimary"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/t_logo" />
+                                    app:srcCompat="@drawable/ic_baseline_text_fields_24" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -149,7 +151,7 @@
                                     android:fontFamily="@font/dancing_script"
                                     android:gravity="center"
                                     android:maxLines="1"
-                                    android:text="@string/telegram_web"
+                                    android:text="Text repeater"
                                     android:textSize="14sp"
                                     android:textStyle="bold"
                                     android:typeface="monospace" />
@@ -194,6 +196,7 @@
 
                                     android:layout_width="100dp"
                                     android:layout_height="90dp"
+                                    android:background="@color/colorprimary"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
@@ -257,11 +260,12 @@
 
                                     android:layout_width="100dp"
                                     android:layout_height="90dp"
+                                    android:background="@color/colorprimary"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/tm" />
+                                    app:srcCompat="@drawable/ic_baseline_sd_storage_24" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -296,8 +300,12 @@
                     android:layout_height="match_parent"
                     android:gravity="center">
 
+
+
+
+
                     <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/facebook"
+                        android:id="@+id/empty"
                         android:layout_width="130dp"
                         android:layout_height="150dp"
                         android:layout_margin="2dp"
@@ -323,11 +331,12 @@
 
                                     android:layout_width="100dp"
                                     android:layout_height="90dp"
+                                    android:background="@color/colorprimary"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/facebook" />
+                                    app:srcCompat="@drawable/ic_baseline_chat_24" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -344,7 +353,7 @@
                                     android:fontFamily="@font/dancing_script"
                                     android:gravity="center"
                                     android:maxLines="1"
-                                    android:text="@string/facebook"
+                                    android:text="Empty message"
                                     android:textSize="14sp"
                                     android:textStyle="bold"
                                     android:typeface="monospace" />
@@ -360,7 +369,7 @@
                         android:layout_height="wrap_content" />
 
                     <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/instagram"
+                        android:id="@+id/direct"
                         android:layout_width="130dp"
                         android:layout_height="150dp"
                         android:layout_margin="2dp"
@@ -386,11 +395,12 @@
 
                                     android:layout_width="100dp"
                                     android:layout_height="90dp"
+                                    android:background="@color/colorprimary"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/in2" />
+                                    app:srcCompat="@drawable/ic_baseline_chat_24" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -407,7 +417,7 @@
                                     android:fontFamily="@font/dancing_script"
                                     android:gravity="center"
                                     android:maxLines="1"
-                                    android:text="@string/instagram"
+                                    android:text="Direct chat"
                                     android:textSize="14sp"
                                     android:textStyle="bold"
                                     android:typeface="monospace" />
@@ -427,9 +437,8 @@
                     android:visibility="visible"
                     tools:visibility="visible">
 
-
                     <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/twitter"
+                        android:id="@+id/offline"
                         android:layout_width="130dp"
                         android:layout_height="150dp"
                         android:layout_margin="2dp"
@@ -437,6 +446,7 @@
                         android:checkable="false"
                         android:clickable="true"
                         android:focusable="true"
+                        android:visibility="visible"
                         app:contentPadding="8dp">
 
                         <LinearLayout
@@ -455,11 +465,12 @@
 
                                     android:layout_width="100dp"
                                     android:layout_height="90dp"
+                                    android:background="@color/colorprimary"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/twitter" />
+                                    app:srcCompat="@drawable/ic_baseline_star_rate_24" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -476,7 +487,7 @@
                                     android:fontFamily="@font/dancing_script"
                                     android:gravity="center"
                                     android:maxLines="1"
-                                    android:text="Twitter"
+                                    android:text="Rate us"
                                     android:textSize="14sp"
                                     android:textStyle="bold"
                                     android:typeface="monospace" />
@@ -486,6 +497,8 @@
 
 
                     </com.google.android.material.card.MaterialCardView>
+
+
                 </TableRow>
 
             </TableLayout>
@@ -500,8 +513,8 @@
 
         android:layout_marginBottom="16dp"
         android:background="@color/purple_500"
-        android:backgroundTint="@color/purple_500"
         android:clickable="true"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_apps_24" />

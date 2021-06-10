@@ -1,4 +1,4 @@
-package com.dktechhub.mnnit.ee.whatsweb;
+package com.dktechhub.mnnit.ee.whatswebcloner;
 
 import android.accessibilityservice.AccessibilityService;
 import android.content.Intent;
@@ -13,20 +13,21 @@ import java.util.List;
 public class chatService extends AccessibilityService {
     String number,name,message;
     private static chatService instance;
+    private boolean inLoopbackMode=false;
     public chatService() {
     }
 
     @Override
     public void onAccessibilityEvent (AccessibilityEvent event) {
-        if (getRootInActiveWindow () == null||message==null) {
+        if (getRootInActiveWindow () == null||message==null||event.getPackageName()==null) {
             return;
         }
-        if(event.getPackageName()!=null)
-        {
+
+
+
              if(event.getPackageName().toString().startsWith("com.whatsapp"))
             {
-                //Toast.makeText(this,event.getEventType(), Toast.LENGTH_SHORT).show();
-                   // Toast.makeText(this, "Window chganged", Toast.LENGTH_SHORT).show();
+
                     AccessibilityNodeInfoCompat rootInActiveWindow = AccessibilityNodeInfoCompat.wrap (getRootInActiveWindow ());
 
                     // Whatsapp Message EditText id
@@ -55,13 +56,20 @@ public class chatService extends AccessibilityService {
                     // Now fire a click on the send button
                     sendMessageButton.performAction (AccessibilityNodeInfo.ACTION_CLICK);
                     message=null;
-                //Thread.sleep (100);// hack for certain devices in which the immediate back click is too fast to handle
+                    //inLoopbackMode=true;
+                    performGlobalAction(GLOBAL_ACTION_RECENTS);
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                performGlobalAction(GLOBAL_ACTION_RECENTS);
 
-                //Thread.sleep (100);  // same hack as above
                 
                 }
 
-        }
+
+
     }
 
     public void sendMessage(String message,String number)

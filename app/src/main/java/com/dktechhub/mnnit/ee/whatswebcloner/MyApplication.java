@@ -1,19 +1,17 @@
-package com.dktechhub.mnnit.ee.whatsweb;
+package com.dktechhub.mnnit.ee.whatswebcloner;
 
 import android.app.Application;
-
-import com.google.android.gms.ads.MobileAds;
 
 public class MyApplication extends Application {
     DatabaseManager databaseManager;
     @Override
     public void onCreate() {
         super.onCreate();
-        MobileAds.initialize(
-                this,
-                initializationStatus -> {});
+        //MobileAds.initialize(
+          //      this,
+           //     initializationStatus -> {});
 
-        AppOpenManager appOpenManager = new AppOpenManager(this);
+        //AppOpenManager appOpenManager = new AppOpenManager(this);
 
     }
     /*

@@ -1,4 +1,4 @@
-package com.dktechhub.mnnit.ee.whatsweb;
+package com.dktechhub.mnnit.ee.whatswebcloner;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -60,7 +60,7 @@ public class ConversationActivity extends AppCompatActivity {
             }
         });
         new DatabaseManager(this).updateRecentChatList();
-       chatService= com.dktechhub.mnnit.ee.whatsweb.chatService.getInstance();
+       chatService= com.dktechhub.mnnit.ee.whatswebcloner.chatService.getInstance();
 
 
 

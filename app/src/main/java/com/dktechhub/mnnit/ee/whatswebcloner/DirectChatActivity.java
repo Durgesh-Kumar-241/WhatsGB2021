@@ -1,7 +1,4 @@
-package com.dktechhub.mnnit.ee.whatsweb;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
+package com.dktechhub.mnnit.ee.whatswebcloner;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,8 +9,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
+
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
 import java.net.URLEncoder;
@@ -56,9 +54,9 @@ public class DirectChatActivity extends AppCompatActivity {
                 message.setText("");
             }
         });
-        AdView mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+       // AdView mAdView = findViewById(R.id.adView);
+      //  AdRequest adRequest = new AdRequest.Builder().build();
+     //   mAdView.loadAd(adRequest);
     }
 
     public void send()

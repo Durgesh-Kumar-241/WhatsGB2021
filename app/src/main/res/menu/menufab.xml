@@ -2,22 +2,7 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/textrepeater"
-        android:icon="@drawable/ic_baseline_text_fields_24"
-        android:title="@string/text_repeater" />
-    <item
-        android:id="@+id/offlineChat"
-        android:icon="@drawable/ic_baseline_visibility_off_24"
-        android:title="Offline chat" />
-    <item
-        android:id="@+id/emptymessage"
-        android:icon="@drawable/ic_baseline_message_24"
-        android:title="@string/send_empty_message" />
-    <item
-        android:id="@+id/directchat"
-        android:icon="@drawable/ic_baseline_message_24"
-        android:title="@string/direct_chat" />
+
     <item
         android:id="@+id/rateus"
         android:icon="@drawable/ic_baseline_rate_review_24"
