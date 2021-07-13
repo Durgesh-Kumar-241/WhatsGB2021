@@ -15,13 +15,33 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_album" />
+        tools:srcCompat="@drawable/back" />
 
-    <CheckBox
-        android:id="@+id/checkBoxStatusItem"
-        android:layout_width="32dp"
-        android:layout_height="wrap_content"
-        android:gravity="clip_horizontal|center"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:id="@+id/share_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:elevation="16dp"
+            app:srcCompat="@drawable/ic_baseline_share_24" />
+
+        <ImageButton
+            android:id="@+id/saveButtonm"
+            android:layout_width="match_parent"
+            android:elevation="16dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/ic_baseline_save_alt_24" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

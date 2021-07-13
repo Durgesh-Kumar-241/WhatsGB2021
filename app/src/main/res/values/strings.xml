@@ -4,12 +4,6 @@
 
     <string name="str_title_main_fragment" translatable="false">WhatsApp web</string>
 
-    <string name="str_title_act_status_saver" translatable="false">Recent status</string>
-    <string name="status_saver" translatable="false">Status saver</string>
-    <string name="saved_status" translatable="false">Saved status</string>
-    <string name="no_items_available">No Items available</string>
-    <string name="select_all">Select all</string>
-
     <string name="enter_phone_number">Enter phone number</string>
     <string name="send">Send</string>
     <string name="enter_any_message_optional">Enter any message (Optional)</string>
@@ -23,13 +17,6 @@
     <string name="app_open" translatable="false">ca-app-pub-5621307103177472/4599083118</string>
     -->
 
-
-    <!-- debug -->
-    <string name="directChatBanner" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="interstitial_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/8691691433</string>
-    <string name="app_open" translatable="false">ca-app-pub-3940256099942544/3419835294</string>
-
-
     <string name="enter_text_to_repeat">Enter text to repeat</string>
     <string name="number_of_times">Number of times</string>
     <string name="include_new_line_charecter">Include new line charecter</string>
@@ -39,7 +26,6 @@
     <string name="copy">Copy</string>
     <string name="refresh">Refresh</string>
     <string name="go_full_screen">Go full screen</string>
-    <string name="rate_us">Rate us</string>
     <string name="preview">Preview</string>
     <string name="connecttointernerfirst">Connect to internet first</string>
     <string name="exit">Exit</string>
@@ -48,17 +34,15 @@
     <string name="pressAgaintoexit">Press again to exit</string>
     <string name="storagepermdenined">Permission denined,Reading external storage is necessary for the app to work properly</string>
     <string name="downloadfaild">Download failed</string>
-    <string name="opening">Opening...</string>
     <string name="chooseaway">Choose a way:</string>
     <string name="failed">Failed</string>
-    <string name="removing">Removing..please wait....</string>
     <string name="invalidtextinput">Invalid input,must be less than 1000 and greater than 0</string>
     <string name="generatedtext">Generated text</string>
     <string name="textcopied">Text copied to clipboard</string>
     <string name="sendindtextto">Sending text to:</string>
     <string name="invalidinputtext">Invalid input,must not be empty</string>
-    <string name="saving">Saving..please wait....</string>
-    <string name="title_activity_offline_chat">offlineChatActivity</string>
+    <string name="title_activity_status">StatusActivity</string>
+    <!-- TODO: Remove or change this placeholder text -->
     <!-- Strings used for fragments for navigation -->
 
 </resources>

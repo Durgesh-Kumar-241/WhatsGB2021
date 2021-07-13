@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.dktechhub.mnnit.ee.whatswebcloner">
+    package="com.dktechhub.mnnit.ee.whatsweb">
     <!-- Include required permissions for Google Mobile Ads to run. -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -12,10 +12,9 @@
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE" />
 
     <application
-        android:name="com.dktechhub.mnnit.ee.whatswebcloner.MyApplication"
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:animateLayoutChanges="true"
         android:hardwareAccelerated="true"
@@ -29,35 +28,24 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup"
         tools:targetApi="m">
-        <activity android:name="com.dktechhub.mnnit.ee.whatswebcloner.ConversationActivity"></activity>
-        <activity android:name="com.dktechhub.mnnit.ee.whatswebcloner.ChatPickerActivity" />
-
-        <service
-            android:name="com.dktechhub.mnnit.ee.whatswebcloner.chatService"
-            android:label="chatservice"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
-            <meta-data
-                android:name="android.accessibilityservice"
-                android:resource="@xml/chatservice" />
-
-            <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
-            </intent-filter>
-        </service>
-
         <activity
-            android:name="com.dktechhub.mnnit.ee.whatswebcloner.offlineChatActivity"
-            android:label="@string/title_activity_offline_chat" />
-        <activity android:name="com.dktechhub.mnnit.ee.whatswebcloner.TextRepeater" /> <!-- Include the AdActivity configChanges and theme. -->
+            android:name=".StatusActivity"
+            android:label="@string/title_activity_status"
+            android:theme="@style/light.NoActionBar"></activity>
 
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-8680893026970119~6608136496" />
+
+        <activity android:name=".TextRepeater" /> <!-- Include the AdActivity configChanges and theme. -->
         <activity
-            android:name="com.dktechhub.mnnit.ee.whatswebcloner.DirectChatActivity"
+            android:name=".DirectChatActivity"
             android:label="Direct Chat"
             android:screenOrientation="userPortrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="com.dktechhub.mnnit.ee.whatswebcloner.MainActivityNew"
-            android:label="Whatsweb scan"
+            android:name=".MainActivityNew"
+            android:label="GB What s App 2021"
             android:screenOrientation="userPortrait"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
@@ -67,18 +55,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.dktechhub.mnnit.ee.whatswebcloner.MainFragment"
+            android:name=".MainFragment"
             android:label="@string/str_title_main_fragment"
-            android:screenOrientation="userPortrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name="com.dktechhub.mnnit.ee.whatswebcloner.SavedStatusActivity"
-            android:label="@string/saved_status"
-            android:screenOrientation="userPortrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name="com.dktechhub.mnnit.ee.whatswebcloner.StatusSaverActivity"
-            android:label="@string/str_title_act_status_saver"
             android:screenOrientation="userPortrait"
             tools:ignore="LockedOrientationActivity" />
 

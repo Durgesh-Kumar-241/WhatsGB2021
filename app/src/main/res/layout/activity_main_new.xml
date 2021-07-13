@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:isScrollContainer="true"
@@ -10,7 +9,6 @@
     android:visibility="visible">
 
     <ScrollView
-        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/whatsback"
@@ -24,499 +22,133 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
 
-            <TableLayout
+            <com.google.android.gms.ads.AdView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:adSize="BANNER"
+                app:adUnitId="ca-app-pub-8680893026970119/4848972898"></com.google.android.gms.ads.AdView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:elevation="16dp"
                 android:gravity="center"
-                android:padding="@dimen/activity_horizontal_margin">
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center">
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/whasweb"
-                        android:layout_width="130dp"
-                        android:layout_height="150dp"
-                        android:layout_margin="2dp"
-                        android:layout_marginBottom="2dp"
-                        android:checkable="false"
-                        android:clickable="true"
-                        android:focusable="true"
-                        app:contentPadding="8dp">
-
-                        <LinearLayout
-
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-
-
-                            android:orientation="vertical">
-
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-                                <ImageView
-
-                                    android:layout_width="100dp"
-                                    android:layout_height="90dp"
-                                    android:background="@color/colorprimary"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/newicon" />
-
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-
-                                <TextView
-
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:ellipsize="end"
-                                    android:fontFamily="@font/dancing_script"
-                                    android:gravity="center"
-                                    android:maxLines="1"
-                                    android:text="@string/str_title_main_fragment"
-                                    android:textSize="14sp"
-                                    android:textStyle="bold"
-                                    android:typeface="monospace" />
-
-                            </LinearLayout>
-                        </LinearLayout>
-
-
-                    </com.google.android.material.card.MaterialCardView>
-
-
-                    <Space
-                        android:layout_width="20dp"
-                        android:layout_height="wrap_content" />
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/textr"
-                        android:layout_width="130dp"
-                        android:layout_height="150dp"
-                        android:layout_margin="2dp"
-                        android:layout_marginBottom="2dp"
-                        android:checkable="false"
-                        android:clickable="true"
-                        android:focusable="true"
-                        app:contentPadding="8dp">
-
-                        <LinearLayout
-
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-
-
-                            android:orientation="vertical">
-
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-                                <ImageView
-
-                                    android:layout_width="100dp"
-                                    android:layout_height="90dp"
-                                    android:background="@color/colorprimary"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/ic_baseline_text_fields_24" />
-
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-
-                                <TextView
-
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:ellipsize="end"
-                                    android:fontFamily="@font/dancing_script"
-                                    android:gravity="center"
-                                    android:maxLines="1"
-                                    android:text="Text repeater"
-                                    android:textSize="14sp"
-                                    android:textStyle="bold"
-                                    android:typeface="monospace" />
-
-                            </LinearLayout>
-                        </LinearLayout>
-
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center">
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/statussaver"
-                        android:layout_width="130dp"
-                        android:layout_height="150dp"
-                        android:layout_margin="2dp"
-                        android:layout_marginBottom="2dp"
-                        android:checkable="false"
-                        android:clickable="true"
-                        android:focusable="true"
-                        app:contentPadding="8dp">
-
-                        <LinearLayout
-
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-
-
-                            android:orientation="vertical">
-
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-                                <ImageView
-
-                                    android:layout_width="100dp"
-                                    android:layout_height="90dp"
-                                    android:background="@color/colorprimary"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/status" />
-
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-
-                                <TextView
-
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:ellipsize="end"
-                                    android:fontFamily="@font/dancing_script"
-                                    android:gravity="center"
-                                    android:maxLines="1"
-                                    android:text="@string/status_saver"
-                                    android:textSize="14sp"
-                                    android:textStyle="bold"
-                                    android:typeface="monospace" />
-
-                            </LinearLayout>
-                        </LinearLayout>
-
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <Space
-                        android:layout_width="20dp"
-                        android:layout_height="wrap_content" />
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/savedstatus"
-                        android:layout_width="130dp"
-                        android:layout_height="150dp"
-                        android:layout_margin="2dp"
-                        android:layout_marginBottom="2dp"
-                        android:checkable="false"
-                        android:clickable="true"
-                        android:focusable="true"
-                        app:contentPadding="8dp">
-
-                        <LinearLayout
-
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-
-
-                            android:orientation="vertical">
-
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-                                <ImageView
-
-                                    android:layout_width="100dp"
-                                    android:layout_height="90dp"
-                                    android:background="@color/colorprimary"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/ic_baseline_sd_storage_24" />
-
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-
-                                <TextView
-
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:ellipsize="end"
-                                    android:fontFamily="@font/dancing_script"
-                                    android:gravity="center"
-                                    android:maxLines="1"
-                                    android:text="@string/saved_status"
-                                    android:textSize="14sp"
-                                    android:textStyle="bold"
-                                    android:typeface="monospace" />
-
-                            </LinearLayout>
-                        </LinearLayout>
-
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center">
-
-
-
-
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/empty"
-                        android:layout_width="130dp"
-                        android:layout_height="150dp"
-                        android:layout_margin="2dp"
-                        android:layout_marginBottom="2dp"
-                        android:checkable="false"
-                        android:clickable="true"
-                        android:focusable="true"
-                        app:contentPadding="8dp">
-
-                        <LinearLayout
-
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-
-
-                            android:orientation="vertical">
-
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-                                <ImageView
-
-                                    android:layout_width="100dp"
-                                    android:layout_height="90dp"
-                                    android:background="@color/colorprimary"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/ic_baseline_chat_24" />
-
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-
-                                <TextView
-
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:ellipsize="end"
-                                    android:fontFamily="@font/dancing_script"
-                                    android:gravity="center"
-                                    android:maxLines="1"
-                                    android:text="Empty message"
-                                    android:textSize="14sp"
-                                    android:textStyle="bold"
-                                    android:typeface="monospace" />
-
-                            </LinearLayout>
-                        </LinearLayout>
-
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <Space
-                        android:layout_width="20dp"
-                        android:layout_height="wrap_content" />
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/direct"
-                        android:layout_width="130dp"
-                        android:layout_height="150dp"
-                        android:layout_margin="2dp"
-                        android:layout_marginBottom="2dp"
-                        android:checkable="false"
-                        android:clickable="true"
-                        android:focusable="true"
-                        app:contentPadding="8dp">
-
-                        <LinearLayout
-
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-
-
-                            android:orientation="vertical">
-
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-                                <ImageView
-
-                                    android:layout_width="100dp"
-                                    android:layout_height="90dp"
-                                    android:background="@color/colorprimary"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/ic_baseline_chat_24" />
-
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-
-                                <TextView
-
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:ellipsize="end"
-                                    android:fontFamily="@font/dancing_script"
-                                    android:gravity="center"
-                                    android:maxLines="1"
-                                    android:text="Direct chat"
-                                    android:textSize="14sp"
-                                    android:textStyle="bold"
-                                    android:typeface="monospace" />
-
-                            </LinearLayout>
-                        </LinearLayout>
-
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/whatsweb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/background"
+                    android:drawableTop="@drawable/newiconsmall"
+                    android:drawablePadding="16dp"
+                    android:elevation="16dp"
                     android:gravity="center"
-                    android:visibility="visible"
-                    tools:visibility="visible">
+                    android:padding="8dp"
+                    android:text="WhatsApp web" />
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/offline"
-                        android:layout_width="130dp"
-                        android:layout_height="150dp"
-                        android:layout_margin="2dp"
-                        android:layout_marginBottom="2dp"
-                        android:checkable="false"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:visibility="visible"
-                        app:contentPadding="8dp">
+            </LinearLayout>
 
-                        <LinearLayout
+            <LinearLayout
+                android:id="@+id/statussaver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:background="?attr/background"
+                android:elevation="16dp"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_baseline_save_alt_24"
+                    android:drawablePadding="16dp"
+                    android:gravity="center|left"
+                    android:text="Status saver"
+                    app:drawableRightCompat="@drawable/ic_baseline_navigate_next_24" />
+            </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/directchat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:background="?attr/background"
+                android:elevation="16dp"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                            android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_baseline_message_24"
+                    android:drawablePadding="16dp"
+                    android:gravity="center|left"
+                    android:text="Direct Chat"
+                    app:drawableRightCompat="@drawable/ic_baseline_navigate_next_24" />
+            </LinearLayout>
 
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/emptytext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:background="?attr/background"
+                android:elevation="16dp"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                                <ImageView
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_baseline_chat_bubble_outline_24"
+                    android:drawablePadding="16dp"
+                    android:gravity="center|left"
+                    android:text="Empty text"
+                    app:drawableRightCompat="@drawable/ic_baseline_navigate_next_24" />
+            </LinearLayout>
 
-                                    android:layout_width="100dp"
-                                    android:layout_height="90dp"
-                                    android:background="@color/colorprimary"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/ic_baseline_star_rate_24" />
+            <LinearLayout
+                android:id="@+id/textrepeater"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="?attr/background"
+                android:elevation="16dp"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                            </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_baseline_repeat_24"
+                    android:drawablePadding="16dp"
+                    android:gravity="center|left"
+                    android:text="Text repeater"
+                    app:drawableRightCompat="@drawable/ic_baseline_navigate_next_24" />
+            </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-
-                                <TextView
-
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:ellipsize="end"
-                                    android:fontFamily="@font/dancing_script"
-                                    android:gravity="center"
-                                    android:maxLines="1"
-                                    android:text="Rate us"
-                                    android:textSize="14sp"
-                                    android:textStyle="bold"
-                                    android:typeface="monospace" />
-
-                            </LinearLayout>
-                        </LinearLayout>
-
-
-                    </com.google.android.material.card.MaterialCardView>
-
-
-                </TableRow>
-
-            </TableLayout>
         </LinearLayout>
     </ScrollView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-
-        android:layout_marginBottom="16dp"
-        android:background="@color/purple_500"
-        android:clickable="true"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_apps_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
