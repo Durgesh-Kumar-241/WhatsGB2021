@@ -9,13 +9,20 @@
     <string name="enter_any_message_optional">Enter any message (Optional)</string>
     <string name="clear">Clear</string>
     <!-- prod -->
-    <!--
-    <string name="mainBanner" translatable="false">ca-app-pub-5621307103177472/4596441043</string>
-    <string name="mainFrgaBanner" translatable="false">ca-app-pub-5621307103177472/4596441043</string>
-    <string name="directChatBanner" translatable="false">ca-app-pub-5621307103177472/4596441043</string>
-    <string name="interstitial_ad_unit_id" translatable="false">ca-app-pub-5621307103177472/3477573137</string>
-    <string name="app_open" translatable="false">ca-app-pub-5621307103177472/4599083118</string>
-    -->
+
+    <string name="direct_chat" >ca-app-pub-8680893026970119/8345659924</string>
+    <string name="banner">ca-app-pub-8680893026970119/1603221823</string>
+    <string name="banner2">ca-app-pub-8680893026970119/4848972898</string>
+    <string name="interstitial" >ca-app-pub-8680893026970119/3943085330</string>
+
+    <!--test-->
+<!--
+<string name="direct_chat" >ca-app-pub-3940256099942544/6300978111</string>
+<string name="banner33">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="banner">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="banner2">ca-app-pub-3940256099942544/6300978111</string>
+<string name="interstitial">ca-app-pub-3940256099942544/1033173712</string>
+-->
 
     <string name="enter_text_to_repeat">Enter text to repeat</string>
     <string name="number_of_times">Number of times</string>

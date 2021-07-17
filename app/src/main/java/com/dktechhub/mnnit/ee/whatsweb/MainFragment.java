@@ -56,8 +56,6 @@ public class MainFragment extends AppCompatActivity {
     String url;
     ProgressBar progressBar;
     ActionBar actionBar;
-    //protected static final String LANGUAGE_DEFAULT_ISO3 = "eng";
-    public static final String PACKAGE_NAME_DOWNLOAD_MANAGER = "com.android.providers.downloads";
     protected static final int REQUEST_CODE_FILE_PICKER = 51426;
     protected static final String LANGUAGE_DEFAULT_ISO3 = "eng";
     protected static final String CHARSET_DEFAULT = "UTF-8";
@@ -110,10 +108,14 @@ public class MainFragment extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (System.currentTimeMillis() - time < 1000) {
-            super.onBackPressed();
+            finish();
         } else {
             time = System.currentTimeMillis();
-            if (webView.canGoBack())
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null&&!actionBar.isShowing()) {
+                actionBar.show();
+            }
+            else if (webView.canGoBack())
                 webView.goBack();
 
             Toast.makeText(this, getString(R.string.pressAgaintoexit), Toast.LENGTH_SHORT).show();
@@ -127,6 +129,7 @@ public class MainFragment extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == WRITE_EXTERNAL_STORAGE_CODE) {
             if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, getString(R.string.storagepermdenined), Toast.LENGTH_SHORT).show();
@@ -408,27 +411,6 @@ public class MainFragment extends AppCompatActivity {
         //startActivityForResult(Intent.createChooser(i, getFileUploadPromptLabel()), mRequestCodeFilePicker);
         Intent shareIntent = Intent.createChooser(i, getFileUploadPromptLabel());
         startActivityForResult(shareIntent,mRequestCodeFilePicker);
-    }
-
-    /**
-     * Returns whether file uploads can be used on the current device (generally all platform versions except for 4.4)
-     *
-     * @return whether file uploads can be used
-     */
-    public static boolean isFileUploadAvailable() {
-        return isFileUploadAvailable(false);
-    }
-
-    /**
-     * Returns whether file uploads can be used on the current device (generally all platform versions except for 4.4)
-     *
-     * On Android 4.4.3/4.4.4, file uploads may be possible but will come with a wrong MIME type
-     *
-     * @param needsCorrectMimeType whether a correct MIME type is required for file uploads or `application/octet-stream` is acceptable
-     * @return whether file uploads can be used
-     */
-    public static boolean isFileUploadAvailable(final boolean needsCorrectMimeType) {
-        return true;
     }
 
     @Override

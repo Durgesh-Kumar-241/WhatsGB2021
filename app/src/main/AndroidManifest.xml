@@ -30,23 +30,23 @@
         tools:targetApi="m">
         <activity
             android:name=".StatusActivity"
-            android:label="@string/title_activity_status"
-            android:theme="@style/light.NoActionBar"></activity>
+            android:label="Status Saver"></activity>
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-8680893026970119~6608136496" />
 
-        <activity android:name=".TextRepeater" /> <!-- Include the AdActivity configChanges and theme. -->
+        <activity android:name=".TextRepeater"
+            android:label="Text Repeater"/> <!-- Include the AdActivity configChanges and theme. -->
         <activity
             android:name=".DirectChatActivity"
             android:label="Direct Chat"
-            android:screenOrientation="userPortrait"
+
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".MainActivityNew"
             android:label="GB What s App 2021"
-            android:screenOrientation="userPortrait"
+
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -57,7 +57,7 @@
         <activity
             android:name=".MainFragment"
             android:label="@string/str_title_main_fragment"
-            android:screenOrientation="userPortrait"
+
             tools:ignore="LockedOrientationActivity" />
 
         <provider

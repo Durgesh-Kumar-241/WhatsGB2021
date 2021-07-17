@@ -12,6 +12,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
 import java.net.URLEncoder;
@@ -28,6 +30,10 @@ public class DirectChatActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_direct_chat);
         //MobileAds.initialize(this);
+        AdView mAdView = findViewById(R.id.adView);
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         ccp=findViewById(R.id.spinner);
         number=findViewById(R.id.number);
         message=findViewById(R.id.message);
@@ -54,9 +60,9 @@ public class DirectChatActivity extends AppCompatActivity {
                 message.setText("");
             }
         });
-       // AdView mAdView = findViewById(R.id.adView);
-      //  AdRequest adRequest = new AdRequest.Builder().build();
-     //   mAdView.loadAd(adRequest);
+       //// AdView mAdView = findViewById(R.id.adView);
+     //  AdRequest adRequest = new AdRequest.Builder().build();
+       // mAdView.loadAd(adRequest);
     }
 
     public void send()

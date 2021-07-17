@@ -1,37 +1,39 @@
 package com.dktechhub.mnnit.ee.whatsweb;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.InsetDrawable;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.TypedValue;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.MenuRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuBuilder;
-import androidx.appcompat.widget.PopupMenu;
 
+import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
 public class MainActivityNew extends AppCompatActivity {
     //PermissionDetector permissionDetector;
     private final String[] allPermissions=new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO};
-    LinearLayout statussaver, repeater,  direct, empty;
+    TextView statussaver, repeater,  direct, empty;
     TextView whatsweb;
+    private InterstitialAd interstitialAd;
     //private FirebaseAnalytics mFirebaseAnalytics;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -39,10 +41,11 @@ public class MainActivityNew extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_new);
-       // AdView mAdView = findViewById(R.id.adView);
+        loadAd();
+        AdView mAdView = findViewById(R.id.adView);
 
-       // AdRequest adRequest = new AdRequest.Builder().build();
-        //mAdView.loadAd(adRequest);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         checkPermissions();
         whatsweb =findViewById(R.id.whatsweb);
@@ -57,10 +60,13 @@ public class MainActivityNew extends AppCompatActivity {
         direct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showInterstitial();
                 startActivity(new Intent(MainActivityNew.this,DirectChatActivity.class));
             }
         });
         whatsweb.setOnClickListener(v -> {
+
+            showInterstitial();
             //whatsappweb.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fullscreengo));
             String encriptedText = encriptedText();
             StringBuilder sb = new StringBuilder();
@@ -72,6 +78,7 @@ public class MainActivityNew extends AppCompatActivity {
 
 
        statussaver.setOnClickListener(v -> {
+           showInterstitial();
            ActivityOptions options =
                    ActivityOptions.makeSceneTransitionAnimation(
                            this, v, "shared_element_end_root");
@@ -82,12 +89,14 @@ public class MainActivityNew extends AppCompatActivity {
        repeater.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
+               showInterstitial();
                startActivity(new Intent(MainActivityNew.this,TextRepeater.class));
            }
        });
         empty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showInterstitial();
                 try {
                     Intent intent = new Intent();
                     intent.setAction("android.intent.action.SEND");
@@ -183,8 +192,64 @@ public class MainActivityNew extends AppCompatActivity {
         }
      */
 
+    private void showInterstitial() {
+        // Show the ad if it's ready. Otherwise toast and restart the game.
+        if (interstitialAd != null) {
+            interstitialAd.show(this);
+        }
+    }
 
+    public void loadAd() {
 
+        AdRequest adRequest = new AdRequest.Builder().build();
+        InterstitialAd.load(
+                this,
+                getResources().getString(R.string.interstitial),
+                adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        // The mInterstitialAd reference will be null until
+                        // an ad is loaded.
+                        MainActivityNew.this.interstitialAd = interstitialAd;
+                        //showInterstitial();
+                        //Log.i(TAG, "onAdLoaded");
+                        Toast.makeText(MainActivityNew.this, "May be you will see an Ad now", Toast.LENGTH_SHORT).show();
+                        interstitialAd.setFullScreenContentCallback(
+                                new FullScreenContentCallback() {
+                                    @Override
+                                    public void onAdDismissedFullScreenContent() {
+                                        // Called when fullscreen content is dismissed.
+                                        // Make sure to set your reference to null so you don't
+                                        // show it a second time.
+                                        MainActivityNew.this.interstitialAd = null;
+                                        //Log.d("TAG", "The ad was dismissed.");
+                                    }
 
+                                    @Override
+                                    public void onAdFailedToShowFullScreenContent(@NotNull AdError adError) {
+                                        // Called when fullscreen content failed to show.
+                                        // Make sure to set your reference to null so you don't
+                                        // show it a second time.
+                                        MainActivityNew.this.interstitialAd = null;
+                                        //Log.d("TAG", "The ad failed to show.");
+                                    }
+
+                                    @Override
+                                    public void onAdShowedFullScreenContent() {
+                                        // Called when fullscreen content is shown.
+                                       // Log.d("TAG", "The ad was shown.");
+                                    }
+                                });
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                        //Log.i(TAG, loadAdError.getMessage());
+                        interstitialAd = null;
+                    }
+                });
+    }
 
 }

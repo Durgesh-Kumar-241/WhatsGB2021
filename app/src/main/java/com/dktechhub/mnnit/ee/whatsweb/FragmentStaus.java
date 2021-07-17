@@ -1,7 +1,6 @@
 package com.dktechhub.mnnit.ee.whatsweb;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -20,14 +19,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class FragmentStaus extends Fragment {
@@ -64,7 +63,7 @@ public class FragmentStaus extends Fragment {
         adapter=new StatusItemAdapter(new StatusItemAdapter.StatusItemAdapterListner() {
             @Override
             public void onSaveButtonClicked(Status status) {
-                new Saver(status).execute();
+                new Szr(status).execute();
             }
 
             @Override
@@ -79,7 +78,7 @@ public class FragmentStaus extends Fragment {
 
             @Override
             public void onDeleteButtonClicked(Status status) {
-                new Deleter(status).execute();
+                new Dlx(status).execute();
             }
         },getActivity(),inSavedMode);
 
@@ -95,7 +94,7 @@ public class FragmentStaus extends Fragment {
     public void refreshItems()
     {adapter.reset();
     adapter.notifyDataSetChanged();
-        new Loader(new OnLoadCompleteListener() {
+        new Ldx(new OnLoadCompleteListener() {
             @Override
             public void onLoaded(Status status) {
                 adapter.addStatusItem(status);
@@ -146,10 +145,10 @@ public class FragmentStaus extends Fragment {
     }
 
 
-    public class Saver extends AsyncTask<Void,Void,Void> {
+    public class Szr extends AsyncTask<Void,Void,Void> {
         com.dktechhub.mnnit.ee.whatsweb.Status status;
 
-        public Saver(com.dktechhub.mnnit.ee.whatsweb.Status status)
+        public Szr(com.dktechhub.mnnit.ee.whatsweb.Status status)
         {
             this.status=status;
         }
@@ -166,7 +165,7 @@ public class FragmentStaus extends Fragment {
                     while ((read=is.read(buffer))>0)
                     {
                         os.write(buffer,0,read);
-                        Log.d("COPY", String.valueOf(read));
+                        //Log.d("COPY", String.valueOf(read));
                     }
                     os.flush();
                     os.close();
@@ -183,6 +182,8 @@ public class FragmentStaus extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             Toast.makeText(getContext(), "Saved to \"/GB What s App/Saved Statuses/\"", Toast.LENGTH_SHORT).show();
+           // Toast toast = new Toast(getContext());
+           // toast.setText("Saved to \"/GB What s App/Saved Statuses/\"");
 
         }
     }
@@ -201,17 +202,17 @@ public class FragmentStaus extends Fragment {
     private static final int WRITE_EXTERNAL_STORAGE_CODE = 257;
 
 
-    public static class Loader extends AsyncTask<Void,com.dktechhub.mnnit.ee.whatsweb.Status,Void> {
+    public static class Ldx extends AsyncTask<Void,com.dktechhub.mnnit.ee.whatsweb.Status,Void> {
         OnLoadCompleteListener onLoadCompleteListener;
         boolean loadSaved;
 
-        Loader(OnLoadCompleteListener onLoadCompleteListener,boolean loadSaved){
+        Ldx(OnLoadCompleteListener onLoadCompleteListener, boolean loadSaved){
             this.onLoadCompleteListener=onLoadCompleteListener;
             this.loadSaved=loadSaved;
         }
 
         public void loadStatusFromDir(File file)
-        {   Log.d("Loader","loading now from"+ file.getAbsolutePath());
+        {   //Log.d("Loader","loading now from"+ file.getAbsolutePath());
             try{
                 if(!file.isDirectory())
                     return;
@@ -228,7 +229,7 @@ public class FragmentStaus extends Fragment {
 
 
                         }
-                        Log.d("Loader","loading now "+ f1.getAbsolutePath());
+                        //Log.d("Loader","loading now "+ f1.getAbsolutePath());
                     }
                 }
             }catch (Exception ignored)
@@ -246,7 +247,7 @@ public class FragmentStaus extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            Log.d("Loader","Executing loader now with "+this.loadSaved);
+            //Log.d("Loader","Executing loader now with "+this.loadSaved);
             if(loadSaved)
             {
                 loadStatusFromDir(new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/GB What s App/Saved Statuses/"));
@@ -292,9 +293,9 @@ public class FragmentStaus extends Fragment {
 
     }
 
-    class Deleter extends AsyncTask<Void,Void,Void>
+    class Dlx extends AsyncTask<Void,Void,Void>
     {   com.dktechhub.mnnit.ee.whatsweb.Status status;
-        public Deleter(com.dktechhub.mnnit.ee.whatsweb.Status status)
+        public Dlx(com.dktechhub.mnnit.ee.whatsweb.Status status)
         {
             this.status=status;
         }

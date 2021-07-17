@@ -28,10 +28,10 @@ public class TextRepeater extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_repeater);
-        //AdView mAdView = findViewById(R.id.adView);
+        AdView mAdView = findViewById(R.id.adview);
 
-        //AdRequest adRequest = new AdRequest.Builder().build();
-       // mAdView.loadAd(adRequest);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         share=findViewById(R.id.share);
         generate=findViewById(R.id.generate);
         copy=findViewById(R.id.copy);

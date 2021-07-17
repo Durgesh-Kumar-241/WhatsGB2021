@@ -8,22 +8,33 @@
     tools:context=".DirectChatActivity">
 
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
             android:gravity="center"
             android:orientation="vertical">
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:adSize="BANNER"
+                app:adUnitId="@string/direct_chat"></com.google.android.gms.ads.AdView>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -120,6 +131,6 @@
         </LinearLayout>
 
 
-    </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

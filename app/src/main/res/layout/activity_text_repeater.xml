@@ -32,6 +32,7 @@
                 android:hint="@string/enter_text_to_repeat"
                 android:inputType="textMultiLine"
                 android:outlineProvider="background"
+                android:fontFamily="@font/dancing_script"
                  />
 
             <EditText
@@ -42,6 +43,7 @@
                 android:ems="10"
                 android:hint="@string/number_of_times"
                 android:inputType="number"
+                android:fontFamily="@font/dancing_script"
                 android:outlineProvider="background"
                  />
 
@@ -56,33 +58,29 @@
                     android:id="@+id/includeNewLine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="@string/include_new_line_charecter" />
+                    android:checked="false"
+                    android:fontFamily="@font/dancing_script"
+                    android:text="Repeat line by line" />
 
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/include_all_charecters"
-                    android:visibility="gone" />
             </LinearLayout>
 
             <Button
                 android:id="@+id/generate"
+                android:fontFamily="@font/dancing_script"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:enabled="false"
                 android:text="@string/generate" />
 
             <com.google.android.gms.ads.AdView
-                android:layout_width="match_parent"
+                android:id="@+id/adview"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
                 app:adSize="BANNER"
-                app:adUnitId="ca-app-pub-8680893026970119/1603221823"></com.google.android.gms.ads.AdView>
+                app:adUnitId="@string/banner"></com.google.android.gms.ads.AdView>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -98,6 +96,7 @@
                     android:layout_margin="4dp"
                     android:layout_weight="5"
                     android:enabled="false"
+                    android:fontFamily="@font/dancing_script"
                     android:text="@string/share"
                     app:icon="@drawable/ic_menu_share" />
 
@@ -105,6 +104,7 @@
                     android:id="@+id/copy"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/dancing_script"
                     android:layout_margin="4dp"
                     android:layout_weight="5"
                     android:enabled="false"
@@ -127,6 +127,7 @@
                     android:layout_margin="4dp"
                     android:layout_marginBottom="8dp"
                     android:text="@string/preview"
+                    android:fontFamily="@font/dancing_script"
                     android:textColor="@color/white" />
 
                 <TextView
@@ -135,6 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:padding="4dp"
+                    android:fontFamily="@font/dancing_script"
                     android:textColor="@color/white"
                     tools:text="jjjjg" />
             </androidx.cardview.widget.CardView>
