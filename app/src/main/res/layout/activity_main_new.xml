@@ -149,6 +149,8 @@
                 app:adSize="BANNER"
                 app:adUnitId="@string/banner2"></com.google.android.gms.ads.AdView>
 
+
+
         </LinearLayout>
     </ScrollView>
 

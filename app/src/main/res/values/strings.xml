@@ -8,12 +8,14 @@
     <string name="send">Send</string>
     <string name="enter_any_message_optional">Enter any message (Optional)</string>
     <string name="clear">Clear</string>
-    <!-- prod -->
+    <!--prod -->
 
-    <string name="direct_chat" >ca-app-pub-8680893026970119/8345659924</string>
-    <string name="banner">ca-app-pub-8680893026970119/1603221823</string>
-    <string name="banner2">ca-app-pub-8680893026970119/4848972898</string>
-    <string name="interstitial" >ca-app-pub-8680893026970119/3943085330</string>
+    <string name="direct_chat" >ca-app-pub-9981627494946174/1138367135</string>
+    <string name="banner33">ca-app-pub-9981627494946174/5815978747</string>
+    <string name="banner">ca-app-pub-9981627494946174/1685162046</string>
+    <string name="banner2">ca-app-pub-9981627494946174/3736610311</string>
+    <string name="interstitial">ca-app-pub-9981627494946174/3346207005</string>
+
 
     <!--test-->
 <!--

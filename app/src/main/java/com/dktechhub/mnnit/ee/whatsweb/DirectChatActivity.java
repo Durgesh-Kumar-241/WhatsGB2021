@@ -23,6 +23,7 @@ public class DirectChatActivity extends AppCompatActivity {
     EditText number,message;
     CountryCodePicker ccp;
     SharedPreferences sharedPreferences;
+    private MyApplication myApplication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,8 @@ public class DirectChatActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_direct_chat);
         //MobileAds.initialize(this);
+        myApplication=(MyApplication)this.getApplication();
+        myApplication.showInterstitial(this);
         AdView mAdView = findViewById(R.id.adView);
 
         AdRequest adRequest = new AdRequest.Builder().build();

@@ -34,7 +34,7 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-8680893026970119~6608136496" />
+            android:value="ca-app-pub-9981627494946174~3729350381" />
 
         <activity android:name=".TextRepeater"
             android:label="Text Repeater"/> <!-- Include the AdActivity configChanges and theme. -->
@@ -69,6 +69,14 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_provider_paths" />
         </provider>
+
+
+
+
+        <activity android:name="com.mopub.common.privacy.ConsentDialogActivity" android:configChanges="keyboardHidden|orientation|screenSize"/>
+
+        <!-- All ad formats -->
+        <activity android:name="com.mopub.common.MoPubBrowser" android:configChanges="keyboardHidden|orientation|screenSize"/>
     </application>
 
 </manifest>

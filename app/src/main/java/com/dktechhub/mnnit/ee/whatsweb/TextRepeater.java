@@ -23,11 +23,15 @@ public class TextRepeater extends AppCompatActivity {
     private Button share,generate,copy;
     private EditText toCopy,noOfTimes;
     private TextView generated;
-    private CheckBox includeNewLine,includeAllChars;
+    private CheckBox includeNewLine;
+    private MyApplication myApplication;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_repeater);
+        myApplication=(MyApplication)this.getApplication();
+        myApplication.showInterstitial(this);
         AdView mAdView = findViewById(R.id.adview);
 
         AdRequest adRequest = new AdRequest.Builder().build();

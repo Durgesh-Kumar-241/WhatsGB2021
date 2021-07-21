@@ -29,12 +29,7 @@ public class ConnectionDetector {
             AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
             alertDialog.setMessage(activity.getString(R.string.connecttointernerfirst));
             alertDialog.setCancelable(false);
-            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, activity.getString(R.string.exit), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    activity.onBackPressed();activity.onBackPressed();
-                }
-            });
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, activity.getString(R.string.exit), (dialog, which) -> activity.finish());
             alertDialog.show();
 
         }

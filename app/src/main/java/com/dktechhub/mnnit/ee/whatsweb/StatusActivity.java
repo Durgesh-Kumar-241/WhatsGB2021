@@ -17,10 +17,14 @@ import com.dktechhub.mnnit.ee.whatsweb.ui.main.SectionsPagerAdapter;
 
 public class StatusActivity extends AppCompatActivity {
 
+    private MyApplication myApplication;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status);
+        myApplication=(MyApplication)this.getApplication();
+        myApplication.showInterstitial(this);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         sectionsPagerAdapter.addFragment(new FragmentStaus(false),"Recent");
         sectionsPagerAdapter.addFragment(new FragmentStaus(true),"Saved");

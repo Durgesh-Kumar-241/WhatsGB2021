@@ -68,6 +68,7 @@ public class MainFragment extends AppCompatActivity {
     protected String mLanguageIso3;
     protected int mRequestCodeFilePicker = REQUEST_CODE_FILE_PICKER;
     protected String mUploadableFileTypes = "*/*";
+    private MyApplication myApplication;
     //protected final Map<String, String> mHttpHeaders = new HashMap<String, String>();
 
     @Override
@@ -75,6 +76,8 @@ public class MainFragment extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.fragment_main);
+        myApplication=(MyApplication)this.getApplication();
+        myApplication.showInterstitial(this);
         actionBar = getSupportActionBar();
         if (actionBar != null) {
             //actionBar.hide();
