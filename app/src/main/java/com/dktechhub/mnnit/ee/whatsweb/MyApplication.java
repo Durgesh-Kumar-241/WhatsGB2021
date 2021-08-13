@@ -22,21 +22,30 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        /*
         MobileAds.initialize(
                 this, initializationStatus -> {});
         loadAd();
         //AppOpenManager appOpenManager = new AppOpenManager(this);
-
+        */
     }
 
     public void showInterstitial(Activity activity) {
         // Show the ad if it's ready. Otherwise toast and restart the game.
+        /*
         if (interstitialAd != null) {
-            interstitialAd.show(activity);
+            try {
+                interstitialAd.show(activity);
+            }catch(Exception e)
+            {
+                e.printStackTrace();
+            }
         }
+        *
+         */
     }
     public void loadAd() {
-
+        /*
         AdRequest adRequest = new AdRequest.Builder().build();
         InterstitialAd.load(
                 this,
@@ -86,6 +95,10 @@ public class MyApplication extends Application {
                         interstitialAd = null;
                     }
                 });
+
+         */
     }
+
+
 
 }

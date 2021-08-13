@@ -81,7 +81,13 @@ public class TextRepeater extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 //Toast.makeText(TextRepeater.this, "before text\n"+s, Toast.LENGTH_SHORT).show();
-                b1= s.toString().length() != 0;
+                try{
+                    b1= s.toString().length() != 0;
+                }catch(Exception e)
+                {
+                    b1=false;
+                }
+
                 if(!b1)
                     toCopy.setError(getString(R.string.invalidinputtext));
                 updateUi();
@@ -104,12 +110,17 @@ public class TextRepeater extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                try{
                 String e = s.toString();
-
                 b2=(!e.equals("")) &&e.length() <4 && Integer.parseInt(e)>0;
+                }
+                catch(Exception e)
+                {
+                    b2=false;
+                }
                 if(!b2)
                     noOfTimes.setError(getString(R.string.invalidtextinput));
-                updateUi();
+                    updateUi();
             }
 
 
