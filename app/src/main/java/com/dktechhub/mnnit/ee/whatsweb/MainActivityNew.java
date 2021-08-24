@@ -21,9 +21,9 @@ import java.util.Locale;
 public class MainActivityNew extends AppCompatActivity {
     //PermissionDetector permissionDetector;
     private final String[] allPermissions=new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO};
-    TextView statussaver, repeater,  direct, empty;
+    TextView statussaver, repeater,  direct, empty,offlineChat;
     TextView whatsweb;
-    MyApplication myApplication;
+    //MyApplication myApplication;
     //private MoPubView moPubView;
     //private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -47,7 +47,14 @@ public class MainActivityNew extends AppCompatActivity {
 
         direct =findViewById(R.id.directchat);
         empty =findViewById(R.id.emptytext);
+        offlineChat=findViewById(R.id.directchat2);
 
+        offlineChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivityNew.this,OfflineChatList.class));
+            }
+        });
 
         direct.setOnClickListener(new View.OnClickListener() {
             @Override

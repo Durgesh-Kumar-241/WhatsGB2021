@@ -36,12 +36,29 @@
                     android:gravity="center">
 
                     <TextView
+                        android:id="@+id/directchat2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:background="@drawable/circuler_background"
+                        android:drawableTop="@drawable/ic_baseline_visibility_off_24"
+                        android:drawablePadding="16dp"
+                        android:elevation="16dp"
+                        android:fontFamily="@font/dancing_script"
+                        android:gravity="center"
+                        android:padding="16dp"
+                        android:text="Offline Chat"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:typeface="normal" />
+
+                    <TextView
                         android:id="@+id/whatsweb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
                         android:background="@drawable/circuler_background"
-                        android:drawableTop="@drawable/newiconsmall"
+                        android:drawableTop="@drawable/gbiconnewsmall"
                         android:drawablePadding="16dp"
                         android:elevation="16dp"
                         android:fontFamily="@font/dancing_script"

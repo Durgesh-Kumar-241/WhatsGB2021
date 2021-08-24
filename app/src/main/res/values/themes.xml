@@ -33,5 +33,9 @@
         <item name="fullscreenTextColor">@color/light_blue_A200</item>
     </style>
 
+    <style name="light.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="light.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 
 </resources>

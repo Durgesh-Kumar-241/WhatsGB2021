@@ -13,6 +13,8 @@ import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+import com.vanniktech.emoji.EmojiManager;
+import com.vanniktech.emoji.google.GoogleEmojiProvider;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -28,6 +30,7 @@ public class MyApplication extends Application {
         loadAd();
         //AppOpenManager appOpenManager = new AppOpenManager(this);
         */
+        EmojiManager.install(new GoogleEmojiProvider());
     }
 
     public void showInterstitial(Activity activity) {
