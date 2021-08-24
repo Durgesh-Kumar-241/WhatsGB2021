@@ -1,9 +1,11 @@
 package com.dktechhub.mnnit.ee.whatsweb;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,12 +33,12 @@ public class DirectChatActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_direct_chat);
         //MobileAds.initialize(this);
-        myApplication=(MyApplication)this.getApplication();
-        myApplication.showInterstitial(this);
-        AdView mAdView = findViewById(R.id.adView);
+        //myApplication=(MyApplication)this.getApplication();
+        //myApplication.showInterstitial(this);
+        //AdView mAdView = findViewById(R.id.adView);
 
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        //AdRequest adRequest = new AdRequest.Builder().build();
+        //mAdView.loadAd(adRequest);
         ccp=findViewById(R.id.spinner);
         number=findViewById(R.id.number);
         message=findViewById(R.id.message);
@@ -46,8 +48,12 @@ public class DirectChatActivity extends AppCompatActivity {
 
         ccp.enableHint(false);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        ccp.setDefaultCountryUsingNameCodeAndApply(sharedPreferences.getString("recent_country",ccp.getSelectedCountryName()));
-        //Log.d("Number",sharedPreferences.getString("recent_country",ccp.getSelectedCountryName())+"loaded");
+        try {
+            ccp.setCountryForNameCode(((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE)).getSimCountryIso().toUpperCase());
+        }catch (Exception ignored)
+        {
+
+        }
         number.setText(sharedPreferences.getString("recent_number",""));
         send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +93,7 @@ public class DirectChatActivity extends AppCompatActivity {
             Toast.makeText(this, "Whatsapp is not installed on your device", Toast.LENGTH_SHORT).show();
         }
 
-        sharedPreferences.edit().putString("recent_country",ccp.getSelectedCountryNameCode()).apply();
+        //sharedPreferences.edit().putString("recent_country",ccp.getSelectedCountryNameCode()).apply();
         sharedPreferences.edit().putString("recent_number",number.getText().toString()).apply();
     }
 

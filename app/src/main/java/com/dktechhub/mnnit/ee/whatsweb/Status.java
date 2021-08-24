@@ -3,8 +3,7 @@ package com.dktechhub.mnnit.ee.whatsweb;
 import android.graphics.Bitmap;
 
 public class Status {
-public boolean isSelected=false;
-public String source;
+    public String source;
 Bitmap thumbnail;
 public String mime="*/*";
 public String name;

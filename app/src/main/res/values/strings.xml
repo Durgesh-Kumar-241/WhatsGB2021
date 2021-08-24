@@ -10,7 +10,7 @@
     <string name="clear">Clear</string>
     <!--prod -->
 
-    <string name="direct_chat" >ca-app-pub-9981627494946174/1138367135</string>
+    <string name="direct_chat">ca-app-pub-9981627494946174/1138367135</string>
     <string name="banner33">ca-app-pub-9981627494946174/5815978747</string>
     <string name="banner">ca-app-pub-9981627494946174/1685162046</string>
     <string name="banner2">ca-app-pub-9981627494946174/3736610311</string>
@@ -18,7 +18,7 @@
 
 
     <!--test-->
-<!--
+    <!--
 <string name="direct_chat" >ca-app-pub-3940256099942544/6300978111</string>
 <string name="banner33">ca-app-pub-3940256099942544/6300978111</string>
     <string name="banner">ca-app-pub-3940256099942544/6300978111</string>
@@ -51,6 +51,9 @@
     <string name="sendindtextto">Sending text to:</string>
     <string name="invalidinputtext">Invalid input,must not be empty</string>
     <string name="title_activity_status">StatusActivity</string>
+    <string name="title_activity_splash">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
     <!-- TODO: Remove or change this placeholder text -->
     <!-- Strings used for fragments for navigation -->
 

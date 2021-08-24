@@ -32,12 +32,12 @@ public class MainActivityNew extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_new);
-        myApplication=(MyApplication)this.getApplication();
-        myApplication.showInterstitial(this);
-        AdView mAdView = findViewById(R.id.adView);
+       // myApplication=(MyApplication)this.getApplication();
+       // myApplication.showInterstitial(this);
+       // AdView mAdView = findViewById(R.id.adView);
 
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+       // AdRequest adRequest = new AdRequest.Builder().build();
+       // mAdView.loadAd(adRequest);
 
         checkPermissions();
         whatsweb =findViewById(R.id.whatsweb);

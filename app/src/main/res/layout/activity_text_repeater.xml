@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/whatsback"
     tools:context=".TextRepeater">
 
     <ScrollView
@@ -28,12 +27,11 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:ems="10"
+                android:fontFamily="@font/dancing_script"
                 android:gravity="start|top"
                 android:hint="@string/enter_text_to_repeat"
                 android:inputType="textMultiLine"
-                android:outlineProvider="background"
-                android:fontFamily="@font/dancing_script"
-                 />
+                android:outlineProvider="background" />
 
             <EditText
                 android:id="@+id/noOfTimes"
@@ -41,11 +39,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:ems="10"
+                android:fontFamily="@font/dancing_script"
                 android:hint="@string/number_of_times"
                 android:inputType="number"
-                android:fontFamily="@font/dancing_script"
-                android:outlineProvider="background"
-                 />
+                android:outlineProvider="background" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -66,10 +63,10 @@
 
             <Button
                 android:id="@+id/generate"
-                android:fontFamily="@font/dancing_script"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:enabled="false"
+                android:fontFamily="@font/dancing_script"
                 android:text="@string/generate" />
 
             <com.google.android.gms.ads.AdView
@@ -79,6 +76,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
+                android:visibility="gone"
                 app:adSize="BANNER"
                 app:adUnitId="@string/banner"></com.google.android.gms.ads.AdView>
 
@@ -104,10 +102,10 @@
                     android:id="@+id/copy"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:fontFamily="@font/dancing_script"
                     android:layout_margin="4dp"
                     android:layout_weight="5"
                     android:enabled="false"
+                    android:fontFamily="@font/dancing_script"
                     android:text="@string/copy"
                     app:icon="?attr/actionModeCopyDrawable" />
             </LinearLayout>
@@ -116,28 +114,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:background="@color/teal_200"
+                android:background="@drawable/circuler_background"
                 android:padding="4dp"
-                app:cardBackgroundColor="#03A9F4"
                 app:cardCornerRadius="6dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/preview"
-                    android:fontFamily="@font/dancing_script"
-                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/generatedText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
-                    android:padding="4dp"
+                    android:background="@drawable/circuler_background"
                     android:fontFamily="@font/dancing_script"
-                    android:textColor="@color/white"
+                    android:padding="4dp"
+                    android:textStyle="bold"
                     tools:text="jjjjg" />
             </androidx.cardview.widget.CardView>
 
