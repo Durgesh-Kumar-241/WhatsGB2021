@@ -1,6 +1,7 @@
 package com.dktechhub.mnnit.ee.whatsweb;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,6 +32,7 @@ public class OfflineChatList extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getPermissions();
+        startNotificationService();
         setupService();
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -121,6 +123,41 @@ public class OfflineChatList extends AppCompatActivity {
         return false;
     }
 
+    public void startNotificationService()
+    {   if(!isNotificationEnbld()) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Allow notification access to receive your messages without opening Whatsapp");
+        builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+        builder.setPositiveButton("Enable", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+
+        builder.create().show();
+
+
+
+    }
+    }
+
+    private  boolean isNotificationEnbld()
+    {
+        ContentResolver cr = getContentResolver();
+        String enableds = Settings.Secure.getString(cr,"enabled_notification_listeners");
+        String pak = getPackageName();
+        return  enableds!=null && enableds.contains(pak);
+    }
     public void setTaskId()
     {
         access=Access.instance;

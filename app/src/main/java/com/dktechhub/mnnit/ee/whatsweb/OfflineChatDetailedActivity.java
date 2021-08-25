@@ -17,6 +17,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.dktechhub.mnnit.ee.whatsweb.Utils.DBHelper;
+
 public class OfflineChatDetailedActivity extends AppCompatActivity {
     com.google.android.material.floatingactionbutton.FloatingActionButton sendButton;
     ImageButton imagePicker;
@@ -24,6 +26,7 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
     ImageView imogiSwitch;
     //Access access;
     String number;
+    DBHelper dbHelper;
     String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,7 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
         });
 
         showAlert();
+        dbHelper=new DBHelper(this);
 
 
 
@@ -112,24 +116,16 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
         {
             return;
         }
-        final boolean[] checked = new boolean[]{false};
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Each time you send a message, you will be directed to whatsapp ,without changing the last seen time");
         builder.setTitle("Notice");
         
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+        builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
 
-        builder.setNegativeButton("Do not show again", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                sharedPreferences.edit().putBoolean("alert_offline_chat_redirect",false).apply();
-                dialog.dismiss();
-            }
+        builder.setNegativeButton("Do not show again", (dialog, which) -> {
+            sharedPreferences.edit().putBoolean("alert_offline_chat_redirect",false).apply();
+            dialog.dismiss();
         });
 
         builder.create().show();
