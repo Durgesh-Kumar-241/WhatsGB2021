@@ -6,4 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".ChatPickerActivity">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/contactsList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="249dp"
+        tools:layout_editor_absoluteY="229dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,15 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/linear_banner_ads"
-        android:orientation="vertical">
+
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -33,16 +29,17 @@
             android:layout_marginTop="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="2dp"
-            android:background="?attr/colorBackgroundLinearSendChat"
+
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"
                 android:layout_weight="200"
-                android:background="@drawable/bg_linear_text_send"
+
+                android:background="@drawable/back"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -51,14 +48,14 @@
                     android:layout_height="31dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="5dp"
-                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_marginBottom="5dp"
                     ads:srcCompat="@drawable/imogi" />
 
                 <com.vanniktech.emoji.EmojiEditText
                     android:id="@+id/emojiEditText"
                     style="android:editTextStyle"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="5dp"
@@ -69,8 +66,7 @@
                     android:imeOptions="actionUnspecified|actionSend|flagNoExtractUi"
                     android:maxLines="5"
                     android:minLines="1"
-                    android:textAppearance="?android:attr/textAppearanceMediumInverse"
-                    android:textColorHint="?attr/colorDescription" />
+                    android:textAppearance="?android:attr/textAppearanceMediumInverse" />
 
                 <ImageButton
                     android:id="@+id/image_button_send_image"
@@ -89,9 +85,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="2dp"
-                android:onClick="sClick"
+
+                android:contentDescription="TODO"
                 android:src="@drawable/ic_baseline_send_24"
                 ads:fabCustomSize="40dp" />
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>

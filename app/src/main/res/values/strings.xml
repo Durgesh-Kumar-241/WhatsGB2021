@@ -63,6 +63,7 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="accessibility_service_description">Background Accessibility service</string>
     <!-- TODO: Remove or change this placeholder text -->
     <!-- Strings used for fragments for navigation -->
 

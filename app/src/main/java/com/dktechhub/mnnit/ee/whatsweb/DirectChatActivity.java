@@ -95,6 +95,8 @@ public class DirectChatActivity extends AppCompatActivity {
 
         //sharedPreferences.edit().putString("recent_country",ccp.getSelectedCountryNameCode()).apply();
         sharedPreferences.edit().putString("recent_number",number.getText().toString()).apply();
+
+
     }
 
 
