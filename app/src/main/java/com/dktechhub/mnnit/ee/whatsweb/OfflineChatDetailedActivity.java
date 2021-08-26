@@ -5,13 +5,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -70,7 +66,7 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
         });
 
         showAlert();
-        dbHelper=new DBHelper(this);
+        dbHelper=new DBHelper(this, 1);
 
 
 

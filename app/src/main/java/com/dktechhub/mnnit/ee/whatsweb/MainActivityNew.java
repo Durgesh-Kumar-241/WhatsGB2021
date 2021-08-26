@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.dktechhub.mnnit.ee.whatsweb.Utils.WContactsManager;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -40,6 +41,8 @@ public class MainActivityNew extends AppCompatActivity {
        // mAdView.loadAd(adRequest);
 
         checkPermissions();
+
+        //WContactsManager.setDeafaultCountryCode(this);
         whatsweb =findViewById(R.id.whatsweb);
         statussaver=findViewById(R.id.statussaver);
 

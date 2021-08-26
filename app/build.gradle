@@ -59,4 +59,8 @@ dependencies {
 
     implementation 'com.vanniktech:emoji-google:0.7.0'
 
+    // https://mvnrepository.com/artifact/com.beardedhen/androidbootstrap
+    implementation group: 'com.beardedhen', name: 'androidbootstrap', version: '2.3.2'
+
+
 }

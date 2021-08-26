@@ -2,12 +2,17 @@ package com.dktechhub.mnnit.ee.whatsweb;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.telephony.PhoneNumberUtils;
@@ -18,6 +23,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.dktechhub.mnnit.ee.whatsweb.Utils.ContactsAdapter;
+import com.dktechhub.mnnit.ee.whatsweb.Utils.WContactsManager;
+import com.dktechhub.mnnit.ee.whatsweb.Utils.wContact;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,9 +32,11 @@ import java.util.Comparator;
 
 public class ChatPickerActivity extends AppCompatActivity {
 
-    private NameComp nameComp;
+    //private NameComp nameComp;
     RecyclerView recyclerView;
     ContactsAdapter contactsAdapter;
+    private SearchView searchView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,68 +61,49 @@ public class ChatPickerActivity extends AppCompatActivity {
         ContentResolver cr = getContentResolver();
 
 //RowContacts for filter Account Types
-        Cursor contactCursor = cr.query(
-                ContactsContract.RawContacts.CONTENT_URI,
-                new String[]{ContactsContract.RawContacts._ID,
-                        ContactsContract.RawContacts.CONTACT_ID},
-                ContactsContract.RawContacts.ACCOUNT_TYPE + "= ?",
-                new String[]{"com.whatsapp"},
-                null);
+        Cursor query = cr.query(
+                ContactsContract.Data.CONTENT_URI,
+                null,
+                "account_type= ? and mimetype= ?",
+                new String[]{"com.whatsapp","vnd.android.cursor.item/vnd.com.whatsapp.profile"},
+                "display_name COLLATE NOCASE");
 
 //ArrayList for Store Whatsapp Contact
        // ArrayList<String> myWhatsappContacts = new ArrayList<>();
 
-        if (contactCursor != null) {
-            if (contactCursor.getCount() > 0) {
-                if (contactCursor.moveToFirst()) {
-                    do {
-                        //whatsappContactId for get Number,Name,Id ect... from  ContactsContract.CommonDataKinds.Phone
-                        String whatsappContactId = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.RawContacts.CONTACT_ID));
-
-                        if (whatsappContactId != null) {
-                            //Get Data from ContactsContract.CommonDataKinds.Phone of Specific CONTACT_ID
-                            Cursor whatsAppContactCursor = cr.query(
-                                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                                    new String[]{ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
-                                            ContactsContract.CommonDataKinds.Phone.NUMBER,
-                                            ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME},
-                                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
-                                    new String[]{whatsappContactId}, null);
-
-                            if (whatsAppContactCursor != null) {
-                                whatsAppContactCursor.moveToFirst();
-                                String id = whatsAppContactCursor.getString(whatsAppContactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
-                                String name = whatsAppContactCursor.getString(whatsAppContactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-                                String number = whatsAppContactCursor.getString(whatsAppContactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                               // number= PhoneNumberUtils.stripSeparators(number);
-                                Log.d("Loaded",name+"\t"+number+"\t"+id);
-                                whatsAppContactCursor.close();
-
-                                //Add Number to ArrayList
-                                loaded.add(new WContact(name,number,id));
-
-                            }
-                        }
-                    } while (contactCursor.moveToNext());
-                    contactCursor.close();
+        if(query!=null&&query.getCount()>0)
+        {   if(query.moveToFirst()){
+            do {
+                long id = query.getLong(query.getColumnIndex("_id"));
+                String display_name = query.getString(query.getColumnIndex("display_name"));
+                String data_1 = query.getString(query.getColumnIndex("data1"));
+                String mimetype = query.getString(query.getColumnIndex("mimetype"));
+                if(display_name!=null) {
+                    //Log.w("gggg", "  Name: " + display_name + "  Number: " + data_1 + "  voip1: " + id + "  type: " + mimetype);
+                    long id2 = id + 1;
+                    if (data_1.contains("@")) {
+                        data_1 = data_1.substring(0, data_1.indexOf("@")).trim();
+                    }
+                    //Log.w("gggg", "Finally  Name: " + display_name + "  Number: " + data_1 + "  voip1: " + id + "  type: " + mimetype);
+                    loaded.add(new WContact(display_name,data_1,String.valueOf(id)));
                 }
+            }while (query.moveToNext());
+
             }
+            query.close();
+
         }
 
+
+
+
+
         //showLogI(TAG, " WhatsApp contact size :  " + myWhatsappContacts.size());
-        nameComp=new NameComp();
-        Collections.sort(loaded,nameComp);
 
         return loaded;
     }
 
-    public static class NameComp implements Comparator<WContact> {
 
-        @Override
-        public int compare(WContact o1, WContact o2) {
-            return o1.name.compareToIgnoreCase(o2.name);
-        }
-    }
 
 
     @Override
@@ -121,15 +111,32 @@ public class ChatPickerActivity extends AppCompatActivity {
         //return super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_contacts,menu);
+        getMenuInflater().inflate(R.menu.menu_app_contact, menu);
+        SearchView searchView2 = (SearchView) menu.findItem(R.id.search_contacts).getActionView();
+        this.searchView = searchView2;
+        searchView2.setSearchableInfo(((SearchManager) getSystemService(Context.SEARCH_SERVICE)).getSearchableInfo(getComponentName()));
+        this.searchView.setMaxWidth(Integer.MAX_VALUE);
+        this.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
         return true;
+
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId()==R.id.refresh)
+        if(item.getItemId()==R.id.menu_contacts_ref)
         {
-            refresh();
-        }else if ( item.getItemId()==R.id.search)
+            //WContactsManager.refreshContactsDatabase(this);
+        }else if ( item.getItemId()==R.id.search_contacts)
         {
 
         }
@@ -153,4 +160,6 @@ public class ChatPickerActivity extends AppCompatActivity {
         startActivity(i);
         this.finish();
     }
+
+
 }

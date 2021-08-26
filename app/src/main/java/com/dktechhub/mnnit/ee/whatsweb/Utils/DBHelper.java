@@ -12,23 +12,6 @@ public class DBHelper extends SQLiteOpenHelper {
     //SQLiteDatabase sqLiteDatabase;
     SQLiteDatabase db;
 
-    public void createMessage(String text, int incoming, String number)
-    {     }
-
-    public void cretaMessageOutgoing(String text,String number)
-    {
-         }
-
-    public void createMessageIncoming(String text,String number)
-    {
-
-    }
-
-    public void loadMessageAll(String number)
-    {
-
-    }
-
 
 
 
@@ -276,7 +259,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 
-    public DBHelper(Context context)
+    public DBHelper(Context context, int i)
     {
         super(context,"gb_data",null,1);
     }
