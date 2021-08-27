@@ -9,19 +9,19 @@ import android.net.Uri;
 public class wContact implements Comparable<wContact> {
 
     /* renamed from: b */
-    public String f5463b;
+    public String name;
 
     /* renamed from: c */
-    public String f5464c;
+    public String number;
 
     /* renamed from: d */
-    public Integer f5465d;
+    public Integer id;
 
     /* renamed from: e */
-    public String f5466e;
+    public String voip1;
 
     /* renamed from: f */
-    public String f5467f;
+    public String voip2;
 
     /* renamed from: g */
     public String f5468g;
@@ -36,11 +36,11 @@ public class wContact implements Comparable<wContact> {
     public String f5471j;
 
     public wContact(Integer num, String str, String str2, String str3, String str4) {
-        this.f5465d = num;
-        this.f5463b = str;
-        this.f5464c = str2;
-        this.f5466e = str3;
-        this.f5467f = str4;
+        this.id = num;
+        this.name = str;
+        this.number = str2;
+        this.voip1 = str3;
+        this.voip2 = str4;
     }
 
     public wContact(String str, long j, Uri uri, String str2) {
@@ -51,29 +51,29 @@ public class wContact implements Comparable<wContact> {
     }
 
     public wContact(String str, String str2, String str3, String str4) {
-        this.f5463b = str;
-        this.f5464c = str2;
-        this.f5466e = str3;
-        this.f5467f = str4;
+        this.name = str;
+        this.number = str2;
+        this.voip1 = str3;
+        this.voip2 = str4;
     }
 
     /* JADX DEBUG: Method arguments types fixed to match base method, original types: [java.lang.Object] */
     @Override // java.lang.Comparable
     public int compareTo(wContact d2Var) {
-        return this.f5463b.compareTo(d2Var.f5463b);
+        return this.name.compareTo(d2Var.name);
     }
 
     public String toString() {
         StringBuilder j = outline.m3280j("Id: ");
-        j.append(this.f5465d);
+        j.append(this.id);
         j.append("  Name: ");
-        j.append(this.f5463b);
+        j.append(this.name);
         j.append("  Number: ");
-        j.append(this.f5464c);
+        j.append(this.number);
         j.append("  voip1: ");
-        j.append(this.f5466e);
+        j.append(this.voip1);
         j.append("  voip2: ");
-        j.append(this.f5467f);
+        j.append(this.voip2);
         return j.toString();
     }
 }

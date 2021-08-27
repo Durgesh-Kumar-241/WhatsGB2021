@@ -66,7 +66,7 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
         });
 
         showAlert();
-        dbHelper=new DBHelper(this, 1);
+        dbHelper=new DBHelper(this);
 
 
 

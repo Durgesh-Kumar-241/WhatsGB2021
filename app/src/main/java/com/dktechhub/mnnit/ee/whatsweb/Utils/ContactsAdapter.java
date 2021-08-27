@@ -1,17 +1,19 @@
 package com.dktechhub.mnnit.ee.whatsweb.Utils;
 
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.dktechhub.mnnit.ee.whatsweb.R;
 import com.dktechhub.mnnit.ee.whatsweb.WContact;
 
@@ -19,7 +21,12 @@ import java.util.ArrayList;
 
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.CViewHolder>{
     ArrayList<WContact> mList=new ArrayList<>();
+    ColorGenerator colorGenerator=ColorGenerator.MATERIAL;
+    //TextDrawable.IBuilder builder;
+    TextDrawable.IBuilder builder = TextDrawable.builder().round();
+
     ContactPickerInterface contactPickerInterface;
+   // TextDrawable.Builder builder ;
     @NonNull
     @Override
     public CViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -33,6 +40,8 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.CViewH
     public void onBindViewHolder(@NonNull CViewHolder holder, int position) {
         holder.number.setText(mList.get(position).number);
         holder.name.setText(mList.get(position).name);
+
+        holder.profile.setImageDrawable(builder.build(String.valueOf(mList.get(position).name.charAt(0)), colorGenerator.getRandomColor()));
         holder.main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,11 +61,13 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.CViewH
     public static class CViewHolder extends RecyclerView.ViewHolder{
         public TextView name,number;
         public LinearLayout main;
+        public ImageView profile;
         public CViewHolder(@NonNull View itemView) {
             super(itemView);
-            name=itemView.findViewById(R.id.name);
-            number=itemView.findViewById(R.id.cnumber);
+            name=itemView.findViewById(R.id.title_conv);
+            number=itemView.findViewById(R.id.summary);
             main=itemView.findViewById(R.id.main_lay);
+            profile=itemView.findViewById(R.id.profile_contact);
 
         }
     }
@@ -74,5 +85,10 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.CViewH
     }
     public interface ContactPickerInterface{
         void OnContactClicked(WContact wContact);
+    }
+
+    public ContactsAdapter()
+    {
+
     }
 }

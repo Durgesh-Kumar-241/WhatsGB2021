@@ -9,14 +9,18 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.dktechhub.mnnit.ee.whatsweb.Utils.DBHelper;
+import com.dktechhub.mnnit.ee.whatsweb.Utils.NotificationTitle;
+import com.dktechhub.mnnit.ee.whatsweb.Utils.NotificationTitleAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -25,10 +29,12 @@ import android.widget.Toast;
 
 public class OfflineChatList extends AppCompatActivity {
     Access access;
+    DBHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offline_chat_list);
+        dbHelper = new DBHelper(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getPermissions();
@@ -42,6 +48,16 @@ public class OfflineChatList extends AppCompatActivity {
 
             }
         });
+        RecyclerView recyclerView = findViewById(R.id.overview_recent_chats);
+        NotificationTitleAdapter adapter = new NotificationTitleAdapter();
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        NotificationTitle notificationTitle = new NotificationTitle(123,"Durgesh",null,1234,"12/02/2003","100","Hello Dear");
+
+        dbHelper.insertNotificationData(notificationTitle);
+        adapter.setmList(dbHelper.loadNotificationData());
+
+
     }
     public void getPermissions()
     {

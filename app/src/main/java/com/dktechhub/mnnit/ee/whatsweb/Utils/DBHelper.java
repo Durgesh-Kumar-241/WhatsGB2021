@@ -10,14 +10,14 @@ import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
     //SQLiteDatabase sqLiteDatabase;
-    SQLiteDatabase db;
+   // SQLiteDatabase db;
 
 
 
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table notificationTitle(ID integer primary key autoincrement, Title text, Photo BLOB, Count integer, date text, number text)");
+        db.execSQL("create table notificationTitle(ID integer primary key autoincrement, Title text, Photo BLOB, Count integer, date text, number text,summary text)");
         db.execSQL("create table notificationText(ID integer primary key autoincrement, Title text, Text text, date text, IDTitle integer, pathPhoto text,direction text, pathVoice text)");
         db.execSQL("create table contactsW(ID integer primary key autoincrement, Name text, Number text, vo1 text, vo2 text)");
 
@@ -112,19 +112,19 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void mo5003h(C1734e2 e2Var) {
+    public void insertMessage(WMessage e2Var) {
         SQLiteDatabase writableDatabase = getWritableDatabase();
         if (writableDatabase != null) {
             try {
                 ContentValues contentValues = new ContentValues();
-                contentValues.put("Title", e2Var.f5474a);
-                contentValues.put("Text", e2Var.f5475b);
-                contentValues.put("date", e2Var.f5476c);
-                contentValues.put("IDTitle", e2Var.f5477d);
-                contentValues.put("pathPhoto", e2Var.f5478e);
-                contentValues.put("direction", e2Var.f5479f);
-                contentValues.put("pathVoice", e2Var.f5480g);
-                contentValues.put("timeMilleSecond", Long.valueOf(e2Var.f5481h));
+                contentValues.put("Title", e2Var.title);
+                contentValues.put("Text", e2Var.text);
+                contentValues.put("date", e2Var.date);
+                contentValues.put("IDTitle", e2Var.idTitle);
+                contentValues.put("pathPhoto", e2Var.pathPhoto);
+                contentValues.put("direction", e2Var.direction);
+                contentValues.put("pathVoice", e2Var.pathVoice);
+                contentValues.put("timeMilleSecond", e2Var.timeMilleSecond);
                 writableDatabase.insert("notificationText", null, contentValues);
             } catch (Exception unused) {
             } catch (Throwable th) {
@@ -136,8 +136,8 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    public ArrayList<C1734e2> mo5001f(String str) {
-        ArrayList<C1734e2> arrayList = new ArrayList<>();
+    public ArrayList<WMessage> getMessageByTitle(String str) {
+        ArrayList<WMessage> arrayList = new ArrayList<>();
         SQLiteDatabase readableDatabase = getReadableDatabase();
         try {
             Cursor rawQuery = readableDatabase.rawQuery("select * from notificationText where Title= ?", new String[]{str});
@@ -147,7 +147,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 return arrayList;
             }
             do {
-                arrayList.add(new C1734e2(rawQuery.getInt(0), rawQuery.getString(1), rawQuery.getString(2), rawQuery.getString(3), Integer.valueOf(rawQuery.getInt(4)), rawQuery.getString(5), rawQuery.getString(6), rawQuery.getString(7), rawQuery.getLong(8)));
+                arrayList.add(new WMessage(rawQuery.getInt(0), rawQuery.getString(1), rawQuery.getString(2), rawQuery.getString(3), Integer.valueOf(rawQuery.getInt(4)), rawQuery.getString(5), rawQuery.getString(6), rawQuery.getString(7), rawQuery.getLong(8)));
             } while (rawQuery.moveToNext());
             rawQuery.close();
             readableDatabase.close();
@@ -160,16 +160,16 @@ public class DBHelper extends SQLiteOpenHelper {
         return arrayList;
     }
 
-    public C1734e2 mo5000e(String str) {
+    public WMessage getLastMessageByTitle(String str) {
         SQLiteDatabase readableDatabase = getReadableDatabase();
-        C1734e2 e2Var = null;
+        WMessage e2Var = null;
         try {
             Cursor rawQuery = readableDatabase.rawQuery("select * from notificationText where Title= ?", new String[]{str});
             if (rawQuery != null && rawQuery.getCount() > 0 && rawQuery.moveToLast()) {
-                e2Var = new C1734e2(rawQuery.getInt(0), rawQuery.getString(1), rawQuery.getString(2), rawQuery.getString(3), Integer.valueOf(rawQuery.getInt(4)), rawQuery.getString(5), rawQuery.getString(6), rawQuery.getString(7), rawQuery.getLong(8));
+                e2Var = new WMessage(rawQuery.getInt(0), rawQuery.getString(1), rawQuery.getString(2), rawQuery.getString(3), Integer.valueOf(rawQuery.getInt(4)), rawQuery.getString(5), rawQuery.getString(6), rawQuery.getString(7), rawQuery.getLong(8));
             }
             rawQuery.close();
-        } catch (Exception unused) {
+        } catch (Exception ignored) {
         } catch (Throwable th) {
             readableDatabase.close();
             throw th;
@@ -202,8 +202,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return 0;
     }
 
-    public ArrayList<C1738f2> mo4998c() {
-        ArrayList<C1738f2> arrayList = new ArrayList<>();
+    public ArrayList<NotificationTitle> loadNotificationData() {
+        ArrayList<NotificationTitle> arrayList = new ArrayList<>();
         SQLiteDatabase readableDatabase = getReadableDatabase();
         try {
             Cursor rawQuery = readableDatabase.rawQuery("select * from notificationTitle", null);
@@ -213,7 +213,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 return arrayList;
             }
             do {
-                arrayList.add(new C1738f2(rawQuery.getInt(0), rawQuery.getString(1), rawQuery.getBlob(2), rawQuery.getInt(3), rawQuery.getString(4), rawQuery.getString(5)));
+                arrayList.add(new NotificationTitle(rawQuery.getInt(0), rawQuery.getString(1), rawQuery.getBlob(2), rawQuery.getInt(3), rawQuery.getString(4), rawQuery.getString(5),rawQuery.getString(6)));
             } while (rawQuery.moveToNext());
             rawQuery.close();
             readableDatabase.close();
@@ -227,15 +227,15 @@ public class DBHelper extends SQLiteOpenHelper {
         return arrayList;
     }
 
-    public ArrayList<C1730d2> mo4997b() {
-        ArrayList<C1730d2> arrayList = new ArrayList<>();
+    public ArrayList<wContact> loadAllContacts() {
+        ArrayList<wContact> arrayList = new ArrayList<>();
         SQLiteDatabase readableDatabase = getReadableDatabase();
         Cursor rawQuery = readableDatabase.rawQuery("select * from contactsW", null);
         if (rawQuery != null) {
             try {
                 if (rawQuery.moveToFirst()) {
                     do {
-                        arrayList.add(new C1730d2(rawQuery.getInt(0), rawQuery.getString(1), rawQuery.getString(2), rawQuery.getString(3), rawQuery.getString(4)));
+                        arrayList.add(new wContact(rawQuery.getInt(0), rawQuery.getString(1), rawQuery.getString(2), rawQuery.getString(3), rawQuery.getString(4)));
                     } while (rawQuery.moveToNext());
                 }
             } catch (Exception ignored) {
@@ -256,18 +256,51 @@ public class DBHelper extends SQLiteOpenHelper {
         getWritableDatabase().execSQL("create table contactsW(ID integer primary key autoincrement, Name text, Number text, vo1 text, vo2 text)");
     }
 
+    public void insertNotificationData(NotificationTitle notificationTitle)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        if(db!=null)
+        {
+            try {
+
+               //Cursor qwery = db.rawQuery("SELECT COUNT(*) FROM notificationTitle WHERE Title = ? ",new String[]{notificationTitle.title});
+               if(true) {
+                   //Title text, Photo BLOB, Count integer, date text, number text
+                   ContentValues contentValues = new ContentValues();
+                   contentValues.put("Title", notificationTitle.title);
+                   contentValues.put("Photo", notificationTitle.photo);
+                   contentValues.put("Count", notificationTitle.count);
+                   contentValues.put("date", notificationTitle.date);
+                   contentValues.put("number", notificationTitle.number);
+                   contentValues.put("summary", notificationTitle.summary);
+                   db.insert("notificationTitle", null, contentValues);
+               }   else {
+                   ContentValues contentValues = new ContentValues();
+                   //contentValues.put("Title", notificationTitle.title);
+                   contentValues.put("Photo", notificationTitle.photo);
+                   contentValues.put("Count", notificationTitle.count);
+                   contentValues.put("date", notificationTitle.date);
+                   contentValues.put("number", notificationTitle.number);
+                   contentValues.put("summary", notificationTitle.summary);
+                   db.update("notificationTitle",contentValues,"Title = ?",new String[]{notificationTitle.title});
+               }
+            } catch (Exception unused) {
+                unused.printStackTrace();
+            } catch (Throwable th) {
+                th.printStackTrace();
+                db.close();
+                throw th;
+            }
+            db.close();
+        }
+    }
 
 
-
-    public DBHelper(Context context, int i)
+    public DBHelper(Context context)
     {
         super(context,"gb_data",null,1);
     }
 
 
-    public static class Message{
-        String text;
-        boolean incoming;
-        String dateTime;
-    }
+
 }
