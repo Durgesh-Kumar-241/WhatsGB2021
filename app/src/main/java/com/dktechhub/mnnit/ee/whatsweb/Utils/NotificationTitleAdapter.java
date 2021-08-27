@@ -48,9 +48,15 @@ public class NotificationTitleAdapter extends RecyclerView.Adapter<NotificationT
         holder.num_unread.setText(mList.get(position).number);
         holder.dateTime.setText(mList.get(position).date);
         //holder.name.setText(mList.get(position).title);
-        if(mList.get(position).photo==null)
-        holder.profile.setImageDrawable(builder.build(String.valueOf(mList.get(position).title.charAt(0)),colorGenerator.getRandomColor()));
-        else holder.profile.setImageBitmap(Bitmap.createScaledBitmap(BitmapFactory.decodeByteArray(mList.get(position).photo,0,mList.get(position).photo.length),holder.profile.getWidth(),holder.profile.getHeight(),false));
+        try {
+            if (mList.get(position).photo == null)
+                holder.profile.setImageDrawable(builder.build(String.valueOf(mList.get(position).title.charAt(0)), colorGenerator.getRandomColor()));
+            else
+                holder.profile.setImageBitmap(Bitmap.createScaledBitmap(BitmapFactory.decodeByteArray(mList.get(position).photo, 0, mList.get(position).photo.length), holder.profile.getWidth(), holder.profile.getHeight(), false));
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         if(mList.get(position).summary!=null)
             holder.summary.setText(mList.get(position).summary);
 

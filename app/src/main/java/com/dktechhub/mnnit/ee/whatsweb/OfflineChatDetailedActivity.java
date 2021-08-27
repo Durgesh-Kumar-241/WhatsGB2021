@@ -4,7 +4,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,6 +17,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.dktechhub.mnnit.ee.whatsweb.Utils.DBHelper;
+import com.dktechhub.mnnit.ee.whatsweb.Utils.NotificationTextAdapter;
+import com.dktechhub.mnnit.ee.whatsweb.Utils.WMessage;
+
+import java.util.ArrayList;
 
 public class OfflineChatDetailedActivity extends AppCompatActivity {
     com.google.android.material.floatingactionbutton.FloatingActionButton sendButton;
@@ -24,10 +31,13 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
     String number;
     DBHelper dbHelper;
     String name;
+    RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_offline_chat_detailed);
+        recyclerView=findViewById(R.id.recycler_view);
         try {
 
 
@@ -68,7 +78,24 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
         showAlert();
         dbHelper=new DBHelper(this);
 
+        ArrayList<WMessage> arrayList = new ArrayList<>();
+        WMessage wMessage = new WMessage("Title","Tetx","12/02/2003",123,"/sdcard/fef",true,"/sdcard/helowdw");
+        arrayList.add(wMessage);
+        arrayList.add(wMessage);
+        arrayList.add(wMessage);
+        WMessage wMessage2 = new WMessage("Title","Tetx","12/02/2003",123,"/sdcard/fef",false,"/sdcard/helowdw");
+        arrayList.add(wMessage2);
+        arrayList.add(wMessage2);
+        NotificationTextAdapter adapter = new NotificationTextAdapter();
 
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        dbHelper.insertMessage(wMessage);
+
+        dbHelper.insertMessage(wMessage2);
+        arrayList.addAll(dbHelper.getMessageByTitleId(123));
+        adapter.setmList(arrayList);
 
     }
 

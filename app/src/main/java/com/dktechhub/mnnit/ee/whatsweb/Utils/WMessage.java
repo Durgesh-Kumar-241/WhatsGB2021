@@ -19,7 +19,7 @@ public class WMessage {
     public String pathPhoto;
 
     /* renamed from: f */
-    public String direction;
+    public boolean incoming = false;
 
     /* renamed from: g */
     public String pathVoice;
@@ -27,32 +27,41 @@ public class WMessage {
     /* renamed from: h */
     public long timeMilleSecond;
 
-    public WMessage(Integer num, String str, String str2, String str3, Integer num2, String str4, String str5, String str6, long j) {
-        this.title = str;
-        this.text = str2;
-        this.date = str3;
-        this.idTitle = num2;
-        this.pathPhoto = str4;
-        this.direction = str5;
-        this.pathVoice = str6;
-        this.timeMilleSecond = j;
+    public WMessage(Integer num, String title, String text, String date, Integer idTitle, String pathPhoto,boolean incoming, String pathvoice, long timeMillisecond) {
+        this.title = title;
+        this.text = text;
+        this.date = date;
+        this.idTitle = idTitle;
+        this.pathPhoto = pathPhoto;
+        this.incoming=incoming;
+        this.pathVoice = pathvoice;
+        this.timeMilleSecond = timeMillisecond;
     }
 
-    public WMessage(String str, String str2, String str3, Integer num, String str4, String str5, String str6) {
-        this.title = str;
-        this.text = str2;
-        this.date = str3;
-        this.idTitle = num;
-        this.pathPhoto = str4;
-        this.direction = str5;
-        this.pathVoice = str6;
+    public WMessage(String title, String text, String date, Integer idTitle, String pathPhoto, boolean incoming, String pathVoice) {
+        this.title = title;
+        this.text = text;
+        this.date = date;
+        this.idTitle = idTitle;
+        this.pathPhoto = pathPhoto;
+        this.incoming=incoming;
+        this.pathVoice = pathVoice;
+    }
+    public WMessage(int id,String title, String text, String date, Integer idTitle, String pathPhoto, boolean incoming, String pathVoice) {
+        this.title = title;
+        this.text = text;
+        this.date = date;
+        this.idTitle = idTitle;
+        this.pathPhoto = pathPhoto;
+        this.incoming=incoming;
+        this.pathVoice = pathVoice;
     }
 
     public String toString() {
         StringBuilder j = outline.m3280j("text: ");
         j.append(this.text);
-        j.append("      Direction:  ");
-        j.append(this.direction);
+        j.append("      Incoming:  ");
+        j.append(this.incoming);
         return j.toString();
     }
 }

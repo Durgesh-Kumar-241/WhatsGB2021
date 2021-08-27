@@ -18,7 +18,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table notificationTitle(ID integer primary key autoincrement, Title text, Photo BLOB, Count integer, date text, number text,summary text)");
-        db.execSQL("create table notificationText(ID integer primary key autoincrement, Title text, Text text, date text, IDTitle integer, pathPhoto text,direction text, pathVoice text)");
+        db.execSQL("create table notificationText(ID integer primary key autoincrement, Title text, Text text, date text, IDTitle integer, pathPhoto text,incoming boolean, pathVoice text )");
         db.execSQL("create table contactsW(ID integer primary key autoincrement, Name text, Number text, vo1 text, vo2 text)");
 
     }
@@ -122,9 +122,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 contentValues.put("date", e2Var.date);
                 contentValues.put("IDTitle", e2Var.idTitle);
                 contentValues.put("pathPhoto", e2Var.pathPhoto);
-                contentValues.put("direction", e2Var.direction);
+                contentValues.put("incoming", e2Var.incoming?1:0);
                 contentValues.put("pathVoice", e2Var.pathVoice);
-                contentValues.put("timeMilleSecond", e2Var.timeMilleSecond);
+                //contentValues.put("timeMilleSecond", e2Var.timeMilleSecond);
                 writableDatabase.insert("notificationText", null, contentValues);
             } catch (Exception unused) {
             } catch (Throwable th) {
@@ -136,18 +136,18 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    public ArrayList<WMessage> getMessageByTitle(String str) {
+    public ArrayList<WMessage> getMessageByTitleId(Integer notificationTitleId) {
         ArrayList<WMessage> arrayList = new ArrayList<>();
         SQLiteDatabase readableDatabase = getReadableDatabase();
         try {
-            Cursor rawQuery = readableDatabase.rawQuery("select * from notificationText where Title= ?", new String[]{str});
+            Cursor rawQuery = readableDatabase.rawQuery("select * from notificationText where IDTitle= ?", new String[]{String.valueOf(notificationTitleId)});
             if (rawQuery == null || !rawQuery.moveToFirst()) {
                 rawQuery.close();
                 readableDatabase.close();
                 return arrayList;
             }
             do {
-                arrayList.add(new WMessage(rawQuery.getInt(0), rawQuery.getString(1), rawQuery.getString(2), rawQuery.getString(3), Integer.valueOf(rawQuery.getInt(4)), rawQuery.getString(5), rawQuery.getString(6), rawQuery.getString(7), rawQuery.getLong(8)));
+                arrayList.add(new WMessage(rawQuery.getInt(0), rawQuery.getString(1), rawQuery.getString(2), rawQuery.getString(3), rawQuery.getInt(4), rawQuery.getString(5),rawQuery.getInt(6)==1, rawQuery.getString(7)));
             } while (rawQuery.moveToNext());
             rawQuery.close();
             readableDatabase.close();
@@ -166,7 +166,7 @@ public class DBHelper extends SQLiteOpenHelper {
         try {
             Cursor rawQuery = readableDatabase.rawQuery("select * from notificationText where Title= ?", new String[]{str});
             if (rawQuery != null && rawQuery.getCount() > 0 && rawQuery.moveToLast()) {
-                e2Var = new WMessage(rawQuery.getInt(0), rawQuery.getString(1), rawQuery.getString(2), rawQuery.getString(3), Integer.valueOf(rawQuery.getInt(4)), rawQuery.getString(5), rawQuery.getString(6), rawQuery.getString(7), rawQuery.getLong(8));
+                e2Var = new WMessage(rawQuery.getInt(0), rawQuery.getString(1), rawQuery.getString(2), rawQuery.getString(3), rawQuery.getInt(4), rawQuery.getString(5),Boolean.getBoolean( rawQuery.getString(6)), rawQuery.getString(7), rawQuery.getLong(8));
             }
             rawQuery.close();
         } catch (Exception ignored) {
@@ -177,6 +177,8 @@ public class DBHelper extends SQLiteOpenHelper {
         readableDatabase.close();
         return e2Var;
     }
+
+
 
     public Integer mo4999d(String str, String str2) {
         SQLiteDatabase readableDatabase = getReadableDatabase();
@@ -263,8 +265,8 @@ public class DBHelper extends SQLiteOpenHelper {
         {
             try {
 
-               //Cursor qwery = db.rawQuery("SELECT COUNT(*) FROM notificationTitle WHERE Title = ? ",new String[]{notificationTitle.title});
-               if(true) {
+               Cursor qwery = db.rawQuery("SELECT notificationTitle.id FROM notificationTitle WHERE Title = ? ",new String[]{notificationTitle.title});
+               if(qwery.getCount()==0) {
                    //Title text, Photo BLOB, Count integer, date text, number text
                    ContentValues contentValues = new ContentValues();
                    contentValues.put("Title", notificationTitle.title);
@@ -283,7 +285,7 @@ public class DBHelper extends SQLiteOpenHelper {
                    contentValues.put("number", notificationTitle.number);
                    contentValues.put("summary", notificationTitle.summary);
                    db.update("notificationTitle",contentValues,"Title = ?",new String[]{notificationTitle.title});
-               }
+               }   qwery.close();
             } catch (Exception unused) {
                 unused.printStackTrace();
             } catch (Throwable th) {

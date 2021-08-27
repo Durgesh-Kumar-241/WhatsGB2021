@@ -2,6 +2,9 @@ package com.dktechhub.mnnit.ee.whatsweb;
 
 import android.app.Notification;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
@@ -10,6 +13,7 @@ import android.util.Log;
 import com.dktechhub.mnnit.ee.whatsweb.Utils.DBHelper;
 import com.dktechhub.mnnit.ee.whatsweb.Utils.NotificationTitle;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -18,7 +22,7 @@ public class NotificationListener extends NotificationListenerService {
     SimpleDateFormat simpleDateFormat ;
     DBHelper dbHelper;
     public NotificationListener() {
-        simpleDateFormat = new SimpleDateFormat("dd\\MM\\yyyy, hh:mm:ss a", Locale.US);
+        simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy, hh:mm:ss a", Locale.US);
         simpleDateFormat.setTimeZone(TimeZone.getDefault());
 
         //dbHelper=new DBHelper(getApplicationContext(),1);
@@ -56,12 +60,33 @@ public class NotificationListener extends NotificationListenerService {
         } else {
 
             title=title.substring(0,title.indexOf(':'));
+            if(title.contains(" messages)")&&title.contains("("))
+                title=title.substring(0,title.indexOf('(')).trim();
             Log.d("Durgesh","Group message: "+title+" Messages:"+mes);
         }
+        byte[] photo = null;
+        try{
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+               Bitmap bmp = (Bitmap) bundle.get(Notification.EXTRA_PICTURE);
+               if(bmp==null)
+                   bmp= (Bitmap) bundle.get("android.largeIcon");
+               if(bmp!=null)
+               {
+                   ByteArrayOutputStream byteArrayOutputStream =
+                           new ByteArrayOutputStream();
+                   bmp.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
+                   photo  = byteArrayOutputStream.toByteArray();
+               }
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+            
         //Log.d("Durgesh","\n\n\n\ntitle "+title+"\t"+"group conversation:"+isGorupCoversation+"\n\n\n");
         if(dbHelper==null)
             dbHelper=new DBHelper(getApplicationContext());
-        dbHelper.insertNotificationData(new NotificationTitle(123,title,null,12,time,"100",mes));
+        dbHelper.insertNotificationData(new NotificationTitle(123,title,photo,12,time,"100",mes));
 
     }
 
