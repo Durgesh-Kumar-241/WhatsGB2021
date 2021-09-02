@@ -12,7 +12,7 @@
     app:barrierMargin="4dp">
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/mesi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -21,7 +21,7 @@
         android:text="Hii bro what are yo yyyyyyyyyyy yyyyyyyyyyyyyyyt ytryy yty yyyyyyyyyyyyyyy hghytjtyj hytht yyyyyyyyyyyyyyyyyyyyyyyyyyyyy yyyyyyyyyyyyyyy yyyyyyyyyyyty bhh u doing " />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/timi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"

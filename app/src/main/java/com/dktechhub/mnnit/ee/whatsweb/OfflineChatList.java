@@ -188,6 +188,6 @@ public class OfflineChatList extends AppCompatActivity implements NotificationTi
         i.putExtra("number",notificationTitle.number);
         i.putExtra("id",notificationTitle.id);
         startActivity(i);
-        this.finish();
+        //this.finish();
     }
 }

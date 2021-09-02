@@ -20,7 +20,11 @@ import com.dktechhub.mnnit.ee.whatsweb.Utils.DBHelper;
 import com.dktechhub.mnnit.ee.whatsweb.Utils.NotificationTextAdapter;
 import com.dktechhub.mnnit.ee.whatsweb.Utils.WMessage;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class OfflineChatDetailedActivity extends AppCompatActivity {
     com.google.android.material.floatingactionbutton.FloatingActionButton sendButton;
@@ -32,7 +36,11 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
     DBHelper dbHelper;
     String name;
     RecyclerView recyclerView;
+    int id=-1;
     boolean isPrivate = false;
+    SimpleDateFormat simpleDateFormat ;
+    NotificationTextAdapter adapter = new NotificationTextAdapter();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +52,9 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
             name = getIntent().getStringExtra("name");
 
              number = getIntent().getStringExtra("number");
-            String id = getIntent().getStringExtra("id");
+            int id = getIntent().getIntExtra("id",-1);
+            if(id!=-1)
+                this.id=id;
             ActionBar actionBar = getSupportActionBar();
             if(name!=null)
                 actionBar.setTitle(name);
@@ -80,25 +90,20 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
 
         dbHelper=new DBHelper(this);
 
-        ArrayList<WMessage> arrayList = new ArrayList<>();
-        WMessage wMessage = new WMessage("Title","Tetx","12/02/2003",123,"/sdcard/fef",true,"/sdcard/helowdw");
-        arrayList.add(wMessage);
-        arrayList.add(wMessage);
-        arrayList.add(wMessage);
-        WMessage wMessage2 = new WMessage("Title","Tetx","12/02/2003",123,"/sdcard/fef",false,"/sdcard/helowdw");
-        arrayList.add(wMessage2);
-        arrayList.add(wMessage2);
-        NotificationTextAdapter adapter = new NotificationTextAdapter();
+
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        dbHelper.insertMessage(wMessage);
+        recyclerView.setHasFixedSize(true);
 
-        dbHelper.insertMessage(wMessage2);
-        arrayList.addAll(dbHelper.getMessageByTitleId(123));
-        adapter.setmList(arrayList);
+        if(this.id!=-1)
+        {
+             adapter.setmList(dbHelper.getMessageByTitleId(id));}
 
+
+        simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy, hh:mm:ss a", Locale.US);
+        simpleDateFormat.setTimeZone(TimeZone.getDefault());
     }
 
     @Override
@@ -125,6 +130,9 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
             intent.putExtra("jid", number + "@s.whatsapp.net");
             intent.putExtra("android.intent.extra.TEXT",emojiEditText.getText().toString()+"‏‏");
             startActivity(intent);
+            WMessage wMessage =new WMessage(emojiEditText.getText().toString(),simpleDateFormat.format(new Date()),this.id,null,false,null);
+            dbHelper.insertMessage(wMessage);
+            adapter.addMessage(wMessage);
             emojiEditText.setText("");
         }catch (Exception e)
         {

@@ -57,8 +57,7 @@ public class NotificationTitleAdapter extends RecyclerView.Adapter<NotificationT
         {
             e.printStackTrace();
         }
-        if(mList.get(position).summary!=null)
-            holder.summary.setText(mList.get(position).summary);
+
 
         holder.main.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +89,6 @@ public class NotificationTitleAdapter extends RecyclerView.Adapter<NotificationT
             main=itemView.findViewById(R.id.main_lay);
             dateTime = itemView.findViewById(R.id.datetime);
             profile=itemView.findViewById(R.id.profile_contact);
-            summary=itemView.findViewById(R.id.summary);
 
         }
     }

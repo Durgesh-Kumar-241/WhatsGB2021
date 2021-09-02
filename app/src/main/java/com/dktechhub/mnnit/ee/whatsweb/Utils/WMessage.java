@@ -4,7 +4,7 @@ package com.dktechhub.mnnit.ee.whatsweb.Utils;
 public class WMessage {
 
     /* renamed from: a */
-    public String title;
+    //public String title;
 
     /* renamed from: b */
     public String text;
@@ -25,30 +25,11 @@ public class WMessage {
     public String pathVoice;
 
     /* renamed from: h */
-    public long timeMilleSecond;
+    //public long timeMilleSecond;
 
-    public WMessage(Integer num, String title, String text, String date, Integer idTitle, String pathPhoto,boolean incoming, String pathvoice, long timeMillisecond) {
-        this.title = title;
-        this.text = text;
-        this.date = date;
-        this.idTitle = idTitle;
-        this.pathPhoto = pathPhoto;
-        this.incoming=incoming;
-        this.pathVoice = pathvoice;
-        this.timeMilleSecond = timeMillisecond;
-    }
 
-    public WMessage(String title, String text, String date, Integer idTitle, String pathPhoto, boolean incoming, String pathVoice) {
-        this.title = title;
-        this.text = text;
-        this.date = date;
-        this.idTitle = idTitle;
-        this.pathPhoto = pathPhoto;
-        this.incoming=incoming;
-        this.pathVoice = pathVoice;
-    }
-    public WMessage(int id,String title, String text, String date, Integer idTitle, String pathPhoto, boolean incoming, String pathVoice) {
-        this.title = title;
+    public WMessage( String text, String date, Integer idTitle, String pathPhoto, boolean incoming, String pathVoice) {
+       // this.title = title;
         this.text = text;
         this.date = date;
         this.idTitle = idTitle;
@@ -57,11 +38,6 @@ public class WMessage {
         this.pathVoice = pathVoice;
     }
 
-    public String toString() {
-        StringBuilder j = outline.m3280j("text: ");
-        j.append(this.text);
-        j.append("      Incoming:  ");
-        j.append(this.incoming);
-        return j.toString();
-    }
+
+
 }

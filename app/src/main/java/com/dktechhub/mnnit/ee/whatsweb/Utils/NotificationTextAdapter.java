@@ -39,7 +39,18 @@ public class NotificationTextAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
+       if(mList.get(position).incoming)
+       {
+           ((IncomingViewHolder) holder)
+                   .mes.setText(mList.get(position).text);
+           ((IncomingViewHolder) holder)
+                   .time.setText(mList.get(position).date);
+       }else {
+           ((OutGoingViewHolder) holder)
+                   .mess.setText(mList.get(position).text);
+           ((OutGoingViewHolder) holder)
+                   .time.setText(mList.get(position).date);
+       }
     }
 
     @Override
@@ -54,18 +65,26 @@ public class NotificationTextAdapter extends RecyclerView.Adapter<RecyclerView.V
         notifyDataSetChanged();
     }
 
+    public void addMessage(WMessage wMessage)
+    {
+        mList.add(wMessage);
+        notifyDataSetChanged();
+    }
     public static class IncomingViewHolder extends RecyclerView.ViewHolder{
-
+        TextView mes,time;
         public IncomingViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            mes=itemView.findViewById(R.id.mesi);
+            time = itemView.findViewById(R.id.timi);
         }
     }
 
     public static class OutGoingViewHolder extends RecyclerView.ViewHolder{
-
+        TextView mess,time;
         public OutGoingViewHolder(@NonNull View itemView) {
             super(itemView);
+            mess=itemView.findViewById(R.id.meso);
+            time = itemView.findViewById(R.id.timo);
 
         }
     }

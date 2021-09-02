@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.dktechhub.mnnit.ee.whatsweb.Utils.DBHelper;
 import com.dktechhub.mnnit.ee.whatsweb.Utils.NotificationTitle;
+import com.dktechhub.mnnit.ee.whatsweb.Utils.WMessage;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
@@ -38,7 +39,7 @@ public class NotificationListener extends NotificationListenerService {
 
         //Log.d("Durgesh",sbn.getPackageName()+"\t"+ sbn.getNotification().toString());
         if(dbHelper==null)
-            dbHelper=new DBHelper(getApplicationContext());
+            dbHelper=DBHelper.getInstance(this);
 
         Notification notification= sbn.getNotification();
         Bundle bundle=notification.extras;
@@ -95,8 +96,9 @@ public class NotificationListener extends NotificationListenerService {
         }
             
         //Log.d("Durgesh","\n\n\n\ntitle "+title+"\t"+"group conversation:"+isGorupCoversation+"\n\n\n");
-
-        dbHelper.insertNotificationData(new NotificationTitle(123,title,photo,12,time,mob,mes));
+       NotificationTitle notificationTitle =  new NotificationTitle(null,title,photo,12,time,mob,mes);
+        dbHelper.insertNotificationData(notificationTitle);
+        dbHelper.insertMessage(new WMessage(mes,time,dbHelper.getNotificationTitleId(notificationTitle),null,true,null));
 
     }
 
