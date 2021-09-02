@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Icon;
+import android.os.Build;
 import android.os.Bundle;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
@@ -36,7 +37,8 @@ public class NotificationListener extends NotificationListenerService {
 
 
         //Log.d("Durgesh",sbn.getPackageName()+"\t"+ sbn.getNotification().toString());
-
+        if(dbHelper==null)
+            dbHelper=new DBHelper(getApplicationContext());
 
         Notification notification= sbn.getNotification();
         Bundle bundle=notification.extras;
@@ -52,11 +54,20 @@ public class NotificationListener extends NotificationListenerService {
         String time =simpleDateFormat.format(notification.when);
         Log.d("Durgesh","DateTime: "+time);
         String mes = bundle.getString("android.text");
+        String mob = "";
         //byte[] blob = notification.getLargeIcon();
         if(!isGorupCoversation)
         {
+            mob= mob=dbHelper.getMob(title);
+            if(mob.length()==0&&!title.matches(".*[a-zA-Z]+.*"))
+            {   mob=title;
+                if(mob.startsWith("+"))
+                    mob = mob.replace("+"," ");
+                mob = mob.replaceAll("\\s","");
+            }
+            //if(mob.length()==0)
+            Log.d("Durgesh","Private message from "+ title + " Message :"+mes+ " Numebr "+mob);
 
-            Log.d("Durgesh","Private message from "+ title + " Message :"+mes);
         } else {
 
             title=title.substring(0,title.indexOf(':'));
@@ -66,7 +77,7 @@ public class NotificationListener extends NotificationListenerService {
         }
         byte[] photo = null;
         try{
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                Bitmap bmp = (Bitmap) bundle.get(Notification.EXTRA_PICTURE);
                if(bmp==null)
                    bmp= (Bitmap) bundle.get("android.largeIcon");
@@ -84,9 +95,8 @@ public class NotificationListener extends NotificationListenerService {
         }
             
         //Log.d("Durgesh","\n\n\n\ntitle "+title+"\t"+"group conversation:"+isGorupCoversation+"\n\n\n");
-        if(dbHelper==null)
-            dbHelper=new DBHelper(getApplicationContext());
-        dbHelper.insertNotificationData(new NotificationTitle(123,title,photo,12,time,"100",mes));
+
+        dbHelper.insertNotificationData(new NotificationTitle(123,title,photo,12,time,mob,mes));
 
     }
 

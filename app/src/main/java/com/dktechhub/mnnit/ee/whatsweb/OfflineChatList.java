@@ -27,7 +27,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
-public class OfflineChatList extends AppCompatActivity {
+public class OfflineChatList extends AppCompatActivity implements NotificationTitleAdapter.OnItemClickListener {
     Access access;
     DBHelper dbHelper;
     @Override
@@ -49,12 +49,12 @@ public class OfflineChatList extends AppCompatActivity {
             }
         });
         RecyclerView recyclerView = findViewById(R.id.overview_recent_chats);
-        NotificationTitleAdapter adapter = new NotificationTitleAdapter();
+        NotificationTitleAdapter adapter = new NotificationTitleAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        NotificationTitle notificationTitle = new NotificationTitle(123,"Durgesh",null,1234,"12/02/2003","100","Hello Dear");
+        //NotificationTitle notificationTitle = new NotificationTitle(123,"Durgesh",null,1234,"12/02/2003","100","Hello Dear");
 
-        dbHelper.insertNotificationData(notificationTitle);
+        //dbHelper.insertNotificationData(notificationTitle);
         adapter.setmList(dbHelper.loadNotificationData());
 
 
@@ -179,5 +179,15 @@ public class OfflineChatList extends AppCompatActivity {
         access=Access.instance;
         if(access!=null)
             access.setTaskId(getTaskId());
+    }
+
+    @Override
+    public void onItemClicked(NotificationTitle notificationTitle) {
+        Intent i = new Intent(this,OfflineChatDetailedActivity.class);
+        i.putExtra("name",notificationTitle.title);
+        i.putExtra("number",notificationTitle.number);
+        i.putExtra("id",notificationTitle.id);
+        startActivity(i);
+        this.finish();
     }
 }

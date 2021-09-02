@@ -182,4 +182,43 @@ public class WContactsManager {
         return loaded;
     }
 
+    public static String getMob(String display_name,Context context)
+    {
+        ContentResolver cr =context.getContentResolver();
+        String Mob="";
+//RowContacts for filter Account Types
+        Cursor query = cr.query(
+                ContactsContract.Data.CONTENT_URI,
+                null,
+                "account_type= ? and mimetype= ? and display_name= ? ",
+                new String[]{"com.whatsapp","vnd.android.cursor.item/vnd.com.whatsapp.profile",display_name},
+                "display_name COLLATE NOCASE");
+        if(query!=null&&query.getCount()>0)
+        {   if(query.moveToFirst()){
+            do {
+                //long id = query.getLong(query.getColumnIndex("_id"));
+               // String display_name = query.getString(query.getColumnIndex("display_name"));
+                String data_1 = query.getString(query.getColumnIndex("data1"));
+                //String mimetype = query.getString(query.getColumnIndex("mimetype"));
+                if(display_name!=null) {
+                    //Log.w("gggg", "  Name: " + display_name + "  Number: " + data_1 + "  voip1: " + id + "  type: " + mimetype);
+                   // long id2 = id + 1;
+                    if (data_1.contains("@")) {
+                        data_1 = data_1.substring(0, data_1.indexOf("@")).trim();
+                    }
+                    //Log.w("gggg", "Finally  Name: " + display_name + "  Number: " + data_1 + "  voip1: " + id + "  type: " + mimetype);
+                    //loaded.add(new WContact(display_name,data_1,String.valueOf(id)));
+                    Mob=data_1;
+                    break;
+                }
+            }while (query.moveToNext());
+
+        }
+            query.close();
+
+        }
+    return Mob;
+
+    }
+
 }

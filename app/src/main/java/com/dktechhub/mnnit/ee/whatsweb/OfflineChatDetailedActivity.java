@@ -32,7 +32,7 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
     DBHelper dbHelper;
     String name;
     RecyclerView recyclerView;
-
+    boolean isPrivate = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,24 +44,18 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
             name = getIntent().getStringExtra("name");
 
              number = getIntent().getStringExtra("number");
-             if(number.startsWith("+"))
-                number = number.replace("+"," ");
-             number = number.replaceAll("\\s","");
             String id = getIntent().getStringExtra("id");
             ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                //actionBar.hide();
+            if(name!=null)
                 actionBar.setTitle(name);
-                actionBar.setSubtitle(number);
-                actionBar.setDisplayHomeAsUpEnabled(true);
-            }
+            if(number!=null&&number.length()>0)
+            {actionBar.setSubtitle(number);isPrivate=true;}
 
         }catch (Exception e)
         {
             this.finish();
         }
-        if(number==null||number.length()==0)
-            this.finish();
+
 
 
         imagePicker = findViewById(R.id.image_button_send_image);
@@ -76,6 +70,14 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
         });
 
         showAlert();
+
+        if(!isPrivate)
+        {
+            emojiEditText.setText("You must receive atleast one message from this group to send any messages");
+            emojiEditText.setEnabled(false);
+            sendButton.setEnabled(false);
+        }
+
         dbHelper=new DBHelper(this);
 
         ArrayList<WMessage> arrayList = new ArrayList<>();

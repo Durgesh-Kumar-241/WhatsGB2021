@@ -24,7 +24,7 @@ public class NotificationTitleAdapter extends RecyclerView.Adapter<NotificationT
     ColorGenerator colorGenerator=ColorGenerator.MATERIAL;
     //TextDrawable.IBuilder builder;
     TextDrawable.IBuilder builder = TextDrawable.builder().round();
-
+    OnItemClickListener onItemClickListener;
 
     // TextDrawable.Builder builder ;
     @NonNull
@@ -59,6 +59,13 @@ public class NotificationTitleAdapter extends RecyclerView.Adapter<NotificationT
         }
         if(mList.get(position).summary!=null)
             holder.summary.setText(mList.get(position).summary);
+
+        holder.main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.onItemClicked(mList.get(position));
+            }
+        });
 
     }
 
@@ -95,6 +102,14 @@ public class NotificationTitleAdapter extends RecyclerView.Adapter<NotificationT
         notifyDataSetChanged();
     }
 
+    public NotificationTitleAdapter(OnItemClickListener onItemClickListener)
+    {
+        this.onItemClickListener=onItemClickListener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClicked(NotificationTitle notificationTitle);
+    }
 
 
 }
