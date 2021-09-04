@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,10 +57,15 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
             if(id!=-1)
                 this.id=id;
             ActionBar actionBar = getSupportActionBar();
-            if(name!=null)
-                actionBar.setTitle(name);
-            if(number!=null&&number.length()>0)
-            {actionBar.setSubtitle(number);isPrivate=true;}
+            if(actionBar!=null)
+            {
+                if(name!=null)
+                    actionBar.setTitle(name);
+                if(number!=null&&number.length()>0)
+                {actionBar.setSubtitle(number);isPrivate=true;}
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
+
 
         }catch (Exception e)
         {
@@ -94,7 +100,7 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         recyclerView.setHasFixedSize(true);
 
         if(this.id!=-1)

@@ -62,7 +62,10 @@
                 android:resource="@xml/accessibility_service_config" />
         </service>
 
-        <activity android:name=".OfflineChatDetailedActivity" />
+        <activity android:name=".OfflineChatDetailedActivity"
+            android:parentActivityName=".OfflineChatList">
+
+        </activity>
         <activity android:name=".ChatPickerActivity" />
         <activity
             android:name=".OfflineChatList"

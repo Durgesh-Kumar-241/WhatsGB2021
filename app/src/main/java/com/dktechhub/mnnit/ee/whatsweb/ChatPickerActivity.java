@@ -3,6 +3,7 @@ package com.dktechhub.mnnit.ee.whatsweb;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,7 +36,7 @@ public class ChatPickerActivity extends AppCompatActivity {
     //private NameComp nameComp;
     RecyclerView recyclerView;
     ContactsAdapter contactsAdapter;
-    private SearchView searchView;
+    private final ArrayList<WContact> all = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +44,13 @@ public class ChatPickerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat_picker);
          recyclerView = findViewById(R.id.contactsList);
          contactsAdapter = new ContactsAdapter(this::startDetailedChat);
-        contactsAdapter.setItems(WContactsManager.loadContacts(this));
+         all.addAll(WContactsManager.loadContacts(this));
+
+        contactsAdapter.setItems(all);
         recyclerView.setAdapter(contactsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
+
         //loadContacts();
     }
 
@@ -56,14 +61,13 @@ public class ChatPickerActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //return super.onCreateOptionsMenu(menu);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_contacts,menu);
+       // MenuInflater inflater = getMenuInflater();
+       // inflater.inflate(R.menu.menu_contacts,menu);
         getMenuInflater().inflate(R.menu.menu_app_contact, menu);
         SearchView searchView2 = (SearchView) menu.findItem(R.id.search_contacts).getActionView();
-        this.searchView = searchView2;
         searchView2.setSearchableInfo(((SearchManager) getSystemService(Context.SEARCH_SERVICE)).getSearchableInfo(getComponentName()));
-        this.searchView.setMaxWidth(Integer.MAX_VALUE);
-        this.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchView2.setMaxWidth(Integer.MAX_VALUE);
+        searchView2.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
@@ -71,11 +75,29 @@ public class ChatPickerActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                filter(newText);
                 return false;
             }
         });
         return true;
 
+    }
+
+    public void filter(String toSearch)
+    {
+        ArrayList<WContact> contacts = new ArrayList<>();
+        for(WContact wContact : all )
+        {
+            if(wContact.name.toLowerCase().contains(toSearch.toLowerCase())||wContact.number.toLowerCase().contains(toSearch.toLowerCase()))
+                contacts.add(wContact);
+        }
+
+        if(contacts.isEmpty())
+        {
+            Toast.makeText(this, "Not found", Toast.LENGTH_SHORT).show();
+        }else {
+            contactsAdapter.setItems(contacts);
+        }
     }
 
     @Override
@@ -84,18 +106,16 @@ public class ChatPickerActivity extends AppCompatActivity {
         {
             //WContactsManager.refreshContactsDatabase(this);
             refresh();
-        }else if ( item.getItemId()==R.id.search_contacts)
-        {
-
         }
         return true;
     }
 
 
     public void refresh()
-    {
-        contactsAdapter.setItems(WContactsManager.loadContacts(this));
-        contactsAdapter.notifyDataSetChanged();
+    {   all.clear();
+        all.addAll(WContactsManager.loadContacts(this));
+        contactsAdapter.setItems(all);
+       // contactsAdapter.notifyDataSetChanged();
         Toast.makeText(this, "Contact list has been updated", Toast.LENGTH_SHORT).show();
     }
 

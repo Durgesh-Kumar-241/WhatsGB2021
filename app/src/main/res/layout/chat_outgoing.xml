@@ -7,7 +7,9 @@
     android:layout_marginLeft="50dp"
     android:layout_marginTop="4dp"
     android:layout_marginRight="16dp"
+    android:layout_weight="1"
     android:background="@drawable/chat_outgoing_background"
+    android:foregroundGravity="right"
     android:gravity="right"
     android:orientation="vertical"
     android:padding="4dp"
@@ -20,7 +22,8 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="4dp"
         android:layout_weight="1"
-        android:gravity="right" />
+        android:text="Hii bro what are yo yyyyyyyyyyy yyyyyyyyyyyyyyyt ytryy yty yyyyyyyyyyyyyyy hghytjtyj hytht yyyyyyyyyyyyyyyyyyyyyyyyyyyyy yyyyyyyyyyyyyyy yyyyyyyyyyyty bhh u doing " />
+    android:gravity="right" />
 
     <TextView
         android:id="@+id/timo"

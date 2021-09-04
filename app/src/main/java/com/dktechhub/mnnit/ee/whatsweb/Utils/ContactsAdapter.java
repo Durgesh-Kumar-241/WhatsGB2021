@@ -77,6 +77,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.CViewH
     {
         this.mList.clear();
         this.mList.addAll(wContacts);
+        notifyDataSetChanged();
     }
 
     public ContactsAdapter(ContactPickerInterface contactPickerInterface)
@@ -87,8 +88,4 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.CViewH
         void OnContactClicked(WContact wContact);
     }
 
-    public ContactsAdapter()
-    {
-
-    }
 }
