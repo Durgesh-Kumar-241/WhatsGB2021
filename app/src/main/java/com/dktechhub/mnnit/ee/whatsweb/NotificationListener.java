@@ -65,6 +65,12 @@ public class NotificationListener extends NotificationListenerService {
                 if(mob.startsWith("+"))
                     mob = mob.replace("+"," ");
                 mob = mob.replaceAll("\\s","");
+
+
+                NotificationTitle notificationTitle =  new NotificationTitle(null,title,null,12,time,mob,mes);
+                dbHelper.insertNotificationData(notificationTitle);
+                dbHelper.insertMessage(new WMessage(mes,time,dbHelper.getNotificationTitleId(notificationTitle),null,true,null));
+
             }
             //if(mob.length()==0)
             Log.d("Durgesh","Private message from "+ title + " Message :"+mes+ " Numebr "+mob);
@@ -75,31 +81,12 @@ public class NotificationListener extends NotificationListenerService {
             if(title.contains(" messages)")&&title.contains("("))
                 title=title.substring(0,title.indexOf('(')).trim();
             Log.d("Durgesh","Group message: "+title+" Messages:"+mes);
-        }
-        byte[] photo = null;
-        try{
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-               Bitmap bmp = (Bitmap) bundle.get(Notification.EXTRA_PICTURE);
-               if(bmp==null)
-                   bmp= (Bitmap) bundle.get("android.largeIcon");
-               if(bmp!=null)
-               {
-                   ByteArrayOutputStream byteArrayOutputStream =
-                           new ByteArrayOutputStream();
-                   bmp.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
-                   photo  = byteArrayOutputStream.toByteArray();
-               }
-            }
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-            
-        //Log.d("Durgesh","\n\n\n\ntitle "+title+"\t"+"group conversation:"+isGorupCoversation+"\n\n\n");
-       NotificationTitle notificationTitle =  new NotificationTitle(null,title,photo,12,time,mob,mes);
-        dbHelper.insertNotificationData(notificationTitle);
-        dbHelper.insertMessage(new WMessage(mes,time,dbHelper.getNotificationTitleId(notificationTitle),null,true,null));
 
+            NotificationTitle notificationTitle =  new NotificationTitle(null,title,null,12,time,null,mes);
+            dbHelper.insertNotificationData(notificationTitle);
+            dbHelper.insertMessage(new WMessage(mes,time,dbHelper.getNotificationTitleId(notificationTitle),null,true,null));
+
+        }
     }
 
     @Override
