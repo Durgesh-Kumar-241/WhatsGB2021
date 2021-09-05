@@ -1,5 +1,6 @@
 package com.dktechhub.mnnit.ee.whatsweb;
 
+import androidx.annotation.ContentView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.dktechhub.mnnit.ee.whatsweb.Utils.DBHelper;
 import com.dktechhub.mnnit.ee.whatsweb.Utils.NotificationTextAdapter;
 import com.dktechhub.mnnit.ee.whatsweb.Utils.WMessage;
+import com.vanniktech.emoji.EmojiPopup;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,6 +47,7 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.layout_offline_chat_detailed);
         recyclerView=findViewById(R.id.recycler_view);
         try {
@@ -78,6 +81,14 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
         sendButton=findViewById(R.id.Float_send);
         emojiEditText=findViewById(R.id.emojiEditText);
         imogiSwitch=findViewById(R.id.imageView_emoji);
+        final EmojiPopup emojiPopup = EmojiPopup.Builder.fromRootView(findViewById(R.id.rootView)).build(emojiEditText);
+        imogiSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                emojiPopup.toggle();
+
+            }
+        });
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +100,7 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
 
         if(!isPrivate)
         {
-            emojiEditText.setText("You must receive atleast one message from this group to send any messages");
+            emojiEditText.setText("Chat with groups is not available now...wait for next updates");
             emojiEditText.setEnabled(false);
             sendButton.setEnabled(false);
         }
