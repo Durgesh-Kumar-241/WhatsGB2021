@@ -37,42 +37,47 @@ public class Access extends AccessibilityService {
             return;
         }
 
-        AccessibilityNodeInfoCompat rootInActiveWindow = AccessibilityNodeInfoCompat.wrap (getRootInActiveWindow ());
-        if(rootInActiveWindow==null)
-            return;
-        // Whatsapp Message EditText id
-        List<AccessibilityNodeInfoCompat> messageNodeList = rootInActiveWindow.findAccessibilityNodeInfosByViewId ("com.whatsapp:id/entry");
-        if (messageNodeList == null || messageNodeList.isEmpty ()) {
-            return;
-        }
+        try {
 
-        // check if the whatsapp message EditText field is filled with text and ending with your suffix (explanation above)
-        AccessibilityNodeInfoCompat messageField = messageNodeList.get (0);
-        if (messageField.getText () == null || messageField.getText ().length () == 0||
-                 !messageField.getText ().toString ().endsWith ("‏‏")) { // So your service doesn't process any message, but the ones ending your apps suffix
-            return;
-        }
+            AccessibilityNodeInfoCompat rootInActiveWindow = AccessibilityNodeInfoCompat.wrap(getRootInActiveWindow());
+            // Whatsapp Message EditText id
+            List<AccessibilityNodeInfoCompat> messageNodeList = rootInActiveWindow.findAccessibilityNodeInfosByViewId("com.whatsapp:id/entry");
+            if (messageNodeList == null || messageNodeList.isEmpty()) {
+                return;
+            }
 
-        // Whatsapp send button id
-        List<AccessibilityNodeInfoCompat> sendMessageNodeInfoList = rootInActiveWindow.findAccessibilityNodeInfosByViewId ("com.whatsapp:id/send");
-        if (sendMessageNodeInfoList == null || sendMessageNodeInfoList.isEmpty ()) {
-            return;
-        }
+            // check if the whatsapp message EditText field is filled with text and ending with your suffix (explanation above)
+            AccessibilityNodeInfoCompat messageField = messageNodeList.get(0);
+            if (messageField.getText() == null || messageField.getText().length() == 0 ||
+                    !messageField.getText().toString().endsWith("‏‏")) { // So your service doesn't process any message, but the ones ending your apps suffix
+                return;
+            }
 
-        AccessibilityNodeInfoCompat sendMessageButton = sendMessageNodeInfoList.get (0);
-        if (!sendMessageButton.isVisibleToUser ()) {
-            return;
-        }
+            // Whatsapp send button id
+            List<AccessibilityNodeInfoCompat> sendMessageNodeInfoList = rootInActiveWindow.findAccessibilityNodeInfosByViewId("com.whatsapp:id/send");
+            if (sendMessageNodeInfoList == null || sendMessageNodeInfoList.isEmpty()) {
+                return;
+            }
 
-        // Now fire a click on the send button
-        sendMessageButton.performAction (AccessibilityNodeInfo.ACTION_CLICK);
+            AccessibilityNodeInfoCompat sendMessageButton = sendMessageNodeInfoList.get(0);
+            if (!sendMessageButton.isVisibleToUser()) {
+                return;
+            }
 
-        if(selfTaskId!=-1)
+            // Now fire a click on the send button
+            sendMessageButton.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+
+            if (selfTaskId != -1) {
+                if (activityManager == null)
+                    activityManager = (ActivityManager) getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+                activityManager.moveTaskToFront(selfTaskId, 0, null);
+            } else
+                Toast.makeText(getApplicationContext(), "Failed,close the app and open again", Toast.LENGTH_SHORT).show();
+
+        }catch (Exception e)
         {
-            if(activityManager==null)
-                activityManager=(ActivityManager)getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
-            activityManager.moveTaskToFront(selfTaskId,0,null);
-        }else Toast.makeText(getApplicationContext(), "Failed,close the app and open again", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
     }
 
     @Override

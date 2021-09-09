@@ -24,9 +24,8 @@ public class NotificationListener extends NotificationListenerService {
     SimpleDateFormat simpleDateFormat ;
     DBHelper dbHelper;
     public NotificationListener() {
-        simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy, hh:mm:ss a", Locale.US);
+        simpleDateFormat = new SimpleDateFormat("hh:mm a dd/MM/yyyy", Locale.US);
         simpleDateFormat.setTimeZone(TimeZone.getDefault());
-
         //dbHelper=new DBHelper(getApplicationContext(),1);
     }
 
@@ -35,16 +34,15 @@ public class NotificationListener extends NotificationListenerService {
         super.onNotificationPosted(sbn);
         if(!sbn.getPackageName().equals("com.whatsapp"))
             return;
+        Notification notification= sbn.getNotification();
+        if(notification==null)
+            return;
 
-
-        //Log.d("Durgesh",sbn.getPackageName()+"\t"+ sbn.getNotification().toString());
+        Bundle bundle=notification.extras;
+        if(bundle==null)
+            return;
         if(dbHelper==null)
             dbHelper=DBHelper.getInstance(this);
-
-        Notification notification= sbn.getNotification();
-        Bundle bundle=notification.extras;
-
-        //Log.d("Durgesh",bundle.toString());
 
         String title = bundle.getString("android.title");
         String mes = bundle.getString("android.text");
@@ -53,50 +51,43 @@ public class NotificationListener extends NotificationListenerService {
         boolean isGorupCoversation = bundle.getBoolean("android.isGroupConversation");
 
         String time =simpleDateFormat.format(notification.when);
-        //Log.d("Durgesh","DateTime: "+time);
 
-        String mob = "";
-        byte[] b = new byte[]{};
-        //byte[] blob = notification.getLargeIcon();
+
         if(!isGorupCoversation)
         {
-            mob= dbHelper.getMob(title);
-            if(mob.length()==0&&!title.matches(".*[a-zA-Z]+.*"))
-            {   mob=title;
-                if(mob.startsWith("+"))
-                    mob = mob.replace("+"," ");
-                mob = mob.replaceAll("\\s","");
 
-
-
-
-            }
             //if(mob.length()==0)
+            String mob=getMobNo(title);
             NotificationTitle notificationTitle =  new NotificationTitle(null,title,null,12,time,mob,mes);
-            dbHelper.insertNotificationData(notificationTitle);
-            dbHelper.insertMessage(new WMessage(mes,time,dbHelper.getNotificationTitleId(notificationTitle),null,true,null));
-            //Log.d("Durgesh","inserted private");
-            //Log.d("Durgesh","Private message from "+ title + " Message :"+mes+ " Numebr "+mob);
+            int id =dbHelper.insertNotificationData(notificationTitle);
+            dbHelper.insertMessage(new WMessage(mes,time,id,null,true,null));
 
         } else {
-            //Log.d("Durgesh","title "+title);
             String from = title.substring(title.indexOf(':')+1);
-            //Log.d("Durgesh","from "+from);
             title=title.substring(0,title.indexOf(':'));
             if(title.contains(" messages)")&&title.contains("("))
                 title=title.substring(0,title.indexOf('(')).trim();
-            //Log.d("Durgesh","Group message: "+title+" Messages:"+mes);
-
             NotificationTitle notificationTitle =  new NotificationTitle(null,title,null,12,time,null,mes);
-            dbHelper.insertNotificationData(notificationTitle);
-            dbHelper.insertMessage(new WMessage(from+'\n'+mes,time,dbHelper.getNotificationTitleId(notificationTitle),null,true,null));
-
+            int id =dbHelper.insertNotificationData(notificationTitle);
+            dbHelper.insertMessage(new WMessage(from+" \n"+mes,time,id,null,true,null));
         }
     }
+
+
+
 
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
 
+    }
+
+    private String getMobNo(String title)
+    {   String temp = title .replace(" ","");
+        temp=temp.replace("+","");
+        if(temp.matches("[0-9]+")&&temp.length()>0)
+        {
+            return temp;
+        }else return dbHelper.getMob(title);
     }
 }

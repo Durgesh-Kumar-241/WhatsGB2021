@@ -1,7 +1,6 @@
 package com.dktechhub.mnnit.ee.whatsweb.Utils;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,8 +30,8 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.CViewH
     @Override
     public CViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context=parent.getContext();
-        LayoutInflater inflator = LayoutInflater.from(context);
-        View AppView = inflator.inflate(R.layout.layout_contact,parent,false);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View AppView = inflater.inflate(R.layout.layout_contact,parent,false);
         return new CViewHolder(AppView);
     }
 
@@ -42,14 +41,9 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.CViewH
         holder.name.setText(mList.get(position).name);
 
         holder.profile.setImageDrawable(builder.build(String.valueOf(mList.get(position).name.charAt(0)), colorGenerator.getRandomColor()));
-        holder.main.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                contactPickerInterface.OnContactClicked(mList.get(position));
-            }
-        });
-
+        holder.main.setOnClickListener(v -> contactPickerInterface.OnContactClicked(mList.get(holder.getAdapterPosition())));
     }
+
 
     @Override
     public int getItemCount() {
@@ -78,6 +72,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.CViewH
         this.mList.clear();
         this.mList.addAll(wContacts);
         notifyDataSetChanged();
+
     }
 
     public ContactsAdapter(ContactPickerInterface contactPickerInterface)

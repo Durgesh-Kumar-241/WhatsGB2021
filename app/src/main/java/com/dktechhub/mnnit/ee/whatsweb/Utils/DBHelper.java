@@ -7,16 +7,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.ContactsContract;
-
-import androidx.room.Database;
-
-import com.dktechhub.mnnit.ee.whatsweb.Access;
-
-import java.text.SimpleDateFormat;
+import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
-import java.util.TimeZone;
 
 public class DBHelper extends SQLiteOpenHelper {
     //SQLiteDatabase sqLiteDatabase;
@@ -24,13 +17,14 @@ public class DBHelper extends SQLiteOpenHelper {
     Context context;
     HashMap<String, Integer> IdTitleMap = new HashMap<>();
     HashMap<String, String> mobTitleMap = new HashMap<>();
-
+    SQLiteDatabase readable,writable;
     static DBHelper instance;
 
     public static DBHelper getInstance(Context context)
     {
         if(instance==null)
-            instance=new DBHelper(context);
+        {instance=new DBHelper(context);
+            Log.d("DBHelper","New Instance "+context.toString());}
         return instance;
     }
     @Override
@@ -57,8 +51,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     public void insertMessage(WMessage e2Var) {
-        SQLiteDatabase writableDatabase = getWritableDatabase();
-        if (writableDatabase != null) {
+        //SQLiteDatabase writableDatabase = writable;
+        if (writable != null) {
             try {
                 ContentValues contentValues = new ContentValues();
                 //contentValues.put("Title", e2Var.title);
@@ -69,37 +63,31 @@ public class DBHelper extends SQLiteOpenHelper {
                 contentValues.put("incoming", e2Var.incoming ? 1 : 0);
                 contentValues.put("pathVoice", e2Var.pathVoice);
                 //contentValues.put("timeMilleSecond", e2Var.timeMilleSecond);
-                writableDatabase.insert("notificationText", null, contentValues);
-            } catch (Exception unused) {
-            } catch (Throwable th) {
-                writableDatabase.close();
-                throw th;
+                writable.insert("notificationText", null, contentValues);
+            } catch (Exception ignored) {
             }
-            writableDatabase.close();
+            //writable.close();
         }
     }
 
 
     public ArrayList<WMessage> getMessageByTitleId(Integer notificationTitleId) {
         ArrayList<WMessage> arrayList = new ArrayList<>();
-        SQLiteDatabase readableDatabase = getReadableDatabase();
+        //SQLiteDatabase readableDatabase = readable;
         try {
-            Cursor rawQuery = readableDatabase.rawQuery("select * from notificationText where IDTitle= ?", new String[]{String.valueOf(notificationTitleId)});
+            Cursor rawQuery = readable.rawQuery("select * from notificationText where IDTitle= ?", new String[]{String.valueOf(notificationTitleId)});
             if (rawQuery == null || !rawQuery.moveToFirst()) {
                 rawQuery.close();
-                readableDatabase.close();
+                //readable.close();
                 return arrayList;
             }
             do {
                 arrayList.add(new WMessage( rawQuery.getString(1), rawQuery.getString(2), rawQuery.getInt(3), rawQuery.getString(4), rawQuery.getInt(5) == 1, rawQuery.getString(6)));
             } while (rawQuery.moveToNext());
             rawQuery.close();
-            readableDatabase.close();
+            //readable.close();
             return arrayList;
-        } catch (Exception unused) {
-        } catch (Throwable th) {
-            readableDatabase.close();
-            throw th;
+        } catch (Exception ignored) {
         }
         return arrayList;
     }
@@ -109,64 +97,38 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public ArrayList<NotificationTitle> loadNotificationData() {
         ArrayList<NotificationTitle> arrayList = new ArrayList<>();
-        SQLiteDatabase readableDatabase = getReadableDatabase();
+
         try {
-            Cursor rawQuery = readableDatabase.rawQuery("select * from notificationTitle", null);
+            Cursor rawQuery = readable.rawQuery("select * from notificationTitle", null);
             if (rawQuery == null || !rawQuery.moveToFirst()) {
                 rawQuery.close();
-                readableDatabase.close();
+                //readable.close();
                 return arrayList;
             }
             do {
                 arrayList.add(new NotificationTitle(rawQuery.getInt(0), rawQuery.getString(1), rawQuery.getBlob(2), rawQuery.getInt(3), rawQuery.getString(4), rawQuery.getString(5), rawQuery.getString(6)));
             } while (rawQuery.moveToNext());
             rawQuery.close();
-            readableDatabase.close();
+            //readable.close();
             return arrayList;
         } catch (Exception unused) {
         } catch (Throwable th) {
-            readableDatabase.close();
+           // readable.close();
             throw th;
         }
 
         return arrayList;
     }
 
-    public ArrayList<wContact> loadAllContacts() {
-        ArrayList<wContact> arrayList = new ArrayList<>();
-        SQLiteDatabase readableDatabase = getReadableDatabase();
-        Cursor rawQuery = readableDatabase.rawQuery("select * from contactsW", null);
-        if (rawQuery != null) {
-            try {
-                if (rawQuery.moveToFirst()) {
-                    do {
-                        arrayList.add(new wContact(rawQuery.getInt(0), rawQuery.getString(1), rawQuery.getString(2), rawQuery.getString(3), rawQuery.getString(4)));
-                    } while (rawQuery.moveToNext());
-                }
-            } catch (Exception ignored) {
-            } catch (Throwable th) {
-                readableDatabase.close();
-                throw th;
-            }
-        }
-        if (rawQuery != null && !rawQuery.isClosed()) {
-            rawQuery.close();
-        }
-        readableDatabase.close();
-        return arrayList;
-    }
 
-    public void deleteAllContactsdata() {
-        getWritableDatabase().execSQL("DROP TABLE IF EXISTS contactsW");
-        getWritableDatabase().execSQL("create table contactsW(ID integer primary key autoincrement, Name text, Number text, vo1 text, vo2 text)");
-    }
 
-    public void insertNotificationData(NotificationTitle notificationTitle) {
-        SQLiteDatabase db = getWritableDatabase();
-        if (db != null) {
+    public int insertNotificationData(NotificationTitle notificationTitle) {
+       // SQLiteDatabase db = writable;
+        long id =-1;
+        if (writable != null) {
             try {
 
-                Cursor qwery = db.rawQuery("SELECT notificationTitle.id FROM notificationTitle WHERE Title = ? ", new String[]{notificationTitle.title});
+                Cursor qwery = writable.rawQuery("SELECT * FROM notificationTitle WHERE Title = ? ", new String[]{notificationTitle.title});
                 if (qwery.getCount() == 0) {
                     //Title text, Photo BLOB, Count integer, date text, number text
                     ContentValues contentValues = new ContentValues();
@@ -176,7 +138,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     contentValues.put("date", notificationTitle.date);
                     contentValues.put("number", notificationTitle.number);
                     contentValues.put("summary", notificationTitle.summary);
-                    db.insert("notificationTitle", null, contentValues);
+                  id =  writable.insert("notificationTitle", null, contentValues);
+
                 } else {
                     ContentValues contentValues = new ContentValues();
                     //contentValues.put("Title", notificationTitle.title);
@@ -185,24 +148,29 @@ public class DBHelper extends SQLiteOpenHelper {
                     contentValues.put("date", notificationTitle.date);
                     contentValues.put("number", notificationTitle.number);
                     contentValues.put("summary", notificationTitle.summary);
-                    db.update("notificationTitle", contentValues, "Title = ?", new String[]{notificationTitle.title});
+                   writable.update("notificationTitle", contentValues, "Title = ?", new String[]{notificationTitle.title});
+                   if(qwery.moveToFirst())
+                    id=qwery.getLong(qwery.getColumnIndex("ID"));
                 }
                 qwery.close();
             } catch (Exception unused) {
                 unused.printStackTrace();
             } catch (Throwable th) {
                 th.printStackTrace();
-                db.close();
+                //writable.close();
                 throw th;
             }
-            db.close();
+           // writable.close();
         }
+        return (int) id;
     }
 
 
     public DBHelper(Context context) {
         super(context, "gb_data", null, 1);
         this.context = context;instance=this;
+        writable=getWritableDatabase();
+        readable=getReadableDatabase();
 
     }
 
@@ -211,32 +179,29 @@ public class DBHelper extends SQLiteOpenHelper {
             return mobTitleMap.get(display_name);
         }
         ContentResolver cr = context.getContentResolver();
-        String Mob = "";
-//RowContacts for filter Account Types
+        //RowContacts for filter Account Types
         Cursor query = cr.query(
                 ContactsContract.Data.CONTENT_URI,
                 null,
                 "account_type= ? and mimetype= ? ",
                 new String[]{"com.whatsapp", "vnd.android.cursor.item/vnd.com.whatsapp.profile"},
                 "display_name COLLATE NOCASE");
+        String Mob = "";
         if (query != null && query.getCount() > 0) {
             if (query.moveToFirst()) {
                 do {
-                    //long id = query.getLong(query.getColumnIndex("_id"));
+
                     String display_name1 = query.getString(query.getColumnIndex("display_name"));
                     String data_1 = query.getString(query.getColumnIndex("data1"));
-                    //String mimetype = query.getString(query.getColumnIndex("mimetype"));
+
                     if (display_name != null) {
-                        //Log.w("gggg", "  Name: " + display_name + "  Number: " + data_1 + "  voip1: " + id + "  type: " + mimetype);
-                        // long id2 = id + 1;
                         if (data_1.contains("@")) {
                             data_1 = data_1.substring(0, data_1.indexOf("@")).trim();
                         }
-                        //Log.w("gggg", "Finally  Name: " + display_name + "  Number: " + data_1 + "  voip1: " + id + "  type: " + mimetype);
-                        //loaded.add(new WContact(display_name,data_1,String.valueOf(id)));
                         mobTitleMap.put(display_name1, data_1);
-                        Mob = data_1;
-                        break;
+                        if(display_name.equals(display_name1))
+                        {Mob = data_1;
+                        break;}
                     }
                 } while (query.moveToNext());
 
@@ -248,17 +213,19 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+
+
     public int getNotificationTitleId(NotificationTitle notificationTitle) {
         int id = -1;
         if (IdTitleMap.containsKey(notificationTitle.title)) {
             return IdTitleMap.get(notificationTitle.title);
         } else {
-            SQLiteDatabase readableDatabase = getReadableDatabase();
+            //SQLiteDatabase readableDatabase = readable;
             try {
-                Cursor rawQuery = readableDatabase.rawQuery("select * from notificationTitle", null);
+                Cursor rawQuery = readable.rawQuery("select * from notificationTitle", null);
                 if (rawQuery == null || !rawQuery.moveToFirst()) {
                     rawQuery.close();
-                    readableDatabase.close();
+                    //readable.close();
                     return -1;
                 }
                 do {
@@ -268,16 +235,27 @@ public class DBHelper extends SQLiteOpenHelper {
                { id = rawQuery.getInt(0);break;}
                 } while (rawQuery.moveToNext());
                 rawQuery.close();
-                readableDatabase.close();
+                //readable.close();
                 return id;
             } catch (Exception unused) {
             } catch (Throwable th) {
-                readableDatabase.close();
+                //readable.close();
                 throw th;
             }
 
         }
     return id;
+    }
+
+
+
+
+    public void close()
+    {
+        if(readable.isOpen())
+            readable.close();
+        if(writable.isOpen())
+            writable.close();
     }
 }
 

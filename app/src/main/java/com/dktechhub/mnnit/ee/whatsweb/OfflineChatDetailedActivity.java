@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.dktechhub.mnnit.ee.whatsweb.Utils.DBHelper;
 import com.dktechhub.mnnit.ee.whatsweb.Utils.NotificationTextAdapter;
+import com.dktechhub.mnnit.ee.whatsweb.Utils.NotificationTitle;
 import com.dktechhub.mnnit.ee.whatsweb.Utils.WMessage;
 import com.vanniktech.emoji.EmojiPopup;
 
@@ -49,6 +50,8 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_offline_chat_detailed);
+        simpleDateFormat = new SimpleDateFormat("hh:mm a dd/MM/yyyy", Locale.US);
+        simpleDateFormat.setTimeZone(TimeZone.getDefault());
         recyclerView=findViewById(R.id.recycler_view);
         try {
 
@@ -113,14 +116,18 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         //recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         recyclerView.setHasFixedSize(true);
+        if(this.id==-1)
+        {
+            NotificationTitle notificationTitle =  new NotificationTitle(null,name,null,12,simpleDateFormat.format(new Date()),number,"");
+            id =dbHelper.getNotificationTitleId(notificationTitle);
+        }
 
         if(this.id!=-1)
         {
              adapter.setmList(dbHelper.getMessageByTitleId(id));}
 
 
-        simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy, hh:mm:ss a", Locale.US);
-        simpleDateFormat.setTimeZone(TimeZone.getDefault());
+
     }
 
     @Override
@@ -147,7 +154,11 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
             intent.putExtra("jid", number + "@s.whatsapp.net");
             intent.putExtra("android.intent.extra.TEXT",emojiEditText.getText().toString()+"‏‏");
             startActivity(intent);
-            WMessage wMessage =new WMessage(emojiEditText.getText().toString(),simpleDateFormat.format(new Date()),this.id,null,false,null);
+            String time =simpleDateFormat.format(new Date());
+            NotificationTitle notificationTitle =  new NotificationTitle(null,name,null,12,time,number,emojiEditText.getText().toString());
+
+            int id =dbHelper.insertNotificationData(notificationTitle);
+            WMessage wMessage =new WMessage(emojiEditText.getText().toString(),time,id,null,false,null);
             dbHelper.insertMessage(wMessage);
             adapter.addMessage(wMessage);
             emojiEditText.setText("");
