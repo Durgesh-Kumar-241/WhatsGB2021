@@ -84,28 +84,30 @@ public class FragmentStaus extends Fragment {
 
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
         recyclerView.setAdapter(adapter);
-
+        showEmpty(false);
         srl=root.findViewById(R.id.refresh);
         srl.setOnRefreshListener(this::refreshItems);
-
+        //refreshItems();
         return root;
     }
 
     public void refreshItems()
-    {adapter.reset();
-    adapter.notifyDataSetChanged();
+    {   adapter.reset();
+       // showEmpty(true);
+        //adapter.notifyDataSetChanged();
         new Ldx(new OnLoadCompleteListener() {
             @Override
             public void onLoaded(Status status) {
                 adapter.addStatusItem(status);
-                adapter.notifyDataSetChanged();
+                //adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onLoadCompleted() {
                 showEmpty(adapter.getItemCount()==0);
-                Toast.makeText(getContext(), "Items updated", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Updated", Toast.LENGTH_SHORT).show();
                 srl.setRefreshing(false);
+                adapter.notifyDataSetChanged();
             }
         },inSavedMode).execute();
     }
@@ -327,6 +329,7 @@ public class FragmentStaus extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+       // Toast.makeText(getContext(), "resumed", Toast.LENGTH_SHORT).show();
         refreshItems();
     }
 }

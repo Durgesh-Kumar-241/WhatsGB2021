@@ -1,7 +1,5 @@
 package com.dktechhub.mnnit.ee.whatsgb2;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -9,30 +7,30 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 public class TextRepeater extends AppCompatActivity {
     private Button share,generate,copy;
     private EditText toCopy,noOfTimes;
     private TextView generated;
     private CheckBox includeNewLine;
-    private MyApplication myApplication;
 
+    AdView adView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_repeater);
-        //myApplication=(MyApplication)this.getApplication();
-       // myApplication.showInterstitial(this);
-        //AdView mAdView = findViewById(R.id.adview);
-
-        //AdRequest adRequest = new AdRequest.Builder().build();
-        //mAdView.loadAd(adRequest);
+        loadAd();
         share=findViewById(R.id.share);
         generate=findViewById(R.id.generate);
         copy=findViewById(R.id.copy);
@@ -42,42 +40,25 @@ public class TextRepeater extends AppCompatActivity {
 
         generated=findViewById(R.id.generatedText);
 
-       // includeAllChars=findViewById(R.id.includeOtherCharecters);
+
         includeNewLine=findViewById(R.id.includeNewLine);
-        generate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                generateText();
-            }
-        });
-        copy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                copyToClipboard();
-            }
-        });
-        share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shareText();
-            }
-        });
+        generate.setOnClickListener(v -> generateText());
+        copy.setOnClickListener(v -> copyToClipboard());
+        share.setOnClickListener(v -> shareText());
         TextWatcher textWatcher1 =new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-               // Toast.makeText(TextRepeater.this, "before text\n"+s+start+' '+after+' '+count, Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //Toast.makeText(TextRepeater.this, "on text\n"+s+start+' '+before+' '+count, Toast.LENGTH_SHORT).show();
 
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                //Toast.makeText(TextRepeater.this, "before text\n"+s, Toast.LENGTH_SHORT).show();
                 try{
                     b1= s.toString().length() != 0;
                 }catch(Exception e)
@@ -154,15 +135,7 @@ public class TextRepeater extends AppCompatActivity {
     boolean b1=false,b2=false,b3=false;
     public void updateUi()
     {
-        if(b1&&b2)
-        {
-
-            generate.setEnabled(true);
-        }else
-        {
-
-            generate.setEnabled(false);
-        }
+        generate.setEnabled(b1 && b2);
         if(b3)
         {
             share.setEnabled(true);
@@ -204,5 +177,43 @@ public class TextRepeater extends AppCompatActivity {
         intent.putExtra(Intent.EXTRA_TEXT,generated.getText().toString());
         intent.setType("text/plain");
         startActivity(Intent.createChooser(intent,getString(R.string.sendindtextto)));
+    }
+
+    public void loadAd()
+    {
+        adView = new com.google.android.gms.ads.AdView(this);
+        adView.setAdSize(com.google.android.gms.ads.AdSize.BANNER);
+        adView.setAdUnitId(getString(R.string.banner));
+
+        LinearLayout adContainer = (LinearLayout) findViewById(R.id.banner_container);
+
+
+        adContainer.addView(adView);
+        AdRequest.Builder builder = new AdRequest.Builder();
+
+        adView.loadAd(builder.build());
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(adView!=null)
+            adView.pause();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(adView!=null)
+            adView.resume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(adView!=null)
+            adView.destroy();
     }
 }

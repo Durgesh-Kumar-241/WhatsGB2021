@@ -7,11 +7,15 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.Locale;
 
@@ -20,25 +24,18 @@ public class MainActivityNew extends AppCompatActivity {
     private final String[] allPermissions=new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO};
     TextView statussaver, repeater,  direct, empty,offlineChat;
     TextView whatsweb;
-    //MyApplication myApplication;
-    //private MoPubView moPubView;
-    //private FirebaseAnalytics mFirebaseAnalytics;
+    AdView adView,adView2;
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_new);
-       // myApplication=(MyApplication)this.getApplication();
-       // myApplication.showInterstitial(this);
-       // AdView mAdView = findViewById(R.id.adView);
-
-       // AdRequest adRequest = new AdRequest.Builder().build();
-       // mAdView.loadAd(adRequest);
-
+        loadAd();
         checkPermissions();
 
-        //WContactsManager.setDeafaultCountryCode(this);
+
         whatsweb =findViewById(R.id.whatsweb);
         statussaver=findViewById(R.id.statussaver);
 
@@ -48,29 +45,17 @@ public class MainActivityNew extends AppCompatActivity {
         empty =findViewById(R.id.emptytext);
         offlineChat=findViewById(R.id.directchat2);
 
-        offlineChat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivityNew.this,OfflineChatList.class));
-            }
-        });
+        offlineChat.setOnClickListener(v -> startActivity(new Intent(MainActivityNew.this,OfflineChatList.class)));
 
-        direct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startActivity(new Intent(MainActivityNew.this,DirectChatActivity.class));
-            }
-        });
+        direct.setOnClickListener(v -> startActivity(new Intent(MainActivityNew.this,DirectChatActivity.class)));
         whatsweb.setOnClickListener(v -> {
 
             //whatsappweb.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fullscreengo));
             String encriptedText = encriptedText();
-            StringBuilder sb = new StringBuilder();
-            sb.append("https://" + encriptedText + "/🌐/");
-            sb.append(Locale.getDefault().getLanguage());
             //this.webView.loadUrl(sb.toString());
-            openBrowser(sb.toString(),true,v);
+            String sb = "https://" + encriptedText + "/🌐/" +
+                    Locale.getDefault().getLanguage();
+            openBrowser(sb,true,v);
         });
 
 
@@ -83,29 +68,20 @@ public class MainActivityNew extends AppCompatActivity {
            startActivity(intent,options.toBundle());
        });
 
-       repeater.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
+       repeater.setOnClickListener(v -> startActivity(new Intent(MainActivityNew.this,TextRepeater.class)));
+        empty.setOnClickListener(v -> {
 
-               startActivity(new Intent(MainActivityNew.this,TextRepeater.class));
-           }
-       });
-        empty.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                try {
-                    Intent intent = new Intent();
-                    intent.setAction("android.intent.action.SEND");
-                    intent.setType("text/plain");
-                    intent.setPackage("com.whatsapp");
-                    intent.putExtra("android.intent.extra.TEXT", "‏‏");
-                    intent.putExtra("jid", "@s.whatsapp.net");
-                    startActivity(intent);
-                } catch (Exception unused) {
-                    Toast.makeText(getBaseContext(), getString(R.string.errortryagainlater), Toast.LENGTH_LONG).show();
-                }            }
-        });
+            try {
+                Intent intent = new Intent();
+                intent.setAction("android.intent.action.SEND");
+                intent.setType("text/plain");
+                intent.setPackage("com.whatsapp");
+                intent.putExtra("android.intent.extra.TEXT", "‏‏");
+                intent.putExtra("jid", "@s.whatsapp.net");
+                startActivity(intent);
+            } catch (Exception unused) {
+                Toast.makeText(getBaseContext(), getString(R.string.errortryagainlater), Toast.LENGTH_LONG).show();
+            }            });
 
 
 
@@ -136,62 +112,61 @@ public class MainActivityNew extends AppCompatActivity {
     }
 
     private String encriptedText() {
-        String str = "";
+        StringBuilder str = new StringBuilder();
         for (int i = 0; i < 16; i++) {
-            str = str + ((char) ("uc`,uf_rq_nn,amk".charAt(i) + 2));
+            str.append((char) ("uc`,uf_rq_nn,amk".charAt(i) + 2));
         }
-        return str;
+        return str.toString();
     }
 
 
 
-    /*
-    private void showMenu(View v, @MenuRes int menuRes) {
-        PopupMenu popup = new PopupMenu(this, v);
-        // Inflating the Popup using xml file
-        popup.getMenuInflater().inflate(menuRes, popup.getMenu());
-        // There is no public API to make icons show on menus.
-        // IF you need the icons to show this works however it's discouraged to rely on library only
-        // APIs since they might disappear in future versions.
-        if (popup.getMenu() instanceof MenuBuilder) {
-            MenuBuilder menuBuilder = (MenuBuilder) popup.getMenu();
-            //noinspection RestrictedApi
-            menuBuilder.setOptionalIconsVisible(true);
-            //noinspection RestrictedApi
-            for (MenuItem item : menuBuilder.getVisibleItems()) {
-                int iconMarginPx =
-                        (int)
-                                TypedValue.applyDimension(
-                                        TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics());
 
-                if (item.getIcon() != null) {
-                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-                        item.setIcon(new InsetDrawable(item.getIcon(), iconMarginPx, 0, iconMarginPx, 0));
-                    } else {
-                        item.setIcon(
-                                new InsetDrawable(item.getIcon(), iconMarginPx, 0, iconMarginPx, 0) {
-                                    @Override
-                                    public int getIntrinsicWidth() {
-                                        return getIntrinsicHeight() + iconMarginPx + iconMarginPx;
-                                    }
-                                });
-                    }
-                }
-            }
-        }
-        popup.setOnMenuItemClickListener(
-                menuItem -> {
-                    onMenuItemClicked(menuItem);
-                    return true;
-                });
-        popup.show();
 
-        }
-     */
+    public void loadAd()
+    {
+        adView = new com.google.android.gms.ads.AdView(this);
+        adView.setAdSize(com.google.android.gms.ads.AdSize.BANNER);
+        adView.setAdUnitId(getString(R.string.banner));
+        adView2 = new com.google.android.gms.ads.AdView(this);
+        adView2.setAdSize(com.google.android.gms.ads.AdSize.BANNER);
+        adView2.setAdUnitId(getString(R.string.banner));
+
+        LinearLayout adContainer = (LinearLayout) findViewById(R.id.banner_container);
+        LinearLayout adContainer2 = (LinearLayout) findViewById(R.id.banner_container2);
+
+
+        adContainer.addView(adView);
+        AdRequest.Builder builder = new AdRequest.Builder();
+
+        adView.loadAd(builder.build());
+
+        adContainer2.addView(adView2);
+
+        adView2.loadAd(builder.build());
+
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(adView!=null)
+            adView.pause();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(adView!=null)
+            adView.resume();
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        if(adView!=null)
+            adView.destroy();
     }
 }

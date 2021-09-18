@@ -2,10 +2,19 @@ package com.dktechhub.mnnit.ee.whatsgb2;
 
 import android.app.Activity;
 import android.app.Application;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.AdapterStatus;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.vanniktech.emoji.EmojiManager;
 import com.vanniktech.emoji.google.GoogleEmojiProvider;
+
+import java.util.Map;
 
 public class MyApplication extends Application {
     Activity activity;
@@ -13,13 +22,26 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        /*
-        MobileAds.initialize(
-                this, initializationStatus -> {});
-        loadAd();
-        //AppOpenManager appOpenManager = new AppOpenManager(this);
-        */
         EmojiManager.install(new GoogleEmojiProvider());
+
+        MobileAds.initialize(this, initializationStatus -> {
+            Map<String, AdapterStatus> statusMap = initializationStatus.getAdapterStatusMap();
+            for (String adapterClass : statusMap.keySet()) {
+                AdapterStatus status = statusMap.get(adapterClass);
+                Log.d("MyApp", String.format(
+                        "Adapter name: %s, Description: %s, Latency: %d",
+                        adapterClass, status.getDescription(), status.getLatency()));
+            }
+
+            // Start loading ads here...
+        });
+
+        //AppOpenManager appOpenManager = new AppOpenManager(this);
+
+        //AudienceNetworkAds.initialize(this);
+
+
+
     }
 
     public void showInterstitial(Activity activity) {

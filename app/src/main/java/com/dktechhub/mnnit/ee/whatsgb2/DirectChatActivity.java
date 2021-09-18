@@ -6,14 +6,15 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
-import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
+import com.google.android.gms.ads.AdRequest;
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
 import java.net.URLEncoder;
@@ -23,20 +24,16 @@ public class DirectChatActivity extends AppCompatActivity {
     EditText number,message;
     CountryCodePicker ccp;
     SharedPreferences sharedPreferences;
-    private MyApplication myApplication;
 
+   com.google.android.gms.ads.AdView adView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_direct_chat);
-        //MobileAds.initialize(this);
-        //myApplication=(MyApplication)this.getApplication();
-        //myApplication.showInterstitial(this);
-        //AdView mAdView = findViewById(R.id.adView);
 
-        //AdRequest adRequest = new AdRequest.Builder().build();
-        //mAdView.loadAd(adRequest);
+        loadAd();
+
         ccp=findViewById(R.id.spinner);
         number=findViewById(R.id.number);
         message=findViewById(R.id.message);
@@ -53,37 +50,26 @@ public class DirectChatActivity extends AppCompatActivity {
 
         }
         number.setText(sharedPreferences.getString("recent_number",""));
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                send();
-            }
+        send.setOnClickListener(v -> send());
+
+        clear.setOnClickListener(v -> {
+            number.setText("");
+            message.setText("");
         });
 
-        clear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                number.setText("");
-                message.setText("");
-            }
-        });
-       //// AdView mAdView = findViewById(R.id.adView);
-     //  AdRequest adRequest = new AdRequest.Builder().build();
-       // mAdView.loadAd(adRequest);
     }
 
     public void send()
     {
-        //int contCode=91;
-        //Toast.makeText(this, ccp.getSelectedCountryCode(), Toast.LENGTH_SHORT).show();
-        if(!ccp.isValid()) {
+           if(!ccp.isValid()) {
             Toast.makeText(this, getString(R.string.phonenumbernotvalid), Toast.LENGTH_SHORT).show();
             return;
         }
         String smessage = message.getText().toString();
-        String url = "https://api.whatsapp.com/send/?phone="+ccp.getFullNumber()+"&text="+ URLEncoder.encode(smessage);
-        try{
-            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+         try{
+             String url = "https://api.whatsapp.com/send/?phone="+ccp.getFullNumber()+"&text="+ URLEncoder.encode(smessage,"utf-8");
+
+             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             i.setPackage("com.whatsapp");
             startActivity(i);
         }catch (Exception e)
@@ -95,6 +81,47 @@ public class DirectChatActivity extends AppCompatActivity {
         sharedPreferences.edit().putString("recent_number",number.getText().toString()).apply();
 
 
+    }
+
+
+
+
+    @Override
+    protected void onDestroy() {
+        if (adView != null) {
+            adView.destroy();
+        }
+        super.onDestroy();
+    }
+
+    public void loadAd()
+    {
+        adView = new com.google.android.gms.ads.AdView(this);
+        adView.setAdSize(com.google.android.gms.ads.AdSize.BANNER);
+        adView.setAdUnitId(getString(R.string.banner));
+
+        LinearLayout adContainer = (LinearLayout) findViewById(R.id.banner_container);
+
+
+        adContainer.addView(adView);
+        AdRequest.Builder builder = new AdRequest.Builder();
+
+        adView.loadAd(builder.build());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(adView!=null)
+            adView.pause();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(adView!=null)
+            adView.resume();
     }
 
 

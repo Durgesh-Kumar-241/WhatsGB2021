@@ -8,11 +8,10 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-
-import com.dktechhub.mnnit.ee.whatsgb2.Utils.DBHelper;
-import com.dktechhub.mnnit.ee.whatsgb2.Utils.NotificationTitle;
-import com.dktechhub.mnnit.ee.whatsgb2.Utils.NotificationTitleAdapter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import android.provider.Settings;
+import android.text.TextUtils;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -22,20 +21,30 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.provider.Settings;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.Toast;
+import com.dktechhub.mnnit.ee.whatsgb2.Utils.DBHelper;
+import com.dktechhub.mnnit.ee.whatsgb2.Utils.NotificationTitle;
+import com.dktechhub.mnnit.ee.whatsgb2.Utils.NotificationTitleAdapter;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class OfflineChatList extends AppCompatActivity implements NotificationTitleAdapter.OnItemClickListener {
     Access access;
     DBHelper dbHelper;
     NotificationTitleAdapter adapter;
     RecyclerView recyclerView;
+    com.google.android.gms.ads.AdView adView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offline_chat_list);
+
+        loadAd();
+
+        //adView = new AdView(this, "IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID", AdSize.BANNER_HEIGHT_90);
+
+
+
         dbHelper = new DBHelper(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -43,20 +52,11 @@ public class OfflineChatList extends AppCompatActivity implements NotificationTi
         startNotificationService();
         setupService();
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(OfflineChatList.this,ChatPickerActivity.class));
-
-            }
-        });
+        fab.setOnClickListener(view -> startActivity(new Intent(OfflineChatList.this,ChatPickerActivity.class)));
         recyclerView = findViewById(R.id.overview_recent_chats);
         adapter = new NotificationTitleAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        //NotificationTitle notificationTitle = new NotificationTitle(123,"Durgesh",null,1234,"12/02/2003","100","Hello Dear");
-
-        //dbHelper.insertNotificationData(notificationTitle);
         adapter.setmList(dbHelper.loadNotificationData());
 
         startObserver();
@@ -88,6 +88,8 @@ public class OfflineChatList extends AppCompatActivity implements NotificationTi
         super.onResume();
         setTaskId();
         setupService();
+        if(adView!=null)
+            adView.resume();
     }
 
     public void setupService()
@@ -196,12 +198,7 @@ public class OfflineChatList extends AppCompatActivity implements NotificationTi
     newMessageObserver observer;
     public void startObserver()
     {
-        observer = new newMessageObserver(new newMessageObserver.observerInterface() {
-            @Override
-            public void onUpdate() {
-                refreshUI();
-            }
-        });
+        observer = new newMessageObserver(this::refreshUI);
         registerReceiver(observer,new IntentFilter("com.dktechhub.mnnit.ee.whatsweb.newMessageObserver"));
     }
     public void stopObserver()
@@ -213,6 +210,35 @@ public class OfflineChatList extends AppCompatActivity implements NotificationTi
     protected void onDestroy() {
         super.onDestroy();
         stopObserver();
+        if (adView != null) {
+            adView.destroy();
+        }
     }
+
+    public void loadAd()
+    {
+        adView = new com.google.android.gms.ads.AdView(this);
+        adView.setAdSize(AdSize.BANNER);
+        adView.setAdUnitId(getString(R.string.banner));
+// Find the Ad Container
+        LinearLayout adContainer = (LinearLayout) findViewById(R.id.banner_container);
+
+// Add the ad view to your activity layout
+        adContainer.addView(adView);
+        AdRequest.Builder builder = new AdRequest.Builder();
+
+        adView.loadAd(builder.build());
+// Request an ad
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(adView!=null)
+            adView.pause();
+
+    }
+
+
+
 
 }

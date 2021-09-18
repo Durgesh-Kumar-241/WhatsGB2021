@@ -21,6 +21,13 @@
             android:orientation="vertical"
             android:padding="@dimen/activity_horizontal_margin">
 
+            <LinearLayout
+                android:id="@+id/banner_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical" />
+
             <EditText
                 android:id="@+id/textToCopy"
                 android:layout_width="match_parent"
@@ -31,6 +38,7 @@
                 android:gravity="start|top"
                 android:hint="@string/enter_text_to_repeat"
                 android:inputType="textMultiLine"
+                android:minHeight="48dp"
                 android:outlineProvider="background" />
 
             <EditText
@@ -42,6 +50,7 @@
                 android:fontFamily="@font/dancing_script"
                 android:hint="@string/number_of_times"
                 android:inputType="number"
+                android:minHeight="48dp"
                 android:outlineProvider="background" />
 
             <LinearLayout

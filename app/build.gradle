@@ -62,5 +62,7 @@ dependencies {
     // https://mvnrepository.com/artifact/com.beardedhen/androidbootstrap
     implementation group: 'com.beardedhen', name: 'androidbootstrap', version: '2.3.2'
     implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+    //implementation 'com.facebook.android:audience-network-sdk:6.7.0'
+    implementation 'com.google.ads.mediation:facebook:6.6.0.0'
 
 }

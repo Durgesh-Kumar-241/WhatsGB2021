@@ -8,21 +8,10 @@
     <string name="send">Send</string>
     <string name="enter_any_message_optional">Enter any message (Optional)</string>
     <string name="clear">Clear</string>
-    <!--prod -->
-
-    <string name="direct_chat">ca-app-pub-9981627494946174/1138367135</string>
-    <string name="banner">ca-app-pub-9981627494946174/1685162046</string>
-    <string name="banner2">ca-app-pub-9981627494946174/3736610311</string>
-
-
     <!--test-->
-    <!--
-<string name="direct_chat" >ca-app-pub-3940256099942544/6300978111</string>
-<string name="banner33">ca-app-pub-3940256099942544/6300978111</string>
     <string name="banner">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="banner2">ca-app-pub-3940256099942544/6300978111</string>
-<string name="interstitial">ca-app-pub-3940256099942544/1033173712</string>
--->
+
+
 
     <string name="enter_text_to_repeat">Enter text to repeat</string>
     <string name="number_of_times">Number of times</string>
@@ -48,7 +37,13 @@
     <!-- Strings used for fragments for navigation -->
 
     <string name="accessibility_service_description">Background Accessibility service</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <!-- Strings used for fragments for navigation -->
+    <string name="empty_text">Empty Text</string>
+    <string name="text_repeater">Text Repeater</string>
+    <string name="status_saver">Status Saver</string>
+    <string name="direct_chat">Direct Chat</string>
+    <string name="whatsapp_web">WhatsApp web</string>
+    <string name="offline_chat">Offline Chat</string>
+    <string name="group_msg_send_warning">Chat with groups is not available now...wait for next updates</string>
+
 
 </resources>

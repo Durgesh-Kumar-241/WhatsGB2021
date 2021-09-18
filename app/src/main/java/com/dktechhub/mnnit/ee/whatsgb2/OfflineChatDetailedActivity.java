@@ -1,5 +1,14 @@
 package com.dktechhub.mnnit.ee.whatsgb2;
 
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,19 +16,13 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.Toast;
-
 import com.dktechhub.mnnit.ee.whatsgb2.Utils.DBHelper;
 import com.dktechhub.mnnit.ee.whatsgb2.Utils.NotificationTextAdapter;
 import com.dktechhub.mnnit.ee.whatsgb2.Utils.NotificationTitle;
 import com.dktechhub.mnnit.ee.whatsgb2.Utils.WMessage;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.vanniktech.emoji.EmojiPopup;
 
 import java.text.SimpleDateFormat;
@@ -28,6 +31,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class OfflineChatDetailedActivity extends AppCompatActivity {
+    AdView adView;
     com.google.android.material.floatingactionbutton.FloatingActionButton sendButton;
     ImageButton imagePicker;
     com.vanniktech.emoji.EmojiEditText emojiEditText;
@@ -48,6 +52,14 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_offline_chat_detailed);
+        loadAd();
+
+        //adView = new AdView(this, "IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID", AdSize.BANNER_HEIGHT_50);
+
+// Find the Ad Container
+
+
+
         simpleDateFormat = new SimpleDateFormat("hh:mm a dd/MM/yyyy", Locale.US);
         simpleDateFormat.setTimeZone(TimeZone.getDefault());
         recyclerView=findViewById(R.id.recycler_view);
@@ -83,25 +95,14 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
         emojiEditText=findViewById(R.id.emojiEditText);
         imogiSwitch=findViewById(R.id.imageView_emoji);
         final EmojiPopup emojiPopup = EmojiPopup.Builder.fromRootView(findViewById(R.id.rootView)).build(emojiEditText);
-        imogiSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                emojiPopup.toggle();
-
-            }
-        });
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                send();
-            }
-        });
+        imogiSwitch.setOnClickListener(v -> emojiPopup.toggle());
+        sendButton.setOnClickListener(v -> send());
 
         showAlert();
 
         if(!isPrivate)
         {
-            emojiEditText.setText("Chat with groups is not available now...wait for next updates");
+            emojiEditText.setText(R.string.group_msg_send_warning);
             emojiEditText.setEnabled(false);
             sendButton.setEnabled(false);
         }
@@ -138,6 +139,8 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //setupService();
+        if(adView!=null)
+            adView.resume();
     }
 
 
@@ -219,5 +222,36 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         stopObserver();
+        if (adView != null) {
+            adView.destroy();
+        }
     }
+
+
+    public void loadAd()
+    {
+        adView = new com.google.android.gms.ads.AdView(this);
+        adView.setAdSize(AdSize.BANNER);
+        adView.setAdUnitId(getString(R.string.banner));
+// Find the Ad Container
+        LinearLayout adContainer = (LinearLayout) findViewById(R.id.banner_container);
+
+// Add the ad view to your activity layout
+        adContainer.addView(adView);
+        AdRequest.Builder builder = new AdRequest.Builder();
+
+        adView.loadAd(builder.build());
+// Request an ad
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(adView!=null)
+            adView.pause();
+
+    }
+
+
+
 }
