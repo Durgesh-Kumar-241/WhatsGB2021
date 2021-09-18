@@ -70,7 +70,6 @@
                 android:text="@string/generate" />
 
             <com.google.android.gms.ads.AdView
-                android:id="@+id/adview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"

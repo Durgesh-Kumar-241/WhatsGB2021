@@ -11,10 +11,8 @@
     <!--prod -->
 
     <string name="direct_chat">ca-app-pub-9981627494946174/1138367135</string>
-    <string name="banner33">ca-app-pub-9981627494946174/5815978747</string>
     <string name="banner">ca-app-pub-9981627494946174/1685162046</string>
     <string name="banner2">ca-app-pub-9981627494946174/3736610311</string>
-    <string name="interstitial">ca-app-pub-9981627494946174/3346207005</string>
 
 
     <!--test-->
@@ -28,14 +26,11 @@
 
     <string name="enter_text_to_repeat">Enter text to repeat</string>
     <string name="number_of_times">Number of times</string>
-    <string name="include_new_line_charecter">Include new line charecter</string>
-    <string name="include_all_charecters">Include all charecters</string>
     <string name="generate">Generate</string>
     <string name="share">Share</string>
     <string name="copy">Copy</string>
     <string name="refresh">Refresh</string>
     <string name="go_full_screen">Go full screen</string>
-    <string name="preview">Preview</string>
     <string name="connecttointernerfirst">Connect to internet first</string>
     <string name="exit">Exit</string>
     <string name="phonenumbernotvalid">Phone number is not valid</string>
@@ -50,19 +45,8 @@
     <string name="textcopied">Text copied to clipboard</string>
     <string name="sendindtextto">Sending text to:</string>
     <string name="invalidinputtext">Invalid input,must not be empty</string>
-    <string name="title_activity_status">StatusActivity</string>
-    <string name="title_activity_splash">FullscreenActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="title_activity_offline_chat_list">OfflineChatList</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="accessibility_service_description">Background Accessibility service</string>
     <!-- TODO: Remove or change this placeholder text -->
     <!-- Strings used for fragments for navigation -->

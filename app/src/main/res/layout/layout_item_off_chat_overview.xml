@@ -42,7 +42,6 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:lines="1"
-                android:text="yf ffefe fwefewf f effffffffff fef efe efew ef f efef e"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/light_blue_600"
                 android:textSize="16sp"
@@ -56,7 +55,6 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:lines="1"
-                android:text="refer ger gger gerg f gvrg sdg vsd gdd dgedg gre grg rgre grg rgr reg rgr "
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/colorBackgroundLight"
                 android:textSize="16sp" />
@@ -65,7 +63,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_weight="5"
+            android:gravity="center"
             android:orientation="vertical">
 
             <TextView

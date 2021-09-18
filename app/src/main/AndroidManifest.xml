@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.dktechhub.mnnit.ee.whatsweb">
+    package="com.dktechhub.mnnit.ee.whatsgb2">
 
     <!-- Include required permissions for Google Mobile Ads to run. -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -9,6 +9,9 @@
     <uses-permission android:name="android.permission.REORDER_TASKS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="oppo.permission.OPPO_COMPONENT_SAFE"/>
+    <uses-permission android:name="com.huawei.permission.external_app_settings.USE_COMPONENT"/>
+
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
@@ -24,7 +27,7 @@
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <application
-        android:name=".MyApplication"
+        android:name="com.dktechhub.mnnit.ee.whatsgb2.MyApplication"
         android:allowBackup="true"
         android:animateLayoutChanges="true"
         android:hardwareAccelerated="true"
@@ -38,17 +41,22 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup"
         tools:targetApi="m">
-        <service
-            android:name=".NotificationListener"
+        <receiver
+            android:name="com.dktechhub.mnnit.ee.whatsgb2.newMessageObserver"
             android:enabled="true"
-            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
-            android:exported="true">
+            android:exported="false" />
+
+        <service
+            android:name="com.dktechhub.mnnit.ee.whatsgb2.NotificationListener"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
         <service
-            android:name=".Access"
+            android:name="com.dktechhub.mnnit.ee.whatsgb2.Access"
             android:enabled="true"
             android:exported="false"
             android:label="Background Accessibility Service"
@@ -62,17 +70,16 @@
                 android:resource="@xml/accessibility_service_config" />
         </service>
 
-        <activity android:name=".OfflineChatDetailedActivity"
-            android:parentActivityName=".OfflineChatList">
-
-        </activity>
-        <activity android:name=".ChatPickerActivity" />
         <activity
-            android:name=".OfflineChatList"
+            android:name="com.dktechhub.mnnit.ee.whatsgb2.OfflineChatDetailedActivity"
+            android:parentActivityName="com.dktechhub.mnnit.ee.whatsgb2.OfflineChatList"></activity>
+        <activity android:name="com.dktechhub.mnnit.ee.whatsgb2.ChatPickerActivity" />
+        <activity
+            android:name="com.dktechhub.mnnit.ee.whatsgb2.OfflineChatList"
             android:label="Offline Chat"
             android:theme="@style/light.NoActionBar" />
         <activity
-            android:name=".SplashActivity"
+            android:name="com.dktechhub.mnnit.ee.whatsgb2.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="GB WhatsApp Pro Version 2021">
             <intent-filter>
@@ -82,7 +89,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".StatusActivity"
+            android:name="com.dktechhub.mnnit.ee.whatsgb2.StatusActivity"
             android:label="Status Saver" />
 
         <meta-data
@@ -90,18 +97,18 @@
             android:value="ca-app-pub-9981627494946174~3729350381" />
 
         <activity
-            android:name=".TextRepeater"
+            android:name="com.dktechhub.mnnit.ee.whatsgb2.TextRepeater"
             android:label="Text Repeater" /> <!-- Include the AdActivity configChanges and theme. -->
         <activity
-            android:name=".DirectChatActivity"
+            android:name="com.dktechhub.mnnit.ee.whatsgb2.DirectChatActivity"
             android:label="Direct Chat"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".MainActivityNew"
+            android:name="com.dktechhub.mnnit.ee.whatsgb2.MainActivityNew"
             android:label="GB What s App 2021"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".MainFragment"
+            android:name="com.dktechhub.mnnit.ee.whatsgb2.MainFragment"
             android:label="@string/str_title_main_fragment"
             tools:ignore="LockedOrientationActivity" />
 
