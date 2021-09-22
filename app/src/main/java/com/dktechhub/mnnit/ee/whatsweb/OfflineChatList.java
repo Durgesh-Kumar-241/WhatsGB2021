@@ -1,0 +1,250 @@
+package com.dktechhub.mnnit.ee.whatsweb;
+
+import android.Manifest;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Bundle;
+import android.provider.Settings;
+import android.text.TextUtils;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.dktechhub.mnnit.ee.whatsweb.Utils.DBHelper;
+import com.dktechhub.mnnit.ee.whatsweb.Utils.NotificationTitle;
+import com.dktechhub.mnnit.ee.whatsweb.Utils.NotificationTitleAdapter;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+public class OfflineChatList extends AppCompatActivity implements NotificationTitleAdapter.OnItemClickListener {
+    Access access;
+    DBHelper dbHelper;
+    NotificationTitleAdapter adapter;
+    RecyclerView recyclerView;
+    com.google.android.gms.ads.AdView adView;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_offline_chat_list);
+
+        loadAd();
+
+        //adView = new AdView(this, "IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID", AdSize.BANNER_HEIGHT_90);
+
+
+
+        dbHelper = new DBHelper(this);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getPermissions();
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(view -> startActivity(new Intent(OfflineChatList.this,ChatPickerActivity.class)));
+        recyclerView = findViewById(R.id.overview_recent_chats);
+        adapter = new NotificationTitleAdapter(this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter.setmList(dbHelper.loadNotificationData());
+
+        startObserver();
+    }
+    public void getPermissions()
+    {
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)!= PackageManager.PERMISSION_GRANTED)
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[] { Manifest.permission.READ_CONTACTS},100);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(grantResults.length>0&&grantResults[0]!=PackageManager.PERMISSION_GRANTED)
+        {
+            Toast.makeText(this, "Contacts permission must be enabled to work this app properly", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+            
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setTaskId();
+        startNotificationService();
+        setupService();
+
+        if(adView!=null)
+            adView.resume();
+    }
+
+    public void setupService()
+    {
+        // Toast.makeText(getApplicationContext(), "Called acessibility setup", Toast.LENGTH_SHORT).show();
+        if (!isAccessibilityOn (this)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Accessibility service must be enabled to work this app properly");
+            builder.setNegativeButton("Go Back", (dialog, which) -> {
+                dialog.dismiss();
+                finish();
+            });
+            builder.setPositiveButton("Let's do it", (dialog, which) -> {
+                Intent intent = new Intent (Settings.ACTION_ACCESSIBILITY_SETTINGS);
+                dialog.dismiss();
+                startActivity (intent);
+
+            });
+
+            builder.create().show();
+
+        }
+    }
+
+
+
+
+    private boolean isAccessibilityOn(Context context) {
+        int accessibilityEnabled = 0;
+        final String service = context.getPackageName () + "/" + Access.class.getCanonicalName ();
+        try {
+            accessibilityEnabled = Settings.Secure.getInt (context.getApplicationContext ().getContentResolver (), Settings.Secure.ACCESSIBILITY_ENABLED);
+        } catch (Settings.SettingNotFoundException ignored) {  }
+
+        TextUtils.SimpleStringSplitter colonSplitter = new TextUtils.SimpleStringSplitter (':');
+
+        if (accessibilityEnabled == 1) {
+            String settingValue = Settings.Secure.getString (context.getApplicationContext ().getContentResolver (), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
+            if (settingValue != null) {
+                colonSplitter.setString (settingValue);
+                while (colonSplitter.hasNext ()) {
+                    String accessibilityService = colonSplitter.next ();
+
+                    if (accessibilityService.equalsIgnoreCase (service)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public void startNotificationService()
+    {   if(!isNotificationEnbld()) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Allow notification access to receive your messages without opening Whatsapp");
+        builder.setNegativeButton("Go Back", (dialog, which) -> {
+            dialog.dismiss();
+            finish();
+        });
+        builder.setPositiveButton("Let's do it", (dialog, which) -> {
+            Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
+            dialog.dismiss();
+            startActivity(intent);
+
+        });
+
+        builder.create().show();
+
+
+
+    }
+    }
+
+    private  boolean isNotificationEnbld()
+    {
+        ContentResolver cr = getContentResolver();
+        String enableds = Settings.Secure.getString(cr,"enabled_notification_listeners");
+        //return Settings.Secure.getString(getContentResolver(), "enabled_notification_listeners") != null && (Settings.Secure.getString(getApplicationContext().getContentResolver(), "enabled_notification_listeners") != null ? Settings.Secure.getString(getApplicationContext().getContentResolver(), "enabled_notification_listeners") : RequestConfiguration.MAX_AD_CONTENT_RATING_UNSPECIFIED).contains(getPackageName());
+
+        String pak = getPackageName();
+        return  enableds!=null && enableds.contains(pak);
+    }
+    public void setTaskId()
+    {
+        access=Access.instance;
+        if(access!=null&&access.selfTaskId==-1)
+            access.setTaskId(getTaskId());
+    }
+
+    @Override
+    public void onItemClicked(NotificationTitle notificationTitle) {
+        Intent i = new Intent(this,OfflineChatDetailedActivity.class);
+        i.putExtra("name",notificationTitle.title);
+        i.putExtra("number",notificationTitle.number);
+        i.putExtra("id",notificationTitle.id);
+        startActivity(i);
+        //this.finish();
+    }
+
+
+    public void refreshUI()
+    {
+        adapter.setmList(dbHelper.loadNotificationData());
+        //recyclerView.scrollToPosition(adapter.getItemCount()-1);
+    }
+
+
+    newMessageObserver observer;
+    public void startObserver()
+    {
+        observer = new newMessageObserver(this::refreshUI);
+        registerReceiver(observer,new IntentFilter("com.dktechhub.mnnit.ee.whatsweb.newMessageObserver"));
+    }
+    public void stopObserver()
+    {
+        if(observer!=null)
+            unregisterReceiver(observer);
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopObserver();
+        if (adView != null) {
+            adView.destroy();
+        }
+    }
+
+    public void loadAd()
+    {
+        adView = new com.google.android.gms.ads.AdView(this);
+        adView.setAdSize(AdSize.BANNER);
+        adView.setAdUnitId(getString(R.string.banner));
+// Find the Ad Container
+        LinearLayout adContainer = (LinearLayout) findViewById(R.id.banner_container);
+
+// Add the ad view to your activity layout
+        adContainer.addView(adView);
+        AdRequest.Builder builder = new AdRequest.Builder();
+
+        adView.loadAd(builder.build());
+// Request an ad
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(adView!=null)
+            adView.pause();
+
+    }
+
+
+
+
+}

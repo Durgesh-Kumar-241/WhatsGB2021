@@ -7,11 +7,11 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.dktechhub.mnnit.ee.whatsgb2"
+        applicationId "com.dktechhub.mnnit.ee.whatsweb"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode 30
+        versionName "30"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -60,7 +60,7 @@ dependencies {
     implementation 'com.vanniktech:emoji-google:0.7.0'
 
     // https://mvnrepository.com/artifact/com.beardedhen/androidbootstrap
-    implementation group: 'com.beardedhen', name: 'androidbootstrap', version: '2.3.2'
+    //implementation group: 'com.beardedhen', name: 'androidbootstrap', version: '2.3.2'
     implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     //implementation 'com.facebook.android:audience-network-sdk:6.7.0'
     implementation 'com.google.ads.mediation:facebook:6.6.0.0'
