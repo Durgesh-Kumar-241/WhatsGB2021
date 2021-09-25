@@ -139,8 +139,7 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //setupService();
-        if(adView!=null)
-            adView.resume();
+
     }
 
 
@@ -230,25 +229,19 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
 
     public void loadAd()
     {
-        adView = new com.google.android.gms.ads.AdView(this);
+        AdView adView = new AdView(this);
         adView.setAdSize(AdSize.BANNER);
         adView.setAdUnitId(getString(R.string.banner));
-// Find the Ad Container
-        LinearLayout adContainer = (LinearLayout) findViewById(R.id.banner_container);
-
-// Add the ad view to your activity layout
-        adContainer.addView(adView);
-        AdRequest.Builder builder = new AdRequest.Builder();
-
-        adView.loadAd(builder.build());
-// Request an ad
+        LinearLayout linearLayout = findViewById(R.id.banner_container);
+        linearLayout.addView(adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
     }
+
 
     @Override
     protected void onPause() {
         super.onPause();
-        if(adView!=null)
-            adView.pause();
 
     }
 

@@ -10,34 +10,36 @@
     <string name="clear">Clear</string>
     <!--test-->
     <!--
-           <string name="banner">ca-app-pub-3940256099942544/6300978111</string>
-   -->
-           <!-- prod -->
+             <string name="banner">ca-app-pub-3940256099942544/6300978111</string>
+     -->
+             <!-- prod -->
 
-        <string name="banner" >ca-app-pub-2629936756289361/8190538219</string>
+            <string name="banner" >ca-app-pub-3473482213195216/4922829746</string>
 
-        <string name="enter_text_to_repeat">Enter text to repeat</string>
-        <string name="number_of_times">Number of times</string>
-        <string name="generate">Generate</string>
-        <string name="share">Share</string>
-        <string name="copy">Copy</string>
-        <string name="refresh">Refresh</string>
-        <string name="go_full_screen">Go full screen</string>
-        <string name="connecttointernerfirst">Connect to internet first</string>
-        <string name="exit">Exit</string>
-        <string name="phonenumbernotvalid">Phone number is not valid</string>
-        <string name="errortryagainlater">error,please try later</string>
-        <string name="pressAgaintoexit">Press again to exit</string>
-        <string name="storagepermdenined">Permission denined,Reading external storage is necessary for the app to work properly</string>
-        <string name="downloadfaild">Download failed</string>
-        <string name="chooseaway">Choose a way:</string>
-        <string name="failed">Failed</string>
-        <string name="invalidtextinput">Invalid input,must be less than 1000 and greater than 0</string>
-        <string name="generatedtext">Generated text</string>
-        <string name="textcopied">Text copied to clipboard</string>
-        <string name="sendindtextto">Sending text to:</string>
-        <string name="invalidinputtext">Invalid input,must not be empty</string>
-        <!-- Strings used for fragments for navigation -->
+
+
+            <string name="enter_text_to_repeat">Enter text to repeat</string>
+            <string name="number_of_times">Number of times</string>
+            <string name="generate">Generate</string>
+            <string name="share">Share</string>
+            <string name="copy">Copy</string>
+            <string name="refresh">Refresh</string>
+            <string name="go_full_screen">Go full screen</string>
+            <string name="connecttointernerfirst">Connect to internet first</string>
+            <string name="exit">Exit</string>
+            <string name="phonenumbernotvalid">Phone number is not valid</string>
+            <string name="errortryagainlater">error,please try later</string>
+            <string name="pressAgaintoexit">Press again to exit</string>
+            <string name="storagepermdenined">Permission denined,Reading external storage is necessary for the app to work properly</string>
+            <string name="downloadfaild">Download failed</string>
+            <string name="chooseaway">Choose a way:</string>
+            <string name="failed">Failed</string>
+            <string name="invalidtextinput">Invalid input,must be less than 1000 and greater than 0</string>
+            <string name="generatedtext">Generated text</string>
+            <string name="textcopied">Text copied to clipboard</string>
+            <string name="sendindtextto">Sending text to:</string>
+            <string name="invalidinputtext">Invalid input,must not be empty</string>
+            <!-- Strings used for fragments for navigation -->
 
     <string name="accessibility_service_description">GB What s App</string>
     <string name="empty_text">Empty Text</string>

@@ -17,6 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="@dimen/activity_horizontal_margin">
@@ -78,15 +79,6 @@
                 android:fontFamily="@font/dancing_script"
                 android:text="@string/generate" />
 
-            <com.google.android.gms.ads.AdView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="16dp"
-                android:visibility="gone"
-                app:adSize="BANNER"
-                app:adUnitId="@string/banner"></com.google.android.gms.ads.AdView>
 
             <LinearLayout
                 android:layout_width="match_parent"

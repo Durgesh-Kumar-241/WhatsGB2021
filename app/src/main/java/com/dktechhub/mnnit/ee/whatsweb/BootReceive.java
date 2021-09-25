@@ -11,7 +11,12 @@ public class BootReceive extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         //Toast.makeText(context, "Received", Toast.LENGTH_SHORT).show();
-        toggleNotificationService(context);
+        try {
+            toggleNotificationService(context);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     private void toggleNotificationService(Context context)

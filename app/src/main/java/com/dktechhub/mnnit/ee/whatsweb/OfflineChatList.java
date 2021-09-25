@@ -1,7 +1,6 @@
 package com.dktechhub.mnnit.ee.whatsweb;
 
 import android.Manifest;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -10,7 +9,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,14 +28,18 @@ import com.dktechhub.mnnit.ee.whatsweb.Utils.NotificationTitle;
 import com.dktechhub.mnnit.ee.whatsweb.Utils.NotificationTitleAdapter;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 public class OfflineChatList extends AppCompatActivity implements NotificationTitleAdapter.OnItemClickListener {
     Access access;
     DBHelper dbHelper;
     NotificationTitleAdapter adapter;
     RecyclerView recyclerView;
-    com.google.android.gms.ads.AdView adView;
+    AdView adView;
+    TextView empty;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +62,8 @@ public class OfflineChatList extends AppCompatActivity implements NotificationTi
         adapter = new NotificationTitleAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter.setmList(dbHelper.loadNotificationData());
-
+        empty = findViewById(R.id.empty2);
+        refreshUI();
         startObserver();
     }
     public void getPermissions()
@@ -67,6 +73,9 @@ public class OfflineChatList extends AppCompatActivity implements NotificationTi
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[] { Manifest.permission.READ_CONTACTS},100);
             }
+        }else
+        {
+            prepare();
         }
     }
 
@@ -77,6 +86,9 @@ public class OfflineChatList extends AppCompatActivity implements NotificationTi
         {
             Toast.makeText(this, "Contacts permission must be enabled to work this app properly", Toast.LENGTH_SHORT).show();
             finish();
+        }else
+        {
+            prepare();
         }
             
 
@@ -86,17 +98,25 @@ public class OfflineChatList extends AppCompatActivity implements NotificationTi
     protected void onResume() {
         super.onResume();
         setTaskId();
-        startNotificationService();
-        setupService();
+        //startNotificationService();
+        //prepare();
 
-        if(adView!=null)
-            adView.resume();
+    }
+
+    public void prepare()
+    {   Log.d("Setup","Called accessibility: "+isAccessibilityOn(this)+" noti"+ isNotificationEnbld());
+        if(!isAccessibilityOn(this))
+            setupService();
+
+        if(!isNotificationEnbld())
+            startNotificationService();
     }
 
     public void setupService()
     {
-        // Toast.makeText(getApplicationContext(), "Called acessibility setup", Toast.LENGTH_SHORT).show();
-        if (!isAccessibilityOn (this)) {
+        //Toast.makeText(getApplicationContext(), "Called acessibility setup", Toast.LENGTH_SHORT).show();
+        //Log.d("Setup","Called");
+
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Accessibility service must be enabled to work this app properly");
             builder.setNegativeButton("Go Back", (dialog, which) -> {
@@ -112,7 +132,7 @@ public class OfflineChatList extends AppCompatActivity implements NotificationTi
 
             builder.create().show();
 
-        }
+
     }
 
 
@@ -145,7 +165,7 @@ public class OfflineChatList extends AppCompatActivity implements NotificationTi
     }
 
     public void startNotificationService()
-    {   if(!isNotificationEnbld()) {
+    {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Allow notification access to receive your messages without opening Whatsapp");
@@ -164,17 +184,16 @@ public class OfflineChatList extends AppCompatActivity implements NotificationTi
 
 
 
-    }
+
     }
 
     private  boolean isNotificationEnbld()
     {
-        ContentResolver cr = getContentResolver();
-        String enableds = Settings.Secure.getString(cr,"enabled_notification_listeners");
-        //return Settings.Secure.getString(getContentResolver(), "enabled_notification_listeners") != null && (Settings.Secure.getString(getApplicationContext().getContentResolver(), "enabled_notification_listeners") != null ? Settings.Secure.getString(getApplicationContext().getContentResolver(), "enabled_notification_listeners") : RequestConfiguration.MAX_AD_CONTENT_RATING_UNSPECIFIED).contains(getPackageName());
+        //ContentResolver cr = getContentResolver();
+        //String enableds = Settings.Secure.getString(cr,"enabled_notification_listeners");
+        return Settings.Secure.getString(getContentResolver(), "enabled_notification_listeners") != null && (Settings.Secure.getString(getApplicationContext().getContentResolver(), "enabled_notification_listeners") != null ? Settings.Secure.getString(getApplicationContext().getContentResolver(), "enabled_notification_listeners") : "").contains(getPackageName());
 
-        String pak = getPackageName();
-        return  enableds!=null && enableds.contains(pak);
+
     }
     public void setTaskId()
     {
@@ -196,9 +215,20 @@ public class OfflineChatList extends AppCompatActivity implements NotificationTi
 
     public void refreshUI()
     {
-        adapter.setmList(dbHelper.loadNotificationData());
+        //adapter.setmList(dbHelper.loadNotificationData());
         //recyclerView.scrollToPosition(adapter.getItemCount()-1);
+        ArrayList<NotificationTitle> rec = dbHelper.loadNotificationData();
+        if(rec.size()==0)
+        {
+            empty.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }else {
+            empty.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            adapter.setmList(rec);
+        }
     }
+
 
 
     newMessageObserver observer;
@@ -223,24 +253,19 @@ public class OfflineChatList extends AppCompatActivity implements NotificationTi
 
     public void loadAd()
     {
-        adView = new com.google.android.gms.ads.AdView(this);
+        AdView adView = new AdView(this);
         adView.setAdSize(AdSize.BANNER);
         adView.setAdUnitId(getString(R.string.banner));
-// Find the Ad Container
-        LinearLayout adContainer = (LinearLayout) findViewById(R.id.banner_container);
-
-// Add the ad view to your activity layout
-        adContainer.addView(adView);
-        AdRequest.Builder builder = new AdRequest.Builder();
-
-        adView.loadAd(builder.build());
-// Request an ad
+        LinearLayout linearLayout = findViewById(R.id.banner_container);
+        linearLayout.addView(adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
     }
+
     @Override
     protected void onPause() {
         super.onPause();
-        if(adView!=null)
-            adView.pause();
+
 
     }
 

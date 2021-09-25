@@ -15,6 +15,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 
 import java.util.Locale;
@@ -24,7 +25,7 @@ public class MainActivityNew extends AppCompatActivity {
     private final String[] allPermissions=new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO};
     TextView statussaver, repeater,  direct, empty,offlineChat;
     TextView whatsweb;
-    AdView adView,adView2;
+    AdView adView;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -125,42 +126,26 @@ public class MainActivityNew extends AppCompatActivity {
 
     public void loadAd()
     {
-        adView = new com.google.android.gms.ads.AdView(this);
-        adView.setAdSize(com.google.android.gms.ads.AdSize.BANNER);
+        AdView adView = new AdView(this);
+        adView.setAdSize(AdSize.BANNER);
         adView.setAdUnitId(getString(R.string.banner));
-        adView2 = new com.google.android.gms.ads.AdView(this);
-        adView2.setAdSize(com.google.android.gms.ads.AdSize.BANNER);
-        adView2.setAdUnitId(getString(R.string.banner));
-
-        LinearLayout adContainer = findViewById(R.id.banner_container);
-        LinearLayout adContainer2 = findViewById(R.id.banner_container2);
-
-
-        adContainer.addView(adView);
-        AdRequest.Builder builder = new AdRequest.Builder();
-        //new RequestConfiguration.Builder().setTestDeviceIds(Collections.singletonList("4E75AA8A7E3D9940C6867400095155E2"));
-        adView.loadAd(builder.build());
-
-        adContainer2.addView(adView2);
-
-        adView2.loadAd(builder.build());
-
-
+        LinearLayout linearLayout = findViewById(R.id.banner_container);
+        linearLayout.addView(adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if(adView!=null)
-            adView.pause();
+
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(adView!=null)
-            adView.resume();
+
     }
 
     @Override

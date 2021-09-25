@@ -2,37 +2,15 @@ package com.dktechhub.mnnit.ee.whatsweb;
 
 import android.app.Activity;
 import android.app.Application;
-import android.util.Log;
-
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.RequestConfiguration;
-import com.google.android.gms.ads.initialization.AdapterStatus;
-import com.google.android.gms.ads.interstitial.InterstitialAd;
-import com.vanniktech.emoji.EmojiManager;
-import com.vanniktech.emoji.google.GoogleEmojiProvider;
-
-import java.util.Collections;
-import java.util.Map;
 
 public class MyApplication extends Application {
-    Activity activity;
-    InterstitialAd interstitialAd;
+    //Activity activity;
+    //InterstitialAd interstitialAd;
     @Override
     public void onCreate() {
         super.onCreate();
-        EmojiManager.install(new GoogleEmojiProvider());
 
-        MobileAds.initialize(this, initializationStatus -> {
-            Map<String, AdapterStatus> statusMap = initializationStatus.getAdapterStatusMap();
-            for (String adapterClass : statusMap.keySet()) {
-                AdapterStatus status = statusMap.get(adapterClass);
-                Log.d("MyApp", String.format(
-                        "Adapter name: %s, Description: %s, Latency: %d",
-                        adapterClass, status.getDescription(), status.getLatency()));
-            }
-
-            // Start loading ads here...
-        });
+        //MobileAds.initialize(this);
         //new RequestConfiguration.Builder().setTestDeviceIds(Collections.singletonList("4E75AA8A7E3D9940C6867400095155E2"));
 
         //AppOpenManager appOpenManager = new AppOpenManager(this);

@@ -2,10 +2,13 @@ package com.dktechhub.mnnit.ee.whatsweb;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.ads.MobileAds;
+import com.vanniktech.emoji.EmojiManager;
+import com.vanniktech.emoji.google.GoogleEmojiProvider;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -19,15 +22,25 @@ public class SplashActivity extends AppCompatActivity {
             actionBar.hide();
         }
         setContentView(R.layout.activity_splash);
+        EmojiManager.install(new GoogleEmojiProvider());
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent i = new Intent(getApplicationContext(),MainActivityNew.class);
-                startActivity(i);
-                finish();
-            }
-        },500);
+      /*AudienceNetworkAds
+                .buildInitSettings(getApplicationContext())
+                .withInitListener(initResult -> {
+                    Intent i = new Intent(getApplicationContext(),MainActivityNew.class);
+                    startActivity(i);
+                    finish();
+                })
+                .initialize();
+        */
+
+        MobileAds.initialize(this, initializationStatus -> {
+            Intent i = new Intent(getApplicationContext(),MainActivityNew.class);
+            startActivity(i);
+            finish();
+        });
+
+
     }
 
 

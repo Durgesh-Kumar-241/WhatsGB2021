@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
 import java.net.URLEncoder;
@@ -25,7 +27,7 @@ public class DirectChatActivity extends AppCompatActivity {
     CountryCodePicker ccp;
     SharedPreferences sharedPreferences;
 
-   com.google.android.gms.ads.AdView adView;
+   AdView adView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,32 +98,26 @@ public class DirectChatActivity extends AppCompatActivity {
 
     public void loadAd()
     {
-        adView = new com.google.android.gms.ads.AdView(this);
-        adView.setAdSize(com.google.android.gms.ads.AdSize.BANNER);
+        AdView adView = new AdView(this);
+        adView.setAdSize(AdSize.BANNER);
         adView.setAdUnitId(getString(R.string.banner));
-
-        LinearLayout adContainer = (LinearLayout) findViewById(R.id.banner_container);
-
-
-        adContainer.addView(adView);
-        AdRequest.Builder builder = new AdRequest.Builder();
-
-        adView.loadAd(builder.build());
+        LinearLayout linearLayout = findViewById(R.id.banner_container);
+        linearLayout.addView(adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
     }
+
 
     @Override
     protected void onPause() {
         super.onPause();
-        if(adView!=null)
-            adView.pause();
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(adView!=null)
-            adView.resume();
+
     }
 
 
