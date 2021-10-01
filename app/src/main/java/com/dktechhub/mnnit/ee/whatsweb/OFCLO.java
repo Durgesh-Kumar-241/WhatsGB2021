@@ -38,16 +38,13 @@ public class OFCLO extends AppCompatActivity implements NotificationTitleAdapter
     DBHelper dbHelper;
     NotificationTitleAdapter adapter;
     RecyclerView recyclerView;
-    AdView adView;
+   // AdView adView;
     TextView empty;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offline_chat_list);
 
-        loadAd();
-
-        //adView = new AdView(this, "IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID", AdSize.BANNER_HEIGHT_90);
 
 
 
@@ -246,21 +243,9 @@ public class OFCLO extends AppCompatActivity implements NotificationTitleAdapter
     protected void onDestroy() {
         super.onDestroy();
         stopObserver();
-        if (adView != null) {
-            adView.destroy();
-        }
+
     }
 
-    public void loadAd()
-    {
-        AdView adView = new AdView(this);
-        adView.setAdSize(AdSize.BANNER);
-        adView.setAdUnitId(getString(R.string.ban_ofco));
-        LinearLayout linearLayout = findViewById(R.id.banner_container);
-        linearLayout.addView(adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
-    }
 
     @Override
     protected void onPause() {

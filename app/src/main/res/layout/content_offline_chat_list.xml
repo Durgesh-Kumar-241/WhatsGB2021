@@ -8,14 +8,6 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <LinearLayout
-        android:id="@+id/banner_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/overview_recent_chats"
         android:layout_width="match_parent"

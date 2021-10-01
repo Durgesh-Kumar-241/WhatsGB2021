@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -20,6 +22,7 @@ import com.dktechhub.mnnit.ee.whatsweb.Utils.DBHelper;
 import com.dktechhub.mnnit.ee.whatsweb.Utils.NotificationTextAdapter;
 import com.dktechhub.mnnit.ee.whatsweb.Utils.NotificationTitle;
 import com.dktechhub.mnnit.ee.whatsweb.Utils.WMessage;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -233,7 +236,15 @@ public class OFCDA extends AppCompatActivity {
         adView.setAdSize(AdSize.BANNER);
         adView.setAdUnitId(getString(R.string.ban_ofcld));
         LinearLayout linearLayout = findViewById(R.id.banner_container);
+        TextView tv = findViewById(R.id.ad_cont_test);
         linearLayout.addView(adView);
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                tv.setVisibility(View.GONE);
+            }
+        });
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
     }

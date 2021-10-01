@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -187,7 +189,15 @@ public class trpr extends AppCompatActivity {
         adView.setAdSize(AdSize.BANNER);
         adView.setAdUnitId(getString(R.string.ban_text_rep));
         LinearLayout linearLayout = findViewById(R.id.banner_container);
+        TextView tv = findViewById(R.id.ad_cont_test);
         linearLayout.addView(adView);
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                tv.setVisibility(View.GONE);
+            }
+        });
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
     }

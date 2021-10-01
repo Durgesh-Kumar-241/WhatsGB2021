@@ -25,7 +25,7 @@ public class MainActivityNew extends AppCompatActivity {
     private final String[] allPermissions=new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO};
     TextView statussaver, repeater,  direct, empty,offlineChat;
     TextView whatsweb;
-    AdView adView;
+
     MyApplication myApplication;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -35,7 +35,7 @@ public class MainActivityNew extends AppCompatActivity {
         setContentView(R.layout.activity_main_new);
         myApplication= (MyApplication) getApplication();
         checkPermissions();
-        loadAd();
+
 
         whatsweb =findViewById(R.id.whatsweb);
         statussaver=findViewById(R.id.statussaver);
@@ -133,26 +133,9 @@ public class MainActivityNew extends AppCompatActivity {
         return str.toString();
     }
 
-
-    public void loadAd()
-    {
-        AdView adView = new AdView(this);
-        adView.setAdSize(AdSize.BANNER);
-        adView.setAdUnitId(getString(R.string.ban_main));
-        LinearLayout linearLayout = findViewById(R.id.banner_container);
-        linearLayout.addView(adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
-    }
-
-
-
-
     @Override
     protected void onPause() {
         super.onPause();
-
-
     }
 
     @Override
@@ -164,8 +147,6 @@ public class MainActivityNew extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(adView!=null)
-            adView.destroy();
     }
 
     public void showInters()

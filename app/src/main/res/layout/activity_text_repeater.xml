@@ -25,9 +25,20 @@
             <LinearLayout
                 android:id="@+id/banner_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
 
-                android:orientation="vertical" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/ad_cont_test"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/back"
+                    android:gravity="center"
+                    android:text="Advertisement"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/textToCopy"

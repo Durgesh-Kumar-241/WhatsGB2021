@@ -57,8 +57,6 @@ public class MyApplication extends Application {
                                     public void onAdDismissedFullScreenContent() {
 
                                         MyApplication.this.interstitialAd = null;
-                                        loadAd();
-                                        //Log.d("TAG", "The ad was dismissed.");
                                     }
 
                                     @Override
@@ -80,12 +78,7 @@ public class MyApplication extends Application {
                     @Override
                     public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
                         interstitialAd = null;
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                loadAd();
-                            }
-                        },10000);
+                        new Handler().postDelayed(() -> loadAd(),10000);
                         //loadAd();
                     }
                 });
