@@ -21,7 +21,7 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 
 
-public class TextRepeater extends AppCompatActivity {
+public class trpr extends AppCompatActivity {
     private Button share,generate,copy;
     private EditText toCopy,noOfTimes;
     private TextView generated;
@@ -185,7 +185,7 @@ public class TextRepeater extends AppCompatActivity {
     {
         AdView adView = new AdView(this);
         adView.setAdSize(AdSize.BANNER);
-        adView.setAdUnitId(getString(R.string.banner));
+        adView.setAdUnitId(getString(R.string.ban_text_rep));
         LinearLayout linearLayout = findViewById(R.id.banner_container);
         linearLayout.addView(adView);
         AdRequest adRequest = new AdRequest.Builder().build();

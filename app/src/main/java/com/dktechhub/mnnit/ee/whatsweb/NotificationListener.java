@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
-import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 
@@ -123,7 +122,7 @@ public class NotificationListener extends NotificationListenerService {
 
     public void showNotification()
     {
-        Intent intent2 = new Intent(this, OfflineChatList.class);
+        Intent intent2 = new Intent(this, OFCLO.class);
         //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent2, 0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)

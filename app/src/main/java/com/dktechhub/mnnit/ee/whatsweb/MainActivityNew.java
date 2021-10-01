@@ -26,31 +26,40 @@ public class MainActivityNew extends AppCompatActivity {
     TextView statussaver, repeater,  direct, empty,offlineChat;
     TextView whatsweb;
     AdView adView;
-
+    MyApplication myApplication;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_new);
-        loadAd();
+        myApplication= (MyApplication) getApplication();
         checkPermissions();
-
+        loadAd();
 
         whatsweb =findViewById(R.id.whatsweb);
         statussaver=findViewById(R.id.statussaver);
-
         repeater =findViewById(R.id.textrepeater);
-
         direct =findViewById(R.id.directchat);
         empty =findViewById(R.id.emptytext);
         offlineChat=findViewById(R.id.directchat2);
 
-        offlineChat.setOnClickListener(v -> startActivity(new Intent(MainActivityNew.this,OfflineChatList.class)));
+        offlineChat.setOnClickListener(v -> {
+            //showInters();
+            startActivity(new Intent(MainActivityNew.this, OFCLO.class));
 
-        direct.setOnClickListener(v -> startActivity(new Intent(MainActivityNew.this,DirectChatActivity.class)));
+        });
+
+        direct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //showInters();
+                startActivity(new Intent(MainActivityNew.this, DCat.class));
+
+            }
+        });
         whatsweb.setOnClickListener(v -> {
-
+            //showInters();
             //whatsappweb.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fullscreengo));
             String encriptedText = encriptedText();
             //this.webView.loadUrl(sb.toString());
@@ -61,17 +70,20 @@ public class MainActivityNew extends AppCompatActivity {
 
 
        statussaver.setOnClickListener(v -> {
-
+            //showInters();
            ActivityOptions options =
                    ActivityOptions.makeSceneTransitionAnimation(
                            this, v, "shared_element_end_root");
-           Intent intent=new Intent(MainActivityNew.this,StatusActivity.class);
+           Intent intent=new Intent(MainActivityNew.this, stsact.class);
            startActivity(intent,options.toBundle());
        });
 
-       repeater.setOnClickListener(v -> startActivity(new Intent(MainActivityNew.this,TextRepeater.class)));
+       repeater.setOnClickListener(v -> {
+           //showInters();
+           startActivity(new Intent(MainActivityNew.this, trpr.class));
+       });
         empty.setOnClickListener(v -> {
-
+                    //showInters();
             try {
                 Intent intent = new Intent();
                 intent.setAction("android.intent.action.SEND");
@@ -89,7 +101,8 @@ public class MainActivityNew extends AppCompatActivity {
     }
 
     public void openBrowser(String url,boolean requestdesktopSite,View v)
-    {ActivityOptions options =
+    {   //showInters();
+        ActivityOptions options =
             ActivityOptions.makeSceneTransitionAnimation(
                     this, v, "shared_element_end_root");
         Intent intent=new Intent(MainActivityNew.this,MainFragment.class);
@@ -121,19 +134,19 @@ public class MainActivityNew extends AppCompatActivity {
     }
 
 
-
-
-
     public void loadAd()
     {
         AdView adView = new AdView(this);
         adView.setAdSize(AdSize.BANNER);
-        adView.setAdUnitId(getString(R.string.banner));
+        adView.setAdUnitId(getString(R.string.ban_main));
         LinearLayout linearLayout = findViewById(R.id.banner_container);
         linearLayout.addView(adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
     }
+
+
+
 
     @Override
     protected void onPause() {
@@ -145,7 +158,7 @@ public class MainActivityNew extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        showInters();
     }
 
     @Override
@@ -153,5 +166,10 @@ public class MainActivityNew extends AppCompatActivity {
         super.onDestroy();
         if(adView!=null)
             adView.destroy();
+    }
+
+    public void showInters()
+    {
+        myApplication.showInterstitial(this);
     }
 }

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.dktechhub.mnnit.ee.whatsweb.ui.main.SectionsPagerAdapter;
 
-public class StatusActivity extends AppCompatActivity {
+public class stsact extends AppCompatActivity {
 
     private MyApplication myApplication;
 

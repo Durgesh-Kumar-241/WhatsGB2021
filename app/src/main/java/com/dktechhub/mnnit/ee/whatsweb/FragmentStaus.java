@@ -30,7 +30,7 @@ import java.io.FileOutputStream;
 
 public class FragmentStaus extends Fragment {
 
-    StatusItemAdapter adapter;
+    stsadpr adapter;
     private final boolean inSavedMode;
     public FragmentStaus(boolean inSavedMode) {
 
@@ -59,24 +59,24 @@ public class FragmentStaus extends Fragment {
         View root= inflater.inflate(R.layout.fragment_staus, container, false);
         recyclerView=root.findViewById(R.id.recycler);
         empty=root.findViewById(R.id.empty);
-        adapter=new StatusItemAdapter(new StatusItemAdapter.StatusItemAdapterListner() {
+        adapter=new stsadpr(new stsadpr.StatusItemAdapterListner() {
             @Override
-            public void onSaveButtonClicked(Status status) {
+            public void onSaveButtonClicked(sts status) {
                 new Szr(status).execute();
             }
 
             @Override
-            public void onShareButtonClicked(Status status) {
+            public void onShareButtonClicked(sts status) {
                 share(status);
             }
 
             @Override
-            public void onIconClicked(Status status) {
+            public void onIconClicked(sts status) {
                 viewStatus(status);
             }
 
             @Override
-            public void onDeleteButtonClicked(Status status) {
+            public void onDeleteButtonClicked(sts status) {
                 new Dlx(status).execute();
             }
         },getActivity(),inSavedMode);
@@ -97,7 +97,7 @@ public class FragmentStaus extends Fragment {
         //adapter.notifyDataSetChanged();
         new Ldx(new OnLoadCompleteListener() {
             @Override
-            public void onLoaded(Status status) {
+            public void onLoaded(sts status) {
                 adapter.addStatusItem(status);
                 //adapter.notifyDataSetChanged();
             }
@@ -135,7 +135,7 @@ public class FragmentStaus extends Fragment {
     {
         return src.contains(".mp4");
     }
-    public void viewStatus(Status status)
+    public void viewStatus(sts status)
     {
         //Toast.makeText(this, getString(R.string.opening)+status.name, Toast.LENGTH_SHORT).show();
         Intent i = new Intent();
@@ -150,9 +150,9 @@ public class FragmentStaus extends Fragment {
 
 
     public class Szr extends AsyncTask<Void,Void,Void> {
-        com.dktechhub.mnnit.ee.whatsweb.Status status;
+        sts status;
 
-        public Szr(com.dktechhub.mnnit.ee.whatsweb.Status status)
+        public Szr(sts status)
         {
             this.status=status;
         }
@@ -206,7 +206,7 @@ public class FragmentStaus extends Fragment {
     private static final int WRITE_EXTERNAL_STORAGE_CODE = 257;
 
 
-    public static class Ldx extends AsyncTask<Void,com.dktechhub.mnnit.ee.whatsweb.Status,Void> {
+    public static class Ldx extends AsyncTask<Void, sts,Void> {
         OnLoadCompleteListener onLoadCompleteListener;
         boolean loadSaved;
 
@@ -225,11 +225,11 @@ public class FragmentStaus extends Fragment {
                 {
                     for (File f1 : list) {
                         if (isImage(f1.getAbsolutePath())) {
-                            publishProgress(new com.dktechhub.mnnit.ee.whatsweb.Status(f1.getAbsolutePath(),f1.getName(),"image/*"));
+                            publishProgress(new sts(f1.getAbsolutePath(),f1.getName(),"image/*"));
 
                         }else if(isVideo(f1.getAbsolutePath())){
 
-                            publishProgress(new com.dktechhub.mnnit.ee.whatsweb.Status(f1.getAbsolutePath(),f1.getName(),"video/*"));
+                            publishProgress(new sts(f1.getAbsolutePath(),f1.getName(),"video/*"));
 
 
                         }
@@ -244,7 +244,7 @@ public class FragmentStaus extends Fragment {
 
 
         @Override
-        protected void onProgressUpdate(com.dktechhub.mnnit.ee.whatsweb.Status... values) {
+        protected void onProgressUpdate(sts... values) {
             super.onProgressUpdate(values);
             onLoadCompleteListener.onLoaded(values[0]);
         }
@@ -269,13 +269,13 @@ public class FragmentStaus extends Fragment {
         }
     }
     public interface OnLoadCompleteListener{
-        void onLoaded(Status status);
+        void onLoaded(sts status);
         void onLoadCompleted();
     }
 
 
 
-    public void share(Status s)
+    public void share(sts s)
     {
 
             try{
@@ -298,8 +298,8 @@ public class FragmentStaus extends Fragment {
     }
 
     class Dlx extends AsyncTask<Void,Void,Void>
-    {   com.dktechhub.mnnit.ee.whatsweb.Status status;
-        public Dlx(com.dktechhub.mnnit.ee.whatsweb.Status status)
+    {   sts status;
+        public Dlx(sts status)
         {
             this.status=status;
         }

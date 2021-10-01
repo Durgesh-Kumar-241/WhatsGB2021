@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StatusItemAdapter extends RecyclerView.Adapter<StatusItemAdapter.ViewHolder> {
+public class stsadpr extends RecyclerView.Adapter<stsadpr.ViewHolder> {
 
     boolean inSavedItemsMode = false;
     int layoutId;
@@ -32,7 +32,7 @@ public class StatusItemAdapter extends RecyclerView.Adapter<StatusItemAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Status status=mList.get(position);
+        sts status=mList.get(position);
 
         Glide.with(this.activity).load(status.source).centerCrop().placeholder(R.drawable.ic_album).into(holder.iconView);
         holder.iconView.setOnClickListener(new View.OnClickListener() {
@@ -81,15 +81,15 @@ public class StatusItemAdapter extends RecyclerView.Adapter<StatusItemAdapter.Vi
         }
     }
 
-    public void addStatusItem(Status item)
+    public void addStatusItem(sts item)
     {
         this.mList.add(item);
     }
-    private final List<Status> mList = new ArrayList<>();
+    private final List<sts> mList = new ArrayList<>();
     StatusItemAdapterListner listner;
 
 
-    public StatusItemAdapter(StatusItemAdapterListner listner, Activity activity,boolean inSavedItemsMode)
+    public stsadpr(StatusItemAdapterListner listner, Activity activity, boolean inSavedItemsMode)
     {   this.listner=listner;
         this.activity=activity;
         this.inSavedItemsMode=inSavedItemsMode;
@@ -101,10 +101,10 @@ public class StatusItemAdapter extends RecyclerView.Adapter<StatusItemAdapter.Vi
     }
 
     public interface StatusItemAdapterListner{
-        void onSaveButtonClicked(Status status);
-        void onShareButtonClicked(Status status);
-        void onIconClicked(Status status);
-        void onDeleteButtonClicked(Status status);
+        void onSaveButtonClicked(sts status);
+        void onShareButtonClicked(sts status);
+        void onIconClicked(sts status);
+        void onDeleteButtonClicked(sts status);
     }
 
     public void reset()

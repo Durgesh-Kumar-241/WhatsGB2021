@@ -13,7 +13,7 @@ import com.vanniktech.emoji.google.GoogleEmojiProvider;
 
 public class SplashActivity extends AppCompatActivity {
 
-
+    MyApplication myApplication;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +23,7 @@ public class SplashActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_splash);
         EmojiManager.install(new GoogleEmojiProvider());
+        myApplication=(MyApplication)getApplication();
 
       /*AudienceNetworkAds
                 .buildInitSettings(getApplicationContext())
@@ -35,6 +36,7 @@ public class SplashActivity extends AppCompatActivity {
         */
 
         MobileAds.initialize(this, initializationStatus -> {
+            myApplication.loadAd();
             Intent i = new Intent(getApplicationContext(),MainActivityNew.class);
             startActivity(i);
             finish();

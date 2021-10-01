@@ -110,7 +110,7 @@ public class ChatPickerActivity extends AppCompatActivity {
 
     public void startDetailedChat(WContact wContact)
     {
-        Intent i = new Intent(ChatPickerActivity.this,OfflineChatDetailedActivity.class);
+        Intent i = new Intent(ChatPickerActivity.this, OFCDA.class);
         i.putExtra("name",wContact.name);
         i.putExtra("number",wContact.number);
         i.putExtra("id",wContact.id);

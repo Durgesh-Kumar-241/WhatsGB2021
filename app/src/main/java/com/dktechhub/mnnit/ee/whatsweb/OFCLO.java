@@ -33,7 +33,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class OfflineChatList extends AppCompatActivity implements NotificationTitleAdapter.OnItemClickListener {
+public class OFCLO extends AppCompatActivity implements NotificationTitleAdapter.OnItemClickListener {
     Access access;
     DBHelper dbHelper;
     NotificationTitleAdapter adapter;
@@ -57,7 +57,7 @@ public class OfflineChatList extends AppCompatActivity implements NotificationTi
         getPermissions();
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> startActivity(new Intent(OfflineChatList.this,ChatPickerActivity.class)));
+        fab.setOnClickListener(view -> startActivity(new Intent(OFCLO.this,ChatPickerActivity.class)));
         recyclerView = findViewById(R.id.overview_recent_chats);
         adapter = new NotificationTitleAdapter(this);
         recyclerView.setAdapter(adapter);
@@ -204,7 +204,7 @@ public class OfflineChatList extends AppCompatActivity implements NotificationTi
 
     @Override
     public void onItemClicked(NotificationTitle notificationTitle) {
-        Intent i = new Intent(this,OfflineChatDetailedActivity.class);
+        Intent i = new Intent(this, OFCDA.class);
         i.putExtra("name",notificationTitle.title);
         i.putExtra("number",notificationTitle.number);
         i.putExtra("id",notificationTitle.id);
@@ -255,7 +255,7 @@ public class OfflineChatList extends AppCompatActivity implements NotificationTi
     {
         AdView adView = new AdView(this);
         adView.setAdSize(AdSize.BANNER);
-        adView.setAdUnitId(getString(R.string.banner));
+        adView.setAdUnitId(getString(R.string.ban_ofco));
         LinearLayout linearLayout = findViewById(R.id.banner_container);
         linearLayout.addView(adView);
         AdRequest adRequest = new AdRequest.Builder().build();

@@ -2,28 +2,30 @@ package com.dktechhub.mnnit.ee.whatsweb;
 
 import android.app.Activity;
 import android.app.Application;
+import android.os.Handler;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+
+import org.jetbrains.annotations.NotNull;
 
 public class MyApplication extends Application {
-    //Activity activity;
-    //InterstitialAd interstitialAd;
+
+    InterstitialAd interstitialAd;
     @Override
     public void onCreate() {
         super.onCreate();
-
-        //MobileAds.initialize(this);
-        //new RequestConfiguration.Builder().setTestDeviceIds(Collections.singletonList("4E75AA8A7E3D9940C6867400095155E2"));
-
-        //AppOpenManager appOpenManager = new AppOpenManager(this);
-
-        //AudienceNetworkAds.initialize(this);
-
-
-
     }
 
     public void showInterstitial(Activity activity) {
-        // Show the ad if it's ready. Otherwise toast and restart the game.
-        /*
+
         if (interstitialAd != null) {
             try {
                 interstitialAd.show(activity);
@@ -32,11 +34,11 @@ public class MyApplication extends Application {
                 e.printStackTrace();
             }
         }
-        *
-         */
+
     }
     public void loadAd() {
-        /*
+        if(this.interstitialAd!=null)
+            return;
         AdRequest adRequest = new AdRequest.Builder().build();
         InterstitialAd.load(
                 this,
@@ -45,49 +47,50 @@ public class MyApplication extends Application {
                 new InterstitialAdLoadCallback() {
                     @Override
                     public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-                        // The mInterstitialAd reference will be null until
-                        // an ad is loaded.
+
                         MyApplication.this.interstitialAd = interstitialAd;
-                        //showInterstitial();
-                        //Log.i(TAG, "onAdLoaded");
+
                         Toast.makeText(getApplicationContext(), "May be you will see an Ad now", Toast.LENGTH_SHORT).show();
                         interstitialAd.setFullScreenContentCallback(
                                 new FullScreenContentCallback() {
                                     @Override
                                     public void onAdDismissedFullScreenContent() {
-                                        // Called when fullscreen content is dismissed.
-                                        // Make sure to set your reference to null so you don't
-                                        // show it a second time.
+
                                         MyApplication.this.interstitialAd = null;
+                                        loadAd();
                                         //Log.d("TAG", "The ad was dismissed.");
                                     }
 
                                     @Override
                                     public void onAdFailedToShowFullScreenContent(@NotNull AdError adError) {
-                                        // Called when fullscreen content failed to show.
-                                        // Make sure to set your reference to null so you don't
-                                        // show it a second time.
+
                                         MyApplication.this.interstitialAd = null;
-                                        //Log.d("TAG", "The ad failed to show.");
+
                                     }
 
                                     @Override
                                     public void onAdShowedFullScreenContent() {
-                                        // Called when fullscreen content is shown.
-                                        // Log.d("TAG", "The ad was shown.");
+
+                                        loadAd();
+
                                     }
                                 });
                     }
 
                     @Override
                     public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                        // Handle the error
-                        //Log.i(TAG, loadAdError.getMessage());
                         interstitialAd = null;
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                loadAd();
+                            }
+                        },10000);
+                        //loadAd();
                     }
                 });
 
-         */
+
     }
 
 

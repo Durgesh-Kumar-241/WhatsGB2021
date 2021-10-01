@@ -30,7 +30,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class OfflineChatDetailedActivity extends AppCompatActivity {
+public class OFCDA extends AppCompatActivity {
     AdView adView;
     com.google.android.material.floatingactionbutton.FloatingActionButton sendButton;
     ImageButton imagePicker;
@@ -231,7 +231,7 @@ public class OfflineChatDetailedActivity extends AppCompatActivity {
     {
         AdView adView = new AdView(this);
         adView.setAdSize(AdSize.BANNER);
-        adView.setAdUnitId(getString(R.string.banner));
+        adView.setAdUnitId(getString(R.string.ban_ofcld));
         LinearLayout linearLayout = findViewById(R.id.banner_container);
         linearLayout.addView(adView);
         AdRequest adRequest = new AdRequest.Builder().build();

@@ -10,13 +10,22 @@
     <string name="clear">Clear</string>
     <!--test-->
     <!--
-             <string name="banner">ca-app-pub-3940256099942544/6300978111</string>
-     -->
+    <string name="banner">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="interstitial">ca-app-pub-3940256099942544/8691691433</string>
+    <string name="ban_main">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ban_ofcld">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ban_text_rep">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ban_ofco">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ban_dchat">ca-app-pub-3940256099942544/6300978111</string>
+    -->
              <!-- prod -->
-
-            <string name="banner" >ca-app-pub-3473482213195216/4922829746</string>
-
-
+    <string name="banner">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="interstitial">ca-app-pub-6181279743443989/4993916279</string>
+    <string name="ban_main">ca-app-pub-6181279743443989/2750896312</string>
+    <string name="ban_ofcld">ca-app-pub-6181279743443989/3872406290</string>
+    <string name="ban_text_rep">ca-app-pub-6181279743443989/9124732976</string>
+    <string name="ban_ofco">ca-app-pub-6181279743443989/7216754935</string>
+    <string name="ban_dchat">ca-app-pub-6181279743443989/7436262690</string>
 
             <string name="enter_text_to_repeat">Enter text to repeat</string>
             <string name="number_of_times">Number of times</string>

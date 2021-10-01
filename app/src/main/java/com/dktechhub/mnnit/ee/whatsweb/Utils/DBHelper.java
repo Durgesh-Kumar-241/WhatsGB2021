@@ -24,7 +24,8 @@ public class DBHelper extends SQLiteOpenHelper {
     {
         if(instance==null)
         {instance=new DBHelper(context);
-            Log.d("DBHelper","New Instance "+context.toString());}
+            //Log.d("DBHelper","New Instance "+context.toString());
+            }
         return instance;
     }
     @Override
@@ -75,14 +76,14 @@ public class DBHelper extends SQLiteOpenHelper {
         ArrayList<WMessage> arrayList = new ArrayList<>();
         //SQLiteDatabase readableDatabase = readable;
         try {
-            Cursor rawQuery = readable.rawQuery("select * from notificationText where IDTitle= ?", new String[]{String.valueOf(notificationTitleId)});
+            Cursor rawQuery = readable.rawQuery("select DISTINCT(text),date,IDTitle,pathPhoto,incoming,pathVoice from notificationText where IDTitle= ?", new String[]{String.valueOf(notificationTitleId)});
             if (rawQuery == null || !rawQuery.moveToFirst()) {
                 rawQuery.close();
                 //readable.close();
                 return arrayList;
             }
             do {
-                arrayList.add(new WMessage( rawQuery.getString(1), rawQuery.getString(2), rawQuery.getInt(3), rawQuery.getString(4), rawQuery.getInt(5) == 1, rawQuery.getString(6)));
+                arrayList.add(new WMessage( rawQuery.getString(0), rawQuery.getString(1), rawQuery.getInt(2), rawQuery.getString(3), rawQuery.getInt(4) == 1, rawQuery.getString(5)));
             } while (rawQuery.moveToNext());
             rawQuery.close();
             //readable.close();

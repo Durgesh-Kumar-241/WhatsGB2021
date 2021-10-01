@@ -45,7 +45,7 @@
         tools:targetApi="n">
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3473482213195216~3123287639"/>
+            android:value="ca-app-pub-6181279743443989~5001671043"/>
         <receiver
             android:name="com.dktechhub.mnnit.ee.whatsweb.BootReceive"
             android:enabled="true"
@@ -88,11 +88,11 @@
         </service>
 
         <activity
-            android:name="com.dktechhub.mnnit.ee.whatsweb.OfflineChatDetailedActivity"
-            android:parentActivityName="com.dktechhub.mnnit.ee.whatsweb.OfflineChatList" />
+            android:name="com.dktechhub.mnnit.ee.whatsweb.OFCDA"
+            android:parentActivityName="com.dktechhub.mnnit.ee.whatsweb.OFCLO" />
         <activity android:name="com.dktechhub.mnnit.ee.whatsweb.ChatPickerActivity" />
         <activity
-            android:name="com.dktechhub.mnnit.ee.whatsweb.OfflineChatList"
+            android:name="com.dktechhub.mnnit.ee.whatsweb.OFCLO"
             android:label="Offline Chat"
             android:theme="@style/light.NoActionBar" />
         <activity
@@ -107,16 +107,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.dktechhub.mnnit.ee.whatsweb.StatusActivity"
+            android:name="com.dktechhub.mnnit.ee.whatsweb.stsact"
             android:label="Status Saver" />
 
 
 
         <activity
-            android:name="com.dktechhub.mnnit.ee.whatsweb.TextRepeater"
+            android:name="com.dktechhub.mnnit.ee.whatsweb.trpr"
             android:label="Text Repeater" /> <!-- Include the AdActivity configChanges and theme. -->
         <activity
-            android:name="com.dktechhub.mnnit.ee.whatsweb.DirectChatActivity"
+            android:name="com.dktechhub.mnnit.ee.whatsweb.DCat"
             android:label="Direct Chat"
             tools:ignore="LockedOrientationActivity" />
         <activity

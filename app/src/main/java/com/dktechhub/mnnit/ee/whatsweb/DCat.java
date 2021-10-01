@@ -21,7 +21,7 @@ import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
 import java.net.URLEncoder;
 
-public class DirectChatActivity extends AppCompatActivity {
+public class DCat extends AppCompatActivity {
     TextView send,clear;
     EditText number,message;
     CountryCodePicker ccp;
@@ -100,7 +100,7 @@ public class DirectChatActivity extends AppCompatActivity {
     {
         AdView adView = new AdView(this);
         adView.setAdSize(AdSize.BANNER);
-        adView.setAdUnitId(getString(R.string.banner));
+        adView.setAdUnitId(getString(R.string.ban_dchat));
         LinearLayout linearLayout = findViewById(R.id.banner_container);
         linearLayout.addView(adView);
         AdRequest adRequest = new AdRequest.Builder().build();
