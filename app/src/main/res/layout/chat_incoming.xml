@@ -18,13 +18,17 @@
         android:orientation="vertical"
         android:padding="4dp">
 
-        <TextView
+        <com.vanniktech.emoji.EmojiTextView
             android:id="@+id/mesi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-
-            android:gravity="start" />
+            android:autoLink="all"
+            android:gravity="start"
+            android:linksClickable="true"
+            android:selectAllOnFocus="false"
+            android:textColorLink="#860825E6"
+            android:textIsSelectable="true" />
 
         <TextView
             android:id="@+id/timi"

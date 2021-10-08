@@ -10,7 +10,7 @@ public class NotificationTitle {
     public String title;
     public String summary;
     /* renamed from: c */
-    public byte[] photo;
+    public String photo;
 
     /* renamed from: d */
     public Integer count;
@@ -21,7 +21,7 @@ public class NotificationTitle {
     /* renamed from: f */
     public String number;
 
-    public NotificationTitle(Integer id, String title, byte[] photo, Integer count, String date, String number,String summary) {
+    public NotificationTitle(Integer id, String title, String photo, Integer count, String date, String number,String summary) {
         this.id = id;
         this.title = title;
         this.photo = photo;

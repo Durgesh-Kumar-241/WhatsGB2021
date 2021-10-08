@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.EditText;
@@ -36,7 +37,7 @@ public class DCat extends AppCompatActivity {
 
         setContentView(R.layout.activity_direct_chat);
 
-        loadAd();
+        new Handler().postDelayed(this::loadAd,1000);
 
         ccp=findViewById(R.id.spinner);
         number=findViewById(R.id.number);
@@ -99,7 +100,10 @@ public class DCat extends AppCompatActivity {
     }
 
     public void loadAd()
-    {
+    {   SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        int nused = sharedPreferences.getInt("nused",1);
+        if(nused<3)
+            return;
         AdView adView = new AdView(this);
         adView.setAdSize(AdSize.BANNER);
         adView.setAdUnitId(getString(R.string.ban_dchat));
@@ -118,17 +122,6 @@ public class DCat extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
 
 
 }

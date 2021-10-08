@@ -7,13 +7,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.ContactsContract;
-import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DBHelper extends SQLiteOpenHelper {
-    //SQLiteDatabase sqLiteDatabase;
-    // SQLiteDatabase db;
     Context context;
     HashMap<String, Integer> IdTitleMap = new HashMap<>();
     HashMap<String, String> mobTitleMap = new HashMap<>();
@@ -30,7 +27,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table notificationTitle(ID integer primary key autoincrement, Title text, Photo BLOB, Count integer, date text, number text,summary text)");
+        db.execSQL("create table notificationTitle(ID integer primary key autoincrement, Title text, Photo text, Count integer, date text, number text,summary text)");
         db.execSQL("create table notificationText(ID integer primary key autoincrement, Text text, date text, IDTitle integer, pathPhoto text,incoming boolean, pathVoice text )");
         db.execSQL("create table contactsW(ID integer primary key autoincrement, Name text, Number text, vo1 text, vo2 text)");
 
@@ -107,7 +104,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 return arrayList;
             }
             do {
-                arrayList.add(new NotificationTitle(rawQuery.getInt(0), rawQuery.getString(1), rawQuery.getBlob(2), rawQuery.getInt(3), rawQuery.getString(4), rawQuery.getString(5), rawQuery.getString(6)));
+                arrayList.add(new NotificationTitle(rawQuery.getInt(0), rawQuery.getString(1), rawQuery.getString(2), rawQuery.getInt(3), rawQuery.getString(4), rawQuery.getString(5), rawQuery.getString(6)));
             } while (rawQuery.moveToNext());
             rawQuery.close();
             //readable.close();

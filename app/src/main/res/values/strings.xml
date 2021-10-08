@@ -1,8 +1,6 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false">Whats Web</string>
 
-
-    <string name="str_title_main_fragment" translatable="false">WhatsApp web</string>
 
     <string name="enter_phone_number">Enter phone number</string>
     <string name="send">Send</string>
@@ -10,48 +8,42 @@
     <string name="clear">Clear</string>
     <!--test-->
 
-    <string name="interstitial">ca-app-pub-3940256099942544/8691691433</string>
-    <string name="ban_ofcld">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="ban_text_rep">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="ban_dchat">ca-app-pub-3940256099942544/6300978111</string>
+      <string name="interstitial">ca-app-pub-3940256099942544/8691691433</string>
+                <string name="ban_ofcld">ca-app-pub-3940256099942544/6300978111</string>
+                <string name="ban_text_rep">ca-app-pub-3940256099942544/6300978111</string>
+                <string name="ban_dchat">ca-app-pub-3940256099942544/6300978111</string>
 
-             <!-- prod -->
+                    <!-- prod -->
+    <!--
+
+                    <string name="interstitial">ca-app-pub-2694142257321208/4057777545</string>
+                    <string name="ban_ofcld">ca-app-pub-2694142257321208/1034182476</string>
+                    <string name="ban_text_rep">ca-app-pub-2694142257321208/6094937468</string>
+                    <string name="ban_dchat">ca-app-pub-2694142257321208/6094937468</string>
+     -->
 
 
 
-            <string name="enter_text_to_repeat">Enter text to repeat</string>
-            <string name="number_of_times">Number of times</string>
-            <string name="generate">Generate</string>
-            <string name="share">Share</string>
-            <string name="copy">Copy</string>
-            <string name="refresh">Refresh</string>
-            <string name="go_full_screen">Go full screen</string>
-            <string name="connecttointernerfirst">Connect to internet first</string>
-            <string name="exit">Exit</string>
-            <string name="phonenumbernotvalid">Phone number is not valid</string>
-            <string name="errortryagainlater">error,please try later</string>
-            <string name="pressAgaintoexit">Press again to exit</string>
-            <string name="storagepermdenined">Permission denined,Reading external storage is necessary for the app to work properly</string>
-            <string name="downloadfaild">Download failed</string>
+        <string name="enter_text_to_repeat">Enter text to repeat</string>
+                    <string name="number_of_times">Number of times</string>
+                    <string name="generate">Generate</string>
+                    <string name="share">Share</string>
+                    <string name="copy">Copy</string>
+    <string name="phonenumbernotvalid">Phone number is not valid</string>
+                    <string name="errortryagainlater">error,please try later</string>
             <string name="chooseaway">Choose a way:</string>
-            <string name="failed">Failed</string>
-            <string name="invalidtextinput">Invalid input,must be less than 1000 and greater than 0</string>
-            <string name="generatedtext">Generated text</string>
-            <string name="textcopied">Text copied to clipboard</string>
-            <string name="sendindtextto">Sending text to:</string>
-            <string name="invalidinputtext">Invalid input,must not be empty</string>
-            <!-- Strings used for fragments for navigation -->
+                    <string name="failed">Failed</string>
+                    <string name="invalidtextinput">Invalid input,must be less than 1000 and greater than 0</string>
+                    <string name="generatedtext">Generated text</string>
+                    <string name="textcopied">Text copied to clipboard</string>
+                    <string name="sendindtextto">Sending text to:</string>
+                    <string name="invalidinputtext">Invalid input,must not be empty</string>
+                    <!-- Strings used for fragments for navigation -->
 
     <string name="accessibility_service_description">GB What s App</string>
-    <string name="empty_text">Empty Text</string>
-    <string name="text_repeater">Text Repeater</string>
-    <string name="status_saver">Status Saver</string>
-    <string name="direct_chat">Direct Chat</string>
-    <string name="whatsapp_web">WhatsApp web</string>
-    <string name="offline_chat">Offline Chat</string>
-    <string name="group_msg_send_warning">Chat with groups is not available now...wait for next updates</string>
+    <string name="group_msg_send_warning" tools:ignore="TypographyEllipsis">Chat with groups is not available currently...wait for next updates</string>
     <string name="channel_name">GB WhatsApp</string>
-    <string name="channel_description">Tap to chat without appear online</string>
+    <string name="channel_description">Tap to chat without appearing online</string>
 
 
 </resources>

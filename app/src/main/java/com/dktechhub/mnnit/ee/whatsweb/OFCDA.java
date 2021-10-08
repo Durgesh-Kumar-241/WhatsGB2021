@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -55,11 +56,10 @@ public class OFCDA extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_offline_chat_detailed);
-        loadAd();
+        new Handler().postDelayed(this::loadAd,4000);
 
-        //adView = new AdView(this, "IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID", AdSize.BANNER_HEIGHT_50);
 
-// Find the Ad Container
+
 
 
 
@@ -130,20 +130,13 @@ public class OFCDA extends AppCompatActivity {
         {
              adapter.setmList(dbHelper.getMessageByTitleId(id)); }
 
-
-
         i = new Intent();
         i.setAction("com.dktechhub.mnnit.ee.whatsweb.newMessageObserver");
         startObserver();
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //setupService();
 
-    }
 
 
 
@@ -167,7 +160,7 @@ public class OFCDA extends AppCompatActivity {
             NotificationTitle notificationTitle =  new NotificationTitle(null,name,null,12,time,number,emojiEditText.getText().toString());
 
             int id =dbHelper.insertNotificationData(notificationTitle);
-            WMessage wMessage =new WMessage(emojiEditText.getText().toString(),time,id,null,false,null);
+            WMessage wMessage =new WMessage(emojiEditText.getText().toString().replaceAll("\n","<br>"),time,id,null,false,null);
             dbHelper.insertMessage(wMessage);
             //adapter.addMessage(wMessage);
             emojiEditText.setText("");
@@ -231,7 +224,11 @@ public class OFCDA extends AppCompatActivity {
 
 
     public void loadAd()
-    {
+    { SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+       int nused = sharedPreferences.getInt("nused",1);
+       if(nused<3)
+           return;
+
         AdView adView = new AdView(this);
         adView.setAdSize(AdSize.BANNER);
         adView.setAdUnitId(getString(R.string.ban_ofcld));
@@ -250,11 +247,7 @@ public class OFCDA extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onPause() {
-        super.onPause();
 
-    }
 
 
 

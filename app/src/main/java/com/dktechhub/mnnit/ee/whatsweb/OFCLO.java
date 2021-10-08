@@ -38,21 +38,18 @@ public class OFCLO extends AppCompatActivity implements NotificationTitleAdapter
     DBHelper dbHelper;
     NotificationTitleAdapter adapter;
     RecyclerView recyclerView;
-   // AdView adView;
+    MyApplication myApplication;
     TextView empty;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offline_chat_list);
-
-
-
-
+        myApplication= (MyApplication) getApplication();
+        myApplication.loadAd();
         dbHelper = new DBHelper(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getPermissions();
-
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> startActivity(new Intent(OFCLO.this,ChatPickerActivity.class)));
         recyclerView = findViewById(R.id.overview_recent_chats);
@@ -62,6 +59,7 @@ public class OFCLO extends AppCompatActivity implements NotificationTitleAdapter
         empty = findViewById(R.id.empty2);
         refreshUI();
         startObserver();
+
     }
     public void getPermissions()
     {
@@ -95,25 +93,19 @@ public class OFCLO extends AppCompatActivity implements NotificationTitleAdapter
     protected void onResume() {
         super.onResume();
         setTaskId();
-        //startNotificationService();
-        //prepare();
-
+        showInters();
     }
 
     public void prepare()
-    {   Log.d("Setup","Called accessibility: "+isAccessibilityOn(this)+" noti"+ isNotificationEnbld());
+    {   //Log.d("Setup","Called accessibility: "+isAccessibilityOn(this)+" noti"+ isNotificationEnbld());
         if(!isAccessibilityOn(this))
             setupService();
-
         if(!isNotificationEnbld())
             startNotificationService();
     }
 
     public void setupService()
     {
-        //Toast.makeText(getApplicationContext(), "Called acessibility setup", Toast.LENGTH_SHORT).show();
-        //Log.d("Setup","Called");
-
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Accessibility service must be enabled to work this app properly");
             builder.setNegativeButton("Go Back", (dialog, which) -> {
@@ -128,8 +120,6 @@ public class OFCLO extends AppCompatActivity implements NotificationTitleAdapter
             });
 
             builder.create().show();
-
-
     }
 
 
@@ -212,8 +202,6 @@ public class OFCLO extends AppCompatActivity implements NotificationTitleAdapter
 
     public void refreshUI()
     {
-        //adapter.setmList(dbHelper.loadNotificationData());
-        //recyclerView.scrollToPosition(adapter.getItemCount()-1);
         ArrayList<NotificationTitle> rec = dbHelper.loadNotificationData();
         if(rec.size()==0)
         {
@@ -246,12 +234,13 @@ public class OFCLO extends AppCompatActivity implements NotificationTitleAdapter
 
     }
 
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-
+    public void showInters()
+    {      try {
+        myApplication.showInterstitial(this);
+    }catch (Exception e)
+    {
+        e.printStackTrace();
+    }
     }
 
 

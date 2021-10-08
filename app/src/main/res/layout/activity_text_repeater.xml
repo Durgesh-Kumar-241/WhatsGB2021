@@ -17,7 +17,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="@dimen/activity_horizontal_margin">
@@ -118,7 +117,7 @@
                     android:enabled="false"
                     android:fontFamily="@font/dancing_script"
                     android:text="@string/copy"
-                    app:icon="?attr/actionModeCopyDrawable" />
+                    app:icon="@drawable/ic_baseline_content_copy_24" />
             </LinearLayout>
 
             <androidx.cardview.widget.CardView
@@ -138,7 +137,7 @@
                     android:fontFamily="@font/dancing_script"
                     android:padding="4dp"
                     android:textStyle="bold"
-                    tools:text="jjjjg" />
+                    tools:text="jjjjg efeiwr er v4bt  bgfgb ttttttttttttttttttttttttttt rtretvt ttttttttttttttttttttt rtrttbt rtb4ttttttttttttttttttttttttttttttttttttttttttttttt ttttttttttttttttttttttt ttttttttttreeeeeeeeeeeeeeeeeeeeeeee tttttttttttttttttttttt fffffffffffffffffffffffff ggggggggggggggggggggg defefef fdfdf fdfg gfg fgfgg gggggggggggggggggggggggggggggg ggggggggggggggggg gggggggggg gggggggggggg ggggggggggggg gggggggggg gggggggggg ggggggggggggg gggggggggggg ggg ggggggggg" />
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>

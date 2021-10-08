@@ -1,22 +1,21 @@
 package com.dktechhub.mnnit.ee.whatsweb.Utils;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.os.Environment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.bumptech.glide.Glide;
 import com.dktechhub.mnnit.ee.whatsweb.R;
-
+import java.io.File;
 import java.util.ArrayList;
 
 public class NotificationTitleAdapter extends RecyclerView.Adapter<NotificationTitleAdapter.NotiViewHolder>{
@@ -25,12 +24,14 @@ public class NotificationTitleAdapter extends RecyclerView.Adapter<NotificationT
     //TextDrawable.IBuilder builder;
     TextDrawable.IBuilder builder = TextDrawable.builder().round();
     OnItemClickListener onItemClickListener;
+    Context context;
+    File destDir = new File(Environment.getExternalStorageDirectory()+File.separator+"GB What s App"+File.separator+".caches");
 
     // TextDrawable.Builder builder ;
     @NonNull
     @Override
     public NotiViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context=parent.getContext();
+        context=parent.getContext();
         LayoutInflater inflator = LayoutInflater.from(context);
         View AppView = inflator.inflate(R.layout.layout_item_off_chat_overview,parent,false);
         return new NotiViewHolder(AppView);
@@ -40,32 +41,24 @@ public class NotificationTitleAdapter extends RecyclerView.Adapter<NotificationT
 
     @Override
     public void onBindViewHolder(@NonNull NotiViewHolder holder, int position) {
-        //holder.number.setText(mList.get(position).number);
-        //holder.name.setText(mList.get(position).name);
-
-        //holder.profile.setImageDrawable(builder.build(String.valueOf(mList.get(position).name.charAt(0)), colorGenerator.getRandomColor()));
-        holder.name.setText(mList.get(position).title);
+        holder.name.setText(Html.fromHtml(mList.get(position).title));
         holder.num_unread.setText(mList.get(position).number);
         holder.dateTime.setText(mList.get(position).date);
-        holder.summary.setText(mList.get(position).summary);
+        holder.summary.setText(Html.fromHtml(mList.get(position).summary));
         //holder.name.setText(mList.get(position).title);
         try {
             if (mList.get(position).photo == null)
                 holder.profile.setImageDrawable(builder.build(String.valueOf(mList.get(position).title.charAt(0)), colorGenerator.getRandomColor()));
             else
-                holder.profile.setImageBitmap(Bitmap.createScaledBitmap(BitmapFactory.decodeByteArray(mList.get(position).photo, 0, mList.get(position).photo.length), holder.profile.getWidth(), holder.profile.getHeight(), false));
+                Glide.with(context).load(destDir.getAbsolutePath()+File.separator+mList.get(position).photo).centerCrop().placeholder(R.drawable.ic_album).into(holder.profile);
+
         }catch (Exception e)
         {
             e.printStackTrace();
         }
 
 
-        holder.main.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemClickListener.onItemClicked(mList.get(position));
-            }
-        });
+        holder.main.setOnClickListener(v -> onItemClickListener.onItemClicked(mList.get(position)));
 
     }
 

@@ -1,6 +1,7 @@
 package com.dktechhub.mnnit.ee.whatsweb.Utils;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,12 +41,12 @@ public class NotificationTextAdapter extends RecyclerView.Adapter<RecyclerView.V
        if(mList.get(position).incoming)
        {
            ((IncomingViewHolder) holder)
-                   .mes.setText(mList.get(position).text);
+                   .mes.setText(Html.fromHtml(mList.get(position).text));
            ((IncomingViewHolder) holder)
                    .time.setText(mList.get(position).date);
        }else {
            ((OutGoingViewHolder) holder)
-                   .mess.setText(mList.get(position).text);
+                   .mess.setText(Html.fromHtml(mList.get(position).text));
            ((OutGoingViewHolder) holder)
                    .time.setText(mList.get(position).date);
        }
@@ -69,7 +70,8 @@ public class NotificationTextAdapter extends RecyclerView.Adapter<RecyclerView.V
         notifyDataSetChanged();
     }
     public static class IncomingViewHolder extends RecyclerView.ViewHolder{
-        TextView mes,time;
+        TextView time;
+        com.vanniktech.emoji.EmojiTextView mes;
         public IncomingViewHolder(@NonNull View itemView) {
             super(itemView);
             mes=itemView.findViewById(R.id.mesi);
