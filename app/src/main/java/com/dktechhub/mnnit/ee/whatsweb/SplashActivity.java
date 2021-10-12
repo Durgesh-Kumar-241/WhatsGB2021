@@ -31,7 +31,6 @@ public class SplashActivity extends AppCompatActivity {
             actionBar.hide();
         }
         setContentView(R.layout.activity_splash);
-        EmojiManager.install(new GoogleEmojiProvider());
         myApplication=(MyApplication)getApplication();
         MobileAds.initialize(this, initializationStatus -> {
             myApplication.loadAd();

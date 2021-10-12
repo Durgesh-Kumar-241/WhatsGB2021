@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "17336562603",
+    "project_id": "gb-what-s-app-pro-version-2021",
+    "storage_bucket": "gb-what-s-app-pro-version-2021.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17336562603:android:c3db77e6bd572b4d3798ee",
+        "android_client_info": {
+          "package_name": "com.dktechhub.mnnit.ee.whatsweb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "17336562603-omprru5vh85ertg8pmohspvgp5nlrl6h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVzXMrZQJEyS39jaJOx0ZTUT3kCrr0_Cs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "17336562603-omprru5vh85ertg8pmohspvgp5nlrl6h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-6358630498399226~5532094016"
+    }
+  ],
+  "configuration_version": "1"
+}

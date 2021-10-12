@@ -8,37 +8,32 @@
     <string name="clear">Clear</string>
     <!--test-->
 
-      <string name="interstitial">ca-app-pub-3940256099942544/8691691433</string>
-                <string name="ban_ofcld">ca-app-pub-3940256099942544/6300978111</string>
-                <string name="ban_text_rep">ca-app-pub-3940256099942544/6300978111</string>
-                <string name="ban_dchat">ca-app-pub-3940256099942544/6300978111</string>
+              <string name="interstitial">ca-app-pub-3940256099942544/8691691433</string>
+              <string name="ban_ofcld">ca-app-pub-3940256099942544/6300978111</string>
 
-                    <!-- prod -->
+
+                            <!-- prod -->
+
     <!--
+                            <string name="interstitial">ca-app-pub-6358630498399226/6845137696</string>
+                            <string name="ban_ofcld">ca-app-pub-6358630498399226/1592811010</string>
 
-                    <string name="interstitial">ca-app-pub-2694142257321208/4057777545</string>
-                    <string name="ban_ofcld">ca-app-pub-2694142257321208/1034182476</string>
-                    <string name="ban_text_rep">ca-app-pub-2694142257321208/6094937468</string>
-                    <string name="ban_dchat">ca-app-pub-2694142257321208/6094937468</string>
-     -->
-
-
-
+    -->
         <string name="enter_text_to_repeat">Enter text to repeat</string>
-                    <string name="number_of_times">Number of times</string>
-                    <string name="generate">Generate</string>
-                    <string name="share">Share</string>
-                    <string name="copy">Copy</string>
-    <string name="phonenumbernotvalid">Phone number is not valid</string>
-                    <string name="errortryagainlater">error,please try later</string>
-            <string name="chooseaway">Choose a way:</string>
-                    <string name="failed">Failed</string>
-                    <string name="invalidtextinput">Invalid input,must be less than 1000 and greater than 0</string>
-                    <string name="generatedtext">Generated text</string>
-                    <string name="textcopied">Text copied to clipboard</string>
-                    <string name="sendindtextto">Sending text to:</string>
-                    <string name="invalidinputtext">Invalid input,must not be empty</string>
-                    <!-- Strings used for fragments for navigation -->
+                        <string name="number_of_times">Number of times</string>
+                        <string name="generate">Generate</string>
+                        <string name="share">Share</string>
+                        <string name="copy">Copy</string>
+        <string name="phonenumbernotvalid">Phone number is not valid</string>
+                        <string name="errortryagainlater">error,please try later</string>
+                <string name="chooseaway">Choose a way:</string>
+                        <string name="failed">Failed</string>
+                        <string name="invalidtextinput">Invalid input,must be less than 1000 and greater than 0</string>
+                        <string name="generatedtext">Generated text</string>
+                        <string name="textcopied">Text copied to clipboard</string>
+                        <string name="sendindtextto">Sending text to:</string>
+                        <string name="invalidinputtext">Invalid input,must not be empty</string>
+                        <!-- Strings used for fragments for navigation -->
 
     <string name="accessibility_service_description">GB What s App</string>
     <string name="group_msg_send_warning" tools:ignore="TypographyEllipsis">Chat with groups is not available currently...wait for next updates</string>

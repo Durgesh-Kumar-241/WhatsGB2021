@@ -4,12 +4,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -23,9 +20,6 @@ import com.dktechhub.mnnit.ee.whatsweb.Utils.DBHelper;
 import com.dktechhub.mnnit.ee.whatsweb.Utils.NotificationTextAdapter;
 import com.dktechhub.mnnit.ee.whatsweb.Utils.NotificationTitle;
 import com.dktechhub.mnnit.ee.whatsweb.Utils.WMessage;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.vanniktech.emoji.EmojiPopup;
 
@@ -56,8 +50,8 @@ public class OFCDA extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_offline_chat_detailed);
-        new Handler().postDelayed(this::loadAd,4000);
-
+        //new Handler().postDelayed(this::loadAd,8000);
+        loadAd();
 
 
 
@@ -199,6 +193,7 @@ public class OFCDA extends AppCompatActivity {
     public void updateUI()
     {
         adapter.setmList(dbHelper.getMessageByTitleId(id));
+        //recyclerView.smoothScrollToPosition();
         //recyclerView.smoothScrollToPosition(adapter.getItemCount()-1);
     }
 
@@ -224,26 +219,9 @@ public class OFCDA extends AppCompatActivity {
 
 
     public void loadAd()
-    { SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-       int nused = sharedPreferences.getInt("nused",1);
-       if(nused<3)
-           return;
-
-        AdView adView = new AdView(this);
-        adView.setAdSize(AdSize.BANNER);
-        adView.setAdUnitId(getString(R.string.ban_ofcld));
+    {
         LinearLayout linearLayout = findViewById(R.id.banner_container);
-        TextView tv = findViewById(R.id.ad_cont_test);
-        linearLayout.addView(adView);
-        adView.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                tv.setVisibility(View.GONE);
-            }
-        });
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
+        ((MyApplication) getApplication()).loadBanner(linearLayout);
     }
 
 

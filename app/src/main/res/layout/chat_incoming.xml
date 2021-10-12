@@ -28,7 +28,8 @@
             android:linksClickable="true"
             android:selectAllOnFocus="false"
             android:textColorLink="#860825E6"
-            android:textIsSelectable="true" />
+            android:textIsSelectable="true"
+            app:emojiSize="20sp" />
 
         <TextView
             android:id="@+id/timi"

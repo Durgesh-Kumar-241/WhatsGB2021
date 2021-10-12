@@ -30,7 +30,6 @@
 
 
                 <TextView
-                    android:id="@+id/ad_cont_test"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/back"

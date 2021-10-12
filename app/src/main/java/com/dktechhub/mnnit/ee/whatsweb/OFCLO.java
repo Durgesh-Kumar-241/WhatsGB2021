@@ -176,11 +176,7 @@ public class OFCLO extends AppCompatActivity implements NotificationTitleAdapter
 
     private  boolean isNotificationEnbld()
     {
-        //ContentResolver cr = getContentResolver();
-        //String enableds = Settings.Secure.getString(cr,"enabled_notification_listeners");
-        return Settings.Secure.getString(getContentResolver(), "enabled_notification_listeners") != null && (Settings.Secure.getString(getApplicationContext().getContentResolver(), "enabled_notification_listeners") != null ? Settings.Secure.getString(getApplicationContext().getContentResolver(), "enabled_notification_listeners") : "").contains(getPackageName());
-
-
+          return Settings.Secure.getString(getContentResolver(), "enabled_notification_listeners") != null && (Settings.Secure.getString(getApplicationContext().getContentResolver(), "enabled_notification_listeners") != null ? Settings.Secure.getString(getApplicationContext().getContentResolver(), "enabled_notification_listeners") : "").contains(getPackageName());
     }
     public void setTaskId()
     {
