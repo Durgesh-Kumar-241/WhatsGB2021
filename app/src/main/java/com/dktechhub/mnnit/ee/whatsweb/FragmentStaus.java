@@ -174,6 +174,7 @@ public class FragmentStaus extends Fragment {
                     os.flush();
                     os.close();
                     is.close();
+                    addToGallery(f);
                 }catch (Exception e)
                 {
                     e.printStackTrace();
@@ -186,10 +187,19 @@ public class FragmentStaus extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             Toast.makeText(getContext(), "Saved to \"/GB What s App/Saved Statuses/\"", Toast.LENGTH_SHORT).show();
+            //addToGallery();
            // Toast toast = new Toast(getContext());
            // toast.setText("Saved to \"/GB What s App/Saved Statuses/\"");
 
         }
+        private void addToGallery(File f)
+        {
+            Intent m = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            Uri contentUri = Uri.fromFile(f);
+            m.setData(contentUri);
+            getActivity().sendBroadcast(m);
+        }
+
     }
 
 

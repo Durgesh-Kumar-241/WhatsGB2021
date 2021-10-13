@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name" translatable="false">Whats Web</string>
+    <string name="app_name" translatable="false">GB What s App</string>
 
 
     <string name="enter_phone_number">Enter phone number</string>
@@ -7,18 +7,18 @@
     <string name="enter_any_message_optional">Enter any message (Optional)</string>
     <string name="clear">Clear</string>
     <!--test-->
-
-              <string name="interstitial">ca-app-pub-3940256099942544/8691691433</string>
-              <string name="ban_ofcld">ca-app-pub-3940256099942544/6300978111</string>
-
-
-                            <!-- prod -->
-
     <!--
+                  <string name="interstitial">ca-app-pub-3940256099942544/8691691433</string>
+                  <string name="ban_ofcld">ca-app-pub-3940256099942544/6300978111</string>
+
+    -->
+                                <!-- prod -->
+
+
                             <string name="interstitial">ca-app-pub-2529314239402580/8746280837</string>
                             <string name="ban_ofcld">ca-app-pub-2529314239402580/9073583897</string>
 
-    -->
+
         <string name="enter_text_to_repeat">Enter text to repeat</string>
                         <string name="number_of_times">Number of times</string>
                         <string name="generate">Generate</string>
@@ -33,7 +33,7 @@
                         <string name="textcopied">Text copied to clipboard</string>
                         <string name="sendindtextto">Sending text to:</string>
                         <string name="invalidinputtext">Invalid input,must not be empty</string>
-                        <!-- Strings used for fragments for navigation -->
+
 
     <string name="accessibility_service_description">GB What s App</string>
     <string name="group_msg_send_warning" tools:ignore="TypographyEllipsis">Chat with groups is not available currently...wait for next updates</string>
