@@ -18,10 +18,10 @@ public class stsact extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status);
         myApplication=(MyApplication)this.getApplication();
-        myApplication.showInterstitial(this);
+
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        sectionsPagerAdapter.addFragment(new FragmentStaus(false),"Recent");
-        sectionsPagerAdapter.addFragment(new FragmentStaus(true),"Saved");
+        sectionsPagerAdapter.addFragment(new FragmentStaus(false),"Recent Statuses");
+        sectionsPagerAdapter.addFragment(new FragmentStaus(true),"Saved Statuses");
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
@@ -29,4 +29,7 @@ public class stsact extends AppCompatActivity {
 
 
     }
+
+
+
 }

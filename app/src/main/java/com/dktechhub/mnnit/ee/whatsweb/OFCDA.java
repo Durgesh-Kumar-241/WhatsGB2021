@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -20,7 +19,6 @@ import com.dktechhub.mnnit.ee.whatsweb.Utils.DBHelper;
 import com.dktechhub.mnnit.ee.whatsweb.Utils.NotificationTextAdapter;
 import com.dktechhub.mnnit.ee.whatsweb.Utils.NotificationTitle;
 import com.dktechhub.mnnit.ee.whatsweb.Utils.WMessage;
-import com.google.android.gms.ads.AdView;
 import com.vanniktech.emoji.EmojiPopup;
 
 import java.text.SimpleDateFormat;
@@ -29,7 +27,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class OFCDA extends AppCompatActivity {
-    AdView adView;
+
     com.google.android.material.floatingactionbutton.FloatingActionButton sendButton;
     ImageButton imagePicker;
     com.vanniktech.emoji.EmojiEditText emojiEditText;
@@ -51,7 +49,7 @@ public class OFCDA extends AppCompatActivity {
 
         setContentView(R.layout.layout_offline_chat_detailed);
         //new Handler().postDelayed(this::loadAd,8000);
-        loadAd();
+        //loadAd();
 
 
 
@@ -208,6 +206,8 @@ public class OFCDA extends AppCompatActivity {
         if(observer!=null)
             unregisterReceiver(observer);
     }
+
+    /*
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -225,6 +225,8 @@ public class OFCDA extends AppCompatActivity {
     }
 
 
+
+     */
 
 
 

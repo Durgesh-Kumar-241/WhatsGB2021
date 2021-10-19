@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F8F5F5"
     android:orientation="vertical"
     tools:context=".FilePickerActivity">
 
@@ -12,17 +13,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.1"
-        android:background="?attr/colorSurface"
+        android:background="#F8F5F5"
+        android:backgroundTintMode="src_in"
         app:tabGravity="center"
+        app:tabIndicatorAnimationMode="elastic"
         app:tabMode="scrollable"
         app:tabSelectedTextColor="?attr/colorOnSurface"
-        app:tabTextColor="?attr/colorOnBackground" />
+        app:tabTextAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:tabTextColor="?attr/colorOnBackground"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        tools:ignore="SpeakableTextPresentCheck">
 
     </androidx.viewpager.widget.ViewPager>
 

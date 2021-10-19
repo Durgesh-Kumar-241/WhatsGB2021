@@ -14,9 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.ads.MobileAds;
-import com.vanniktech.emoji.EmojiManager;
-import com.vanniktech.emoji.google.GoogleEmojiProvider;
+import com.facebook.ads.AudienceNetworkAds;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -31,12 +29,19 @@ public class SplashActivity extends AppCompatActivity {
             actionBar.hide();
         }
         setContentView(R.layout.activity_splash);
+        /*
         myApplication=(MyApplication)getApplication();
-        MobileAds.initialize(this, initializationStatus -> {
-            myApplication.loadAd();
-            ini=true;
-            update();
-        });
+        ini=myApplication.init;
+        if(!ini)
+        {
+            myApplication.setOnInitListner(() -> {
+                ini=true;
+                update();
+            });
+            myApplication.init();
+        }
+
+         */
         Button con = findViewById(R.id.cont);
 
         if(Build.VERSION.SDK_INT<Build.VERSION_CODES.M||checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
@@ -86,7 +91,7 @@ public class SplashActivity extends AppCompatActivity {
 
     public void update()
     {
-        if(ini&&storage)
+       // if(ini&&storage)
             goToMain();
     }
 }

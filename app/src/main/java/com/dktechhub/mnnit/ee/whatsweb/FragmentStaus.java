@@ -105,7 +105,7 @@ public class FragmentStaus extends Fragment {
             @Override
             public void onLoadCompleted() {
                 showEmpty(adapter.getItemCount()==0);
-                Toast.makeText(getContext(), "Updated", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Updated", Toast.LENGTH_SHORT).show();
                 srl.setRefreshing(false);
                 adapter.notifyDataSetChanged();
             }

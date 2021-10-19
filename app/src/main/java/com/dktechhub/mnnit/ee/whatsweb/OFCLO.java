@@ -20,15 +20,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dktechhub.mnnit.ee.whatsweb.Utils.DBHelper;
 import com.dktechhub.mnnit.ee.whatsweb.Utils.NotificationTitle;
 import com.dktechhub.mnnit.ee.whatsweb.Utils.NotificationTitleAdapter;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class OFCLO extends AppCompatActivity implements NotificationTitleAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offline_chat_list);
         myApplication= (MyApplication) getApplication();
-        myApplication.loadAd();
+
         dbHelper = new DBHelper(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -56,6 +55,8 @@ public class OFCLO extends AppCompatActivity implements NotificationTitleAdapter
         adapter = new NotificationTitleAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
+
         empty = findViewById(R.id.empty2);
         refreshUI();
         startObserver();
@@ -93,7 +94,7 @@ public class OFCLO extends AppCompatActivity implements NotificationTitleAdapter
     protected void onResume() {
         super.onResume();
         setTaskId();
-        showInters();
+        //showInters();
     }
 
     public void prepare()
@@ -230,14 +231,6 @@ public class OFCLO extends AppCompatActivity implements NotificationTitleAdapter
 
     }
 
-    public void showInters()
-    {      try {
-        myApplication.showInterstitial(this);
-    }catch (Exception e)
-    {
-        e.printStackTrace();
-    }
-    }
 
 
 

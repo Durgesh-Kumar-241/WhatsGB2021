@@ -16,22 +16,22 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.ads.AdView;
+
 
 
 public class trpr extends AppCompatActivity {
     private Button share,generate,copy;
-    private EditText toCopy,noOfTimes;
+    com.google.android.material.textfield.TextInputEditText toCopy,noOfTimes;
     private TextView generated;
     private CheckBox includeNewLine;
 
-    AdView adView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_repeater);
         //new Handler().postDelayed(this::loadAd,4000);
-        loadAd();
+
         share=findViewById(R.id.share);
         generate=findViewById(R.id.generate);
         copy=findViewById(R.id.copy);
@@ -180,18 +180,9 @@ public class trpr extends AppCompatActivity {
         startActivity(Intent.createChooser(intent,getString(R.string.sendindtextto)));
     }
 
-    public void loadAd()
-    {
-        LinearLayout linearLayout = findViewById(R.id.banner_container);
-        ((MyApplication) getApplication()).loadBanner(linearLayout);
-    }
 
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(adView!=null)
-            adView.destroy();
-    }
+
+
 }

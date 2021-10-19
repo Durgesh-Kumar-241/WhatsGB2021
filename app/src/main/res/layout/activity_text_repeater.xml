@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F8F5F5"
     tools:context=".trpr">
 
     <ScrollView
@@ -22,9 +23,7 @@
             android:padding="@dimen/activity_horizontal_margin">
 
             <LinearLayout
-                android:id="@+id/banner_container"
                 android:layout_width="match_parent"
-
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
@@ -32,36 +31,59 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:background="@drawable/back"
+                    android:background="@color/white"
+                    android:elevation="16dp"
                     android:gravity="center"
                     android:text="Advertisement"
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/textToCopy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:ems="10"
-                android:fontFamily="@font/dancing_script"
-                android:gravity="start|top"
-                android:hint="@string/enter_text_to_repeat"
-                android:inputType="textMultiLine"
-                android:minHeight="48dp"
-                android:outlineProvider="background" />
+            <com.google.android.material.textfield.TextInputLayout
 
-            <EditText
-                android:id="@+id/noOfTimes"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:ems="10"
-                android:fontFamily="@font/dancing_script"
-                android:hint="@string/number_of_times"
-                android:inputType="number"
-                android:minHeight="48dp"
-                android:outlineProvider="background" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:elevation="16dp"
+                android:hint="Enter your text Message"
+                android:inputType="textPersonName"
+                app:helperTextEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+
+                    android:id="@+id/textToCopy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:elevation="16dp"
+                android:hint="Number of times to repeat"
+                android:inputType="textPersonName"
+                app:helperTextEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+
+
+                    android:id="@+id/noOfTimes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="3" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -98,6 +120,7 @@
 
                 <Button
                     android:id="@+id/share"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="4dp"
@@ -109,6 +132,7 @@
 
                 <Button
                     android:id="@+id/copy"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="4dp"

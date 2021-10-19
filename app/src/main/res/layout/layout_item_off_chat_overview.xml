@@ -4,10 +4,10 @@
     android:id="@+id/main_lay"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/back"
     android:clickable="true"
     android:focusable="true"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="8dp">
 
     <ImageView
         android:id="@+id/profile_contact"

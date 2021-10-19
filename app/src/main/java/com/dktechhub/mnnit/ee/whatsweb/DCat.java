@@ -7,14 +7,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
-import com.google.android.gms.ads.AdView;
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
 import java.net.URLEncoder;
@@ -25,7 +23,7 @@ public class DCat extends AppCompatActivity {
     CountryCodePicker ccp;
     SharedPreferences sharedPreferences;
 
-   AdView adView;
+   //AdView adView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +31,7 @@ public class DCat extends AppCompatActivity {
         setContentView(R.layout.activity_direct_chat);
 
         //new Handler().postDelayed(this::loadAd,4000);
-        loadAd();
+        //loadAd();
         ccp=findViewById(R.id.spinner);
         number=findViewById(R.id.number);
         message=findViewById(R.id.message);
@@ -85,7 +83,7 @@ public class DCat extends AppCompatActivity {
 
 
 
-
+    /*
     @Override
     protected void onDestroy() {
         if (adView != null) {
@@ -98,7 +96,16 @@ public class DCat extends AppCompatActivity {
     {
         LinearLayout linearLayout = findViewById(R.id.banner_container);
         ((MyApplication) getApplication()).loadBanner(linearLayout);
+        try {
+            ((MyApplication) getApplication()).showInterstitial(this);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
+
+     */
+
 
 
 
