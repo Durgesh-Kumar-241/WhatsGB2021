@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.facebook.ads.AudienceNetworkAds;
+
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -46,7 +46,7 @@ public class SplashActivity extends AppCompatActivity {
 
         if(Build.VERSION.SDK_INT<Build.VERSION_CODES.M||checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
         {
-            storage=true;
+            //storage=true;
             update();
         }else {
             con.setVisibility(View.VISIBLE);

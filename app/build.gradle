@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.dktechhub.mnnit.ee.whatsweb"
-        minSdkVersion 21
+        minSdkVersion 16
         targetSdkVersion 30
         versionCode 40
         versionName "1.9"
@@ -54,7 +54,7 @@ dependencies {
     implementation 'com.vanniktech:emoji-google:0.7.0'
 
     implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
-    implementation 'com.facebook.android:audience-network-sdk:6.7.0'
+   // implementation 'com.facebook.android:audience-network-sdk:6.7.0'
 
 
 
