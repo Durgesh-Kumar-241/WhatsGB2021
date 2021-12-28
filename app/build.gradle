@@ -9,11 +9,11 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.dktechhub.mnnit.ee.whatsweb"
+        applicationId "com.dktechhub.gbchat22.whatsweb"
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 40
-        versionName "1.9"
+        versionCode 1
+        versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

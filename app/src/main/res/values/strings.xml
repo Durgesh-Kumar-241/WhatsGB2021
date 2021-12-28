@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name" translatable="false">GB What s App</string>
+    <string name="app_name" translatable="false">GB What s App 22.0</string>
 
 
     <string name="enter_phone_number">Enter phone number</string>
@@ -27,7 +27,7 @@
                         <string name="invalidinputtext">Invalid input,must not be empty</string>
 
 
-    <string name="accessibility_service_description">GB What s App</string>
+    <string name="accessibility_service_description">GB What s App 22.0</string>
     <string name="group_msg_send_warning" tools:ignore="TypographyEllipsis">Chat with groups is not available currently...wait for next updates</string>
     <string name="channel_name">GB WhatsApp</string>
     <string name="channel_description">Tap to chat without appearing online</string>
