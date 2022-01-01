@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F5F5"
+    android:background="?attr/color_background_prime"
     android:orientation="vertical"
     tools:context=".FilePickerActivity">
 
@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.1"
-        android:background="#F8F5F5"
         android:backgroundTintMode="src_in"
         app:tabGravity="center"
         app:tabIndicatorAnimationMode="elastic"

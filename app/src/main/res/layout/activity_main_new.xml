@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F5F5"
-    android:isScrollContainer="true"
+    android:background="?attr/color_background_prime"
 
+    android:isScrollContainer="true"
     android:orientation="vertical"
     android:visibility="visible">
 
@@ -113,7 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:background="@color/white"
+                android:background="@drawable/circuler_background"
                 android:elevation="16dp"
                 android:orientation="vertical"
                 android:padding="16dp">

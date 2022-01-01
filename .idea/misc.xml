@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android/WhatsappWeb/app/src/main/res/drawable/back.xml" value="0.26927083333333335" />
+        <entry key="..\:/Android/WhatsappWeb/app/src/main/res/drawable/chat_incoming_back.xml" value="0.28512820512820514" />
+        <entry key="..\:/Android/WhatsappWeb/app/src/main/res/drawable/chat_outgoing_background.xml" value="0.28512820512820514" />
         <entry key="..\:/Android/WhatsappWeb/app/src/main/res/drawable/circuler_background.xml" value="0.26927083333333335" />
         <entry key="..\:/Android/WhatsappWeb/app/src/main/res/layout/activity_direct_chat.xml" value="0.264" />
         <entry key="..\:/Android/WhatsappWeb/app/src/main/res/layout/activity_main_new.xml" value="0.264" />
@@ -20,6 +22,7 @@
         <entry key="..\:/Android/WhatsappWeb/app/src/main/res/layout/layout_item_off_chat_overview.xml" value="0.2734375" />
         <entry key="..\:/Android/WhatsappWeb/app/src/main/res/layout/layout_more.xml" value="0.253125" />
         <entry key="..\:/Android/WhatsappWeb/app/src/main/res/layout/layout_offline_chat_detailed.xml" value="0.253125" />
+        <entry key="..\:/Android/WhatsappWeb/app/src/main/res/menu/menu_main_activity.xml" value="0.2734375" />
         <entry key="..\:/Android/WhatsappWeb/app/src/main/res/xml/network_security_config.xml" value="0.253125" />
         <entry key="..\:/Users/kdurg/AndroidStudioProjects/WhatsappWeb/app/src/main/res/layout/chat_incoming.xml" value="0.2734375" />
         <entry key="..\:/Users/kdurg/AndroidStudioProjects/WhatsappWeb/app/src/main/res/layout/layout_contact.xml" value="0.2734375" />

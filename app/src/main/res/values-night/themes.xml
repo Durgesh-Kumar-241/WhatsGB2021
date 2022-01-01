@@ -1,0 +1,17 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+
+
+    <style name="light" parent="Theme.MaterialComponents.DayNight">
+        <item name="color_elevated">#100729</item>
+        <item name="color_background_prime">#010110</item>
+        <item name="color_text">@color/white</item>
+        <item name="colorPrimary">@color/light_blue_600</item>
+        <item name="color_background_sec">#1023B5</item>
+
+
+    </style>
+
+
+
+</resources>

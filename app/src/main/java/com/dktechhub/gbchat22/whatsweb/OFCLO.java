@@ -44,8 +44,7 @@ public class OFCLO extends AppCompatActivity implements NotificationTitleAdapter
         myApplication= (MyApplication) getApplication();
 
         dbHelper = new DBHelper(this);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
         getPermissions();
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> startActivity(new Intent(OFCLO.this,ChatPickerActivity.class)));

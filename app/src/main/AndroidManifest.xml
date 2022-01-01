@@ -17,7 +17,7 @@
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
 
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <uses-permission
         android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
         tools:ignore="ProtectedPermissions" />
@@ -96,7 +96,7 @@
             android:name="com.dktechhub.gbchat22.whatsweb.OFCLO"
             android:label="Offline Chat"
             android:screenOrientation="portrait"
-            android:theme="@style/light.NoActionBar"
+
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.dktechhub.gbchat22.whatsweb.SplashActivity"
