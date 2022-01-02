@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -130,11 +131,17 @@ public class MainActivityNew extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
+        MenuInflater menuInflater= getMenuInflater();
+        menuInflater.inflate(R.menu.menu_main_activity,menu);
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id=item.getItemId();
+        if (id == R.id.settings) {
+            startActivity(new Intent(this,SettingsActivity.class));
+        }
         return super.onOptionsItemSelected(item);
     }
 }

@@ -10,21 +10,21 @@
                       <string name="ban_ofcld">ca-app-pub-3940256099942544/6300978111</string>
      -->
 
-                                    <!-- prod -->
+    <!-- prod -->
 
 
     <string name="generate">Generate</string>
-                        <string name="share">Share</string>
-                        <string name="copy">Copy</string>
-        <string name="phonenumbernotvalid">Phone number is not valid</string>
-                        <string name="errortryagainlater">error,please try later</string>
-                <string name="chooseaway">Choose a way:</string>
-                        <string name="failed">Failed</string>
-                        <string name="invalidtextinput">Invalid input,must be less than 1000 and greater than 0</string>
-                        <string name="generatedtext">Generated text</string>
-                        <string name="textcopied">Text copied to clipboard</string>
-                        <string name="sendindtextto">Sending text to:</string>
-                        <string name="invalidinputtext">Invalid input,must not be empty</string>
+    <string name="share">Share</string>
+    <string name="copy">Copy</string>
+    <string name="phonenumbernotvalid">Phone number is not valid</string>
+    <string name="errortryagainlater">error,please try later</string>
+    <string name="chooseaway">Choose a way:</string>
+    <string name="failed">Failed</string>
+    <string name="invalidtextinput">Invalid input,must be less than 1000 and greater than 0</string>
+    <string name="generatedtext">Generated text</string>
+    <string name="textcopied">Text copied to clipboard</string>
+    <string name="sendindtextto">Sending text to:</string>
+    <string name="invalidinputtext">Invalid input,must not be empty</string>
 
 
     <string name="accessibility_service_description">GB What s App 22.0</string>
@@ -36,6 +36,22 @@
     <string name="status_saver">Status saver</string>
     <string name="offline_chat">Offline Chat</string>
     <string name="rate_the_app">Rate the App</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
 
 </resources>

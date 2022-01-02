@@ -12,6 +12,14 @@
 
     </style>
 
+    <style name="resso" parent="Theme.MaterialComponents.DayNight">
+        <item name="color_elevated">#201149</item>
+        <item name="color_background_prime">#100729</item>
+        <item name="color_text">@color/white</item>
+        <item name="colorPrimary">@color/light_blue_600</item>
+        <item name="color_background_sec">#1023B5</item>
 
+
+    </style>
 
 </resources>

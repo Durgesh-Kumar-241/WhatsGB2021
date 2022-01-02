@@ -13,8 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
-
+import androidx.appcompat.app.AppCompatDelegate;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -28,6 +27,7 @@ public class SplashActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
+        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         setContentView(R.layout.activity_splash);
         /*
         myApplication=(MyApplication)getApplication();
