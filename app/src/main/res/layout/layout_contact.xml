@@ -4,6 +4,7 @@
     android:id="@+id/main_lay"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?attr/color_elevated"
     android:clickable="true"
     android:focusable="true"
     android:orientation="horizontal">
@@ -32,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/light_blue_600"
+            android:textColor="?attr/color_text"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -42,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/colorBackgroundLight"
+            android:textColor="?attr/color_text"
             android:textSize="16sp" />
     </LinearLayout>
 </LinearLayout>
