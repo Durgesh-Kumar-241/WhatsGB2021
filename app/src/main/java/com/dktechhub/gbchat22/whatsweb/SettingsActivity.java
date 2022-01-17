@@ -32,6 +32,9 @@ public class SettingsActivity extends AppCompatActivity {
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
             CheckBoxPreference theme_mode = findPreference("theme_mode");
+            if(theme_mode!=null)
+            theme_mode.setChecked(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES);
+
             theme_mode.setOnPreferenceChangeListener((preference, newValue) -> {
                 if(newValue.toString().equals("true"))
                 {

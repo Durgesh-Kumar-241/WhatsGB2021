@@ -50,6 +50,7 @@ public class SplashActivity extends AppCompatActivity {
             update();
         }else {
             con.setVisibility(View.VISIBLE);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
 
 
@@ -58,6 +59,7 @@ public class SplashActivity extends AppCompatActivity {
             {
                 update();
             } else {
+
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},100);
             }
         });

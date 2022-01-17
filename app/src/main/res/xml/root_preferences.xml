@@ -4,7 +4,7 @@
 
     </PreferenceCategory>
     <CheckBoxPreference
-        android:defaultValue="false"
+        android:background="@drawable/circuler_background"
         android:key="theme_mode"
         android:title="Dark Theme" />
 </PreferenceScreen>
