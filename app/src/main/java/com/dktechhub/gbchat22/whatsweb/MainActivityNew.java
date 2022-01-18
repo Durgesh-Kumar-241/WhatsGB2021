@@ -21,7 +21,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 public class MainActivityNew extends AppCompatActivity {
     //PermissionDetector permissionDetector;
-    TextView statussaver, direct,offlineChat,more;
+    TextView statussaver, direct,more;
             LinearLayout rate_us;
 
 
@@ -35,17 +35,14 @@ public class MainActivityNew extends AppCompatActivity {
         myApplication= (MyApplication) getApplication();
 
 
-        offlineChat=findViewById(R.id.offlinechat);
+
         direct =findViewById(R.id.dchat);
         statussaver=findViewById(R.id.statussaver);
         more = findViewById(R.id.more);
         rate_us=findViewById(R.id.rate_us);
         rate_us.setOnClickListener(v -> rate(null));
         more.setOnClickListener(v -> showMoreOptions());
-        offlineChat.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivityNew.this, OFCLO.class));
 
-        });
 
         direct.setOnClickListener(v -> {
             startActivity(new Intent(MainActivityNew.this, DCat.class));

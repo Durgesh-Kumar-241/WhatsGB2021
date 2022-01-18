@@ -89,7 +89,7 @@ public class trpr extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 try{
                 String e = s.toString();
-                b2=(!e.equals("")) &&e.length() <4 && Integer.parseInt(e)>0;
+                b2=(!e.equals("")) && Integer.parseInt(e)>0;
                 }
                 catch(Exception e)
                 {

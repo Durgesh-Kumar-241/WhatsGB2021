@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name" translatable="false">GB What s App 22.0</string>
+    <string name="app_name" translatable="false">GB Version 21.0 Lite</string>
 
 
     <string name="enter_phone_number">Enter phone number</string>
@@ -20,38 +20,20 @@
     <string name="errortryagainlater">error,please try later</string>
     <string name="chooseaway">Choose a way:</string>
     <string name="failed">Failed</string>
-    <string name="invalidtextinput">Invalid input,must be less than 1000 and greater than 0</string>
+    <string name="invalidtextinput">Invalid input,must be greater than 0</string>
     <string name="generatedtext">Generated text</string>
     <string name="textcopied">Text copied to clipboard</string>
     <string name="sendindtextto">Sending text to:</string>
     <string name="invalidinputtext">Invalid input,must not be empty</string>
 
 
-    <string name="accessibility_service_description">GB What s App 22.0</string>
-    <string name="group_msg_send_warning" tools:ignore="TypographyEllipsis">Chat with groups is not available currently...wait for next updates</string>
-    <string name="channel_name">GB WhatsApp</string>
-    <string name="channel_description">Tap to chat without appearing online</string>
     <string name="more_features">More features</string>
     <string name="direct_chat">Direct Chat</string>
     <string name="status_saver">Status saver</string>
-    <string name="offline_chat">Offline Chat</string>
     <string name="rate_the_app">Rate the App</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
 
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
 
 </resources>
