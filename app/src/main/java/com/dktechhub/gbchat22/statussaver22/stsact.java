@@ -1,4 +1,4 @@
-package com.dktechhub.gbchat22.whatsweb;
+package com.dktechhub.gbchat22.statussaver22;
 
 import android.os.Bundle;
 
@@ -7,7 +7,7 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.dktechhub.gbchat22.whatsweb.ui.main.SectionsPagerAdapter;
+import com.dktechhub.gbchat22.statussaver22.ui.main.SectionsPagerAdapter;
 
 public class stsact extends AppCompatActivity {
 

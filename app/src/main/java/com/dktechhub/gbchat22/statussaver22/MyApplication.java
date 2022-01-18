@@ -1,9 +1,8 @@
-package com.dktechhub.gbchat22.whatsweb;
+package com.dktechhub.gbchat22.statussaver22;
 
 import android.app.Application;
 
-import com.vanniktech.emoji.EmojiManager;
-import com.vanniktech.emoji.google.GoogleEmojiProvider;
+
 
 public class MyApplication extends Application {
     /*
@@ -19,7 +18,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        EmojiManager.install(new GoogleEmojiProvider());
+
         /*
         init();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);

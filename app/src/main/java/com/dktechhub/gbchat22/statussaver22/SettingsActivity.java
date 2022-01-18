@@ -1,4 +1,4 @@
-package com.dktechhub.gbchat22.whatsweb;
+package com.dktechhub.gbchat22.statussaver22;
 
 import android.os.Bundle;
 
@@ -6,7 +6,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.CheckBoxPreference;
-import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 public class SettingsActivity extends AppCompatActivity {

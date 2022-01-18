@@ -1,4 +1,4 @@
-package com.dktechhub.gbchat22.whatsweb;
+package com.dktechhub.gbchat22.statussaver22;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -114,7 +114,7 @@ public class MainActivityNew extends AppCompatActivity {
 
     public void rate(View view)
     {
-        Uri uri = Uri.parse("market://details?id="+"com.dktechhub.gbchat22.whatsweb");
+        Uri uri = Uri.parse("market://details?id="+"com.dktechhub.gbchat22.statussaver22");
         Intent i = new Intent(Intent.ACTION_VIEW, uri);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -122,7 +122,7 @@ public class MainActivityNew extends AppCompatActivity {
             startActivity(i);
         }catch (Exception e)
         {
-            startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("http://play.google.com/store/apps/details?id="+"com.dktechhub.gbchat22.whatsweb")));//Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("http://play.google.com/store/apps/details?id="+"com.dktechhub.gbchat22.statussaver22")));//Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
