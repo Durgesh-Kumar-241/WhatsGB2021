@@ -50,7 +50,7 @@ public class SplashActivity extends AppCompatActivity {
             update();
         }else {
             con.setVisibility(View.VISIBLE);
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
         }
 
 

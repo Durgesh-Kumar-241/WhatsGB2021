@@ -6,6 +6,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.CheckBoxPreference;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
@@ -31,15 +32,10 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
-            CheckBoxPreference theme_mode = findPreference("theme_mode");
-            if(theme_mode!=null)
-            theme_mode.setChecked(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES);
+            ListPreference listPreference =findPreference("theme_mode");
 
-            theme_mode.setOnPreferenceChangeListener((preference, newValue) -> {
-                if(newValue.toString().equals("true"))
-                {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                }else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            listPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                AppCompatDelegate.setDefaultNightMode(Integer.parseInt((String)newValue));
                 //getActivity().recreate();
                 return true;
             });

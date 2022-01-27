@@ -1,6 +1,10 @@
 package com.dktechhub.gbchat22.whatsweb;
 
 import android.app.Application;
+import android.content.SharedPreferences;
+
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.preference.PreferenceManager;
 
 import com.vanniktech.emoji.EmojiManager;
 import com.vanniktech.emoji.google.GoogleEmojiProvider;
@@ -20,6 +24,10 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         EmojiManager.install(new GoogleEmojiProvider());
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String theme = sharedPreferences.getString("theme_mode", String.valueOf(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM));
+        //AppCompatDelegate.setDefaultNightMode(theme);
+        AppCompatDelegate.setDefaultNightMode(Integer.parseInt(theme));
         /*
         init();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);

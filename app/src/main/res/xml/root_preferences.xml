@@ -3,8 +3,9 @@
     <PreferenceCategory android:title="Appearance">
 
     </PreferenceCategory>
-    <CheckBoxPreference
-        android:background="@drawable/circuler_background"
+    <ListPreference
+        android:entries="@array/theme_names"
+        android:entryValues="@array/theme_values"
         android:key="theme_mode"
-        android:title="Dark Theme" />
+        android:title="Theme" />
 </PreferenceScreen>
