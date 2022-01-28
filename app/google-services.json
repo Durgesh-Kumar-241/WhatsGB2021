@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "809365708370",
+    "project_id": "gb-what-s-app-72122",
+    "storage_bucket": "gb-what-s-app-72122.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:809365708370:android:0ab4bcacf60dae56af898b",
+        "android_client_info": {
+          "package_name": "com.dktechhub.gbchat22.whatsweb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "809365708370-qpcgm6juvs3lik2hb990q7brkhe9ik6l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMVsxmS4BRmtcgo7JV8_NX7R0SIb04xFg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "809365708370-qpcgm6juvs3lik2hb990q7brkhe9ik6l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
