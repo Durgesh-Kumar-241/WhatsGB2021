@@ -1,17 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name" translatable="false">GB What s App 22.0</string>
+    <string name="app_name" translatable="false">GB Whats Offline Chat</string>
 
 
     <string name="enter_phone_number">Enter phone number</string>
     <string name="enter_any_message_optional">Enter any message (Optional)</string>
-    <!--test-->
-    <!--
-                      <string name="interstitial">ca-app-pub-3940256099942544/8691691433</string>
-                      <string name="ban_ofcld">ca-app-pub-3940256099942544/6300978111</string>
-     -->
-
-    <!-- prod -->
-
 
     <string name="generate">Generate</string>
     <string name="share">Share</string>
@@ -38,11 +30,10 @@
     <string name="rate_the_app">Rate the App</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
-    <!-- Preference Titles -->
-
-    <!-- Messages Preferences -->
-
-    <!-- Sync Preferences -->
-
+    <!--
+    prod ca-app-pub-4198943547176716/2247822022
+    test ca-app-pub-3940256099942544/1033173712
+    -->
+    <string name="inter">ca-app-pub-3940256099942544/1033173712</string>
 
 </resources>

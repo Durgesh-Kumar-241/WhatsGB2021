@@ -35,13 +35,14 @@ public class OFCLO extends AppCompatActivity implements NotificationTitleAdapter
     DBHelper dbHelper;
     NotificationTitleAdapter adapter;
     RecyclerView recyclerView;
-    MyApplication myApplication;
+    //MyApplication myApplication;
     TextView empty;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offline_chat_list);
-        myApplication= (MyApplication) getApplication();
+       // myApplication= (MyApplication) getApplication();
+        ((MyApplication)getApplication()).showInterstitialIfReady(this);
 
         dbHelper = new DBHelper(this);
 

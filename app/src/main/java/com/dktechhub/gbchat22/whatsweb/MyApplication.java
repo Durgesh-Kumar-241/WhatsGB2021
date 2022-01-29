@@ -1,5 +1,6 @@
 package com.dktechhub.gbchat22.whatsweb;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -9,10 +10,22 @@ import androidx.multidex.MultiDexApplication;
 import androidx.preference.PreferenceManager;
 
 import com.dktechhub.gbchat22.whatsweb.Utils.AdmobConf;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -24,154 +37,104 @@ import java.util.List;
 public class MyApplication extends MultiDexApplication {
     FirebaseFirestore db;
     AdmobConf admobConf=new AdmobConf();
-    String id;
-    CollectionReference admob_conf;
+    public int adSerial =3;
+    DocumentReference admob_conf;
+    InterstitialAd interstitialAd;
     @Override
     public void onCreate() {
         super.onCreate();
         EmojiManager.install(new GoogleEmojiProvider());
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String theme = sharedPreferences.getString("theme_mode", String.valueOf(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM));
-        //AppCompatDelegate.setDefaultNightMode(theme);
-        AppCompatDelegate.setDefaultNightMode(Integer.parseInt(theme));
-
-
+        setTheme();
         FirebaseApp.initializeApp(this);
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference admob_conf = db.collection("main_admob");
-        admob_conf.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                for(DocumentSnapshot documentSnapshot: list)
-                {
-                    AdmobConf  admobConf = documentSnapshot.toObject(AdmobConf.class);
-                    String id = documentSnapshot.getId();
-                    Log.d("firebase admob",admobConf.getMaxImpressionsDaily()+" "+admobConf.getImpressions()+" "+admobConf.getRequests()+" "+admobConf.getMaxRequestsDaily());
+        MobileAds.initialize(this);
+        db = FirebaseFirestore.getInstance();
+        admob_conf = db.collection("main_admob").document("admob_conf");
+        loadAdmobConf();
 
-                    admobConf.setImpressions(admobConf.getImpressions()+1);
-                    admob_conf.document(id).set(admobConf).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Log.d("firebase admob","updated sucessfully");
-                        }
-                    });
+
+    }
+
+    public void loadAdmobConf()
+    {
+        admob_conf.get().addOnCompleteListener(task -> {
+            if(task.isSuccessful())
+            {
+                DocumentSnapshot documentSnapshot = task.getResult();
+                if(documentSnapshot.exists())
+                {
+                    admobConf = documentSnapshot.toObject(AdmobConf.class);
+                    loadInterstitial();
+                    Log.d("firebase admob",admobConf.getMaxImpressionsDaily()+" "+admobConf.getRequests()+" "+admobConf.getMaxRequestsDaily());
                 }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("firebase admob",e.toString());
             }
         });
-        /*
-        init();
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        nused = sharedPreferences.getInt("nused",1);
-        sharedPreferences.edit().putInt("nused",nused+1).apply();
-
-         */
-    }
-    /*
-    public void showInterstitial(Activity activity) {
-        if (interstitialAd != null) {
-            try {
-                interstitialAd.show(activity);
-            }catch(Exception e)
-            {
-                e.printStackTrace();
-            }
-        }else loadAd();
-
-    }
-    public void loadAd() {
-        Log.d("2004d","Requested inter");
-        if(nused<2||this.interstitialAd!=null||alrerady)
-            return;
-        Log.d("2004d","Request confirmed for interstitial");
-        alrerady=true;
-
-
     }
 
-
-    LinearLayout current;
-    public void loadBanner(LinearLayout linearLayout)
+    public void updateAdmobRequest()
     {
-            if(nused<3)
-                return;
+        loadAdmobConf();
+        admobConf.setRequests(admobConf.getRequests()+1);
+        admob_conf.set(admobConf).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.d("firebase admob","request updated");
+            }
+        });
+    }
 
-            current=linearLayout;
-            if(adView==null)
-            {
-                adView = new AdView(this, "IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID", AdSize.BANNER_HEIGHT_50);
-                AdListener adListener = new AdListener() {
-                    @Override
-                    public void onError(Ad ad, AdError adError) {
+    public void setTheme()
+    {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String theme = sharedPreferences.getString("theme_mode", String.valueOf(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM));
+        AppCompatDelegate.setDefaultNightMode(Integer.parseInt(theme));
 
-                    }
+    }
 
-                    @Override
-                    public void onAdLoaded(Ad ad) {
-                        loadedBanner=true;
-                        if(current!=null)
-                        {
-                            current.removeAllViews();
-                            current.addView(adView);
+
+    public void loadInterstitial()
+    {   Log.d("firebase admob","adserial "+adSerial);
+        if(interstitialAd==null&&admobConf.requestAllowed()&&adSerial%4==0)
+        {
+            AdRequest adRequest =new  AdRequest.Builder().build();
+            InterstitialAd.load(this,getString(R.string.inter), adRequest,
+                    new InterstitialAdLoadCallback() {
+                        @Override
+                        public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                            // The mInterstitialAd reference will be null until
+                            // an ad is loaded.
+                           MyApplication.this.interstitialAd = interstitialAd;
+                           updateAdmobRequest();
+
                         }
-                    }
 
-                    @Override
-                    public void onAdClicked(Ad ad) {
+                        @Override
+                        public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                            // Handle the error
+                            interstitialAd = null;
+                            updateAdmobRequest();
+                        }
+                    });
+        }
+    }
 
-                    }
-
-                    @Override
-                    public void onLoggingImpression(Ad ad) {
-
-                    }
-                };
-                adView.loadAd(adView.buildLoadAdConfig().withAdListener(adListener).build());
-
-            }
-
-            if(loadedBanner){
-                if(adView.getParent()!=null)
-                {
-                    LinearLayout t = (LinearLayout) adView.getParent();
-                    t.removeView(adView);
+    public void showInterstitialIfReady(Activity activity)
+    {
+        if(this.interstitialAd!=null)
+        {
+            interstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                @Override
+                public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                    super.onAdFailedToShowFullScreenContent(adError);
                 }
-                current.removeAllViews();
-                current.addView(adView);
-            }
 
+                @Override
+                public void onAdShowedFullScreenContent() {
+                    super.onAdShowedFullScreenContent();
+                    interstitialAd = null;
+                }
+            });
+            interstitialAd.show(activity);
 
-
-
+        }
     }
-
-    public void init()
-    {
-        AudienceNetworkAds.buildInitSettings(this).withInitListener(initResult -> {
-            if(onInitListener!=null)
-                onInitListener.onInitialized();
-
-            init=true;
-        }).initialize();
-    }
-
-
-    public void setOnInitListner(OnInitListener onInitListener)
-    {
-        this.onInitListener=onInitListener;
-    }
-
-    public OnInitListener onInitListener;
-    public interface OnInitListener{
-        public void onInitialized();
-    }
-
-     */
-
-
 }

@@ -5,7 +5,7 @@ public class AdmobConf {
     private int impressions =0;
     private int maxRequestsDaily =0;
     private int maxImpressionsDaily = 0;
-    private String id ="";
+
 
     public int getRequests() {
         return requests;
@@ -36,12 +36,8 @@ public class AdmobConf {
     public void setMaxImpressionsDaily(int maxImpressionsDaily) {
         this.maxImpressionsDaily = maxImpressionsDaily;
     }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public boolean requestAllowed()
+    {
+        return requests<maxRequestsDaily;
     }
 }

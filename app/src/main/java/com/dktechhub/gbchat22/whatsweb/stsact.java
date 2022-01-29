@@ -11,13 +11,14 @@ import com.dktechhub.gbchat22.whatsweb.ui.main.SectionsPagerAdapter;
 
 public class stsact extends AppCompatActivity {
 
-    private MyApplication myApplication;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status);
-        myApplication=(MyApplication)this.getApplication();
+
+        ((MyApplication)getApplication()).showInterstitialIfReady(this);
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         sectionsPagerAdapter.addFragment(new FragmentStaus(false),"Recent Statuses");

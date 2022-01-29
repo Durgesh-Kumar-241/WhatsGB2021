@@ -29,7 +29,7 @@ import java.util.List;
 
 public class SplashActivity extends AppCompatActivity {
 
-    MyApplication myApplication;
+
     private boolean storage=false,ini=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,26 +38,17 @@ public class SplashActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
+
+        ((MyApplication)getApplication()).adSerial++;
+        ((MyApplication)getApplication()).loadInterstitial();
         //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         setContentView(R.layout.activity_splash);
-        /*
-        myApplication=(MyApplication)getApplication();
-        ini=myApplication.init;
-        if(!ini)
-        {
-            myApplication.setOnInitListner(() -> {
-                ini=true;
-                update();
-            });
-            myApplication.init();
-        }
 
-         */
         Button con = findViewById(R.id.cont);
 
         if(Build.VERSION.SDK_INT<Build.VERSION_CODES.M||checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
         {
-            //storage=true;
+
             update();
         }else {
             con.setVisibility(View.VISIBLE);
@@ -87,6 +78,7 @@ public class SplashActivity extends AppCompatActivity {
     public void goToMain()
     {
         new Handler().postDelayed(() -> {
+
             Intent i = new Intent(getApplicationContext(),MainActivityNew.class);
             startActivity(i);
             finish();

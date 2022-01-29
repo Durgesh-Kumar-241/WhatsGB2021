@@ -33,7 +33,7 @@ public class MainActivityNew extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_new);
         myApplication= (MyApplication) getApplication();
-
+        ((MyApplication)getApplication()).showInterstitialIfReady(this);
 
         offlineChat=findViewById(R.id.offlinechat);
         direct =findViewById(R.id.dchat);

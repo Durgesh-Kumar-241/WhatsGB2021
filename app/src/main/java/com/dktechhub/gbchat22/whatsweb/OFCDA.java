@@ -48,8 +48,7 @@ public class OFCDA extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_offline_chat_detailed);
-        //new Handler().postDelayed(this::loadAd,8000);
-        //loadAd();
+
 
 
 
