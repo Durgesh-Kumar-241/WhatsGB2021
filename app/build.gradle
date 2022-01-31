@@ -12,8 +12,8 @@ android {
         applicationId "com.dktechhub.gbchat22.whatsweb"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 3
-        versionName "3.0"
+        versionCode 4
+        versionName "4.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -60,7 +60,7 @@ dependencies {
 
     implementation platform('com.google.firebase:firebase-bom:29.0.4')
     implementation 'com.google.firebase:firebase-firestore'
-
+    implementation 'com.google.firebase:firebase-analytics:20.0.2'
     implementation 'com.google.android.gms:play-services-ads:20.4.0'
 
 }

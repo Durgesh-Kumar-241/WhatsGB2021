@@ -15,24 +15,15 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.vanniktech.emoji.EmojiManager;
 import com.vanniktech.emoji.google.GoogleEmojiProvider;
-
-import java.util.List;
 
 public class MyApplication extends MultiDexApplication {
     FirebaseFirestore db;
@@ -45,11 +36,6 @@ public class MyApplication extends MultiDexApplication {
         super.onCreate();
         EmojiManager.install(new GoogleEmojiProvider());
         setTheme();
-        FirebaseApp.initializeApp(this);
-        MobileAds.initialize(this);
-        db = FirebaseFirestore.getInstance();
-        admob_conf = db.collection("main_admob").document("admob_conf");
-        loadAdmobConf();
 
 
     }
@@ -63,7 +49,7 @@ public class MyApplication extends MultiDexApplication {
                 if(documentSnapshot.exists())
                 {
                     admobConf = documentSnapshot.toObject(AdmobConf.class);
-                    loadInterstitial();
+                    //loadInterstitial();
                     Log.d("firebase admob",admobConf.getMaxImpressionsDaily()+" "+admobConf.getRequests()+" "+admobConf.getMaxRequestsDaily());
                 }
             }
@@ -91,8 +77,9 @@ public class MyApplication extends MultiDexApplication {
     }
 
 
-    public void loadInterstitial()
-    {   Log.d("firebase admob","adserial "+adSerial);
+    public void loadInterstitial(SDKInterface sdkInterface)
+    {   adSerial++;
+        Log.d("firebase admob","adserial "+adSerial);
         if(interstitialAd==null&&admobConf.requestAllowed()&&adSerial%4==0)
         {
             AdRequest adRequest =new  AdRequest.Builder().build();
@@ -103,17 +90,22 @@ public class MyApplication extends MultiDexApplication {
                             // The mInterstitialAd reference will be null until
                             // an ad is loaded.
                            MyApplication.this.interstitialAd = interstitialAd;
+                           Log.d("firebase admob","ad loaded");
                            updateAdmobRequest();
-
+                           sdkInterface.onInitCompleted();
                         }
 
                         @Override
                         public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
                             // Handle the error
+                            Log.d("admob",loadAdError.getMessage()+loadAdError.getResponseInfo()+loadAdError.toString());
                             interstitialAd = null;
                             updateAdmobRequest();
+                            sdkInterface.onInitCompleted();
                         }
                     });
+        }else {
+            sdkInterface.onInitCompleted();
         }
     }
 
@@ -136,5 +128,19 @@ public class MyApplication extends MultiDexApplication {
             interstitialAd.show(activity);
 
         }
+    }
+
+    public void initializeSdk(SDKInterface sdkInterface)
+    {
+        FirebaseApp.initializeApp(this);
+        MobileAds.initialize(this, initializationStatus -> sdkInterface.onInitCompleted());
+        db = FirebaseFirestore.getInstance();
+        admob_conf = db.collection("main_admob").document("admob_conf");
+        loadAdmobConf();
+        //loadInterstitial();
+    }
+
+    public interface SDKInterface{
+        void onInitCompleted();
     }
 }
