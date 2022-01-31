@@ -1,12 +1,12 @@
 package com.dktechhub.gbchat22.whatsweb;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.multidex.MultiDexApplication;
 import androidx.preference.PreferenceManager;
 
 import com.dktechhub.gbchat22.whatsweb.Utils.AdmobConf;
@@ -17,13 +17,12 @@ import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class MyApplication extends Application {
+public class MyApplication extends MultiDexApplication {
     FirebaseFirestore db;
     AdmobConf admobConf=new AdmobConf();
     public int adSerial =3;

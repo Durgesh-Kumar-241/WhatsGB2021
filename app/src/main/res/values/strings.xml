@@ -26,9 +26,9 @@
     <string name="title_activity_settings">SettingsActivity</string>
 
     <!--
-    prod ca-app-pub-4198943547176716/1186640348
+    prod ca-app-pub-4198943547176716/9527809573
     test ca-app-pub-3940256099942544/1033173712
     -->
-    <string name="inter">ca-app-pub-4198943547176716/1186640348</string>
+    <string name="inter">ca-app-pub-4198943547176716/9527809573</string>
 
 </resources>

@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "809365708370",
-    "project_id": "gb-what-s-app-72122",
-    "storage_bucket": "gb-what-s-app-72122.appspot.com"
+    "project_number": "754821056951",
+    "project_id": "gb-version-21-8a2b5",
+    "storage_bucket": "gb-version-21-8a2b5.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:809365708370:android:0ab4bcacf60dae56af898b",
+        "mobilesdk_app_id": "1:754821056951:android:8a721889eab6f27fb28032",
         "android_client_info": {
-          "package_name": "com.dktechhub.gbchat22.whatsweb"
+          "package_name": "com.dktechhub.gbchat22.statussaver22"
         }
       },
       "oauth_client": [
         {
-          "client_id": "809365708370-qpcgm6juvs3lik2hb990q7brkhe9ik6l.apps.googleusercontent.com",
+          "client_id": "754821056951-es3vue4k62hqiedfmp0fvl58kl0kh63v.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBMVsxmS4BRmtcgo7JV8_NX7R0SIb04xFg"
+          "current_key": "AIzaSyD9pTJTYxNliaGidAOhlWsxEoPmkyWRlmk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "809365708370-qpcgm6juvs3lik2hb990q7brkhe9ik6l.apps.googleusercontent.com",
+              "client_id": "754821056951-es3vue4k62hqiedfmp0fvl58kl0kh63v.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

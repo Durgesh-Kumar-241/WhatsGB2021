@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.dktechhub.gbchat22.whatsweb">
+
     <!-- Include required permissions for Google Mobile Ads to run. -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -20,10 +21,10 @@
         android:supportsRtl="true"
         android:theme="@style/light">
         <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
-        <!-- prod id: ca-app-pub-4198943547176716~9332105129 -->
+        <!-- prod id: ca-app-pub-4198943547176716~3179514336 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-4198943547176716~9332105129"/>
+            android:value="ca-app-pub-4198943547176716~3179514336"/>
         <activity
             android:name=".SettingsActivity"
             android:exported="false"
