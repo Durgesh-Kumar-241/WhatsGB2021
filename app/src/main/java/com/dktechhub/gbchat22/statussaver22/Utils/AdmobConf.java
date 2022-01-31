@@ -1,4 +1,4 @@
-package com.dktechhub.gbchat22.whatsweb.Utils;
+package com.dktechhub.gbchat22.statussaver22.Utils;
 
 public class AdmobConf {
     private int requests = 0;

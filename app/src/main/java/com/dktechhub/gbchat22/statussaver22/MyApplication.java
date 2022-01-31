@@ -1,4 +1,4 @@
-package com.dktechhub.gbchat22.whatsweb;
+package com.dktechhub.gbchat22.statussaver22;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.multidex.MultiDexApplication;
 import androidx.preference.PreferenceManager;
 
-import com.dktechhub.gbchat22.whatsweb.Utils.AdmobConf;
+import com.dktechhub.gbchat22.statussaver22.Utils.AdmobConf;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.FullScreenContentCallback;

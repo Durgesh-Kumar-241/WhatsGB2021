@@ -9,7 +9,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.dktechhub.gbchat22.whatsweb"
+        applicationId "com.dktechhub.gbchat22.statussaver22"
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 4
