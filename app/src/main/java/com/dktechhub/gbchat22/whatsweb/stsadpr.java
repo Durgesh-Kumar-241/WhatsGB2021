@@ -35,27 +35,14 @@ public class stsadpr extends RecyclerView.Adapter<stsadpr.ViewHolder> {
         sts status=mList.get(position);
 
         Glide.with(this.activity).load(status.source).centerCrop().placeholder(R.drawable.ic_album).into(holder.iconView);
-        holder.iconView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listner.onIconClicked(status);
-            }
+        holder.iconView.setOnClickListener(v -> listner.onIconClicked(status));
+        holder.saveButton.setOnClickListener(v -> {
+            if(inSavedItemsMode)
+                listner.onDeleteButtonClicked(status);
+            else
+            listner.onSaveButtonClicked(status);
         });
-        holder.saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(inSavedItemsMode)
-                    listner.onDeleteButtonClicked(status);
-                else
-                listner.onSaveButtonClicked(status);
-            }
-        });
-        holder.shareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listner.onShareButtonClicked(status);
-            }
-        });
+        holder.shareButton.setOnClickListener(v -> listner.onShareButtonClicked(status));
     }
 
     @Override

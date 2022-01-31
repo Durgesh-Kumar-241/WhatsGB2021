@@ -9,9 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 public class SplashActivity extends AppCompatActivity {
-
-
-    private boolean storage=false,ini=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,14 +16,8 @@ public class SplashActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
-
-        //((MyApplication)getApplication()).adSerial++;
-        //((MyApplication)getApplication()).loadInterstitial();
-        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         setContentView(R.layout.activity_splash);
         ((MyApplication)getApplication()).initializeSdk(this::loadInert);
-
-
     }
 
     public void loadInert()
@@ -44,13 +35,4 @@ public class SplashActivity extends AppCompatActivity {
         },500);
     }
 
-
-
-
-
-    public void update()
-    {
-       // if(ini&&storage)
-            goToMain();
-    }
 }

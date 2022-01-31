@@ -33,7 +33,6 @@ public class FragmentStaus extends Fragment {
     stsadpr adapter;
     private final boolean inSavedMode;
     public FragmentStaus(boolean inSavedMode) {
-
         this.inSavedMode=inSavedMode;
     }
 
@@ -77,7 +76,9 @@ public class FragmentStaus extends Fragment {
 
             @Override
             public void onDeleteButtonClicked(sts status) {
-                new Dlx(status).execute();
+                new File(status.source).delete();
+                Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                refreshItems();
             }
         },getActivity(),inSavedMode);
 
@@ -127,14 +128,6 @@ public class FragmentStaus extends Fragment {
     }
 
 
-    public static boolean isImage(String src)
-    {
-        return src.contains(".png") || src.contains(".jpg");
-    }
-    public static boolean isVideo(String src)
-    {
-        return src.contains(".mp4");
-    }
     public void viewStatus(sts status)
     {
         //Toast.makeText(this, getString(R.string.opening)+status.name, Toast.LENGTH_SHORT).show();
@@ -234,10 +227,10 @@ public class FragmentStaus extends Fragment {
                 if(list!=null)
                 {
                     for (File f1 : list) {
-                        if (isImage(f1.getAbsolutePath())) {
+                        if (f1.getAbsolutePath().endsWith(".png") || f1.getAbsolutePath().endsWith(".jpg")) {
                             publishProgress(new sts(f1.getAbsolutePath(),f1.getName(),"image/*"));
 
-                        }else if(isVideo(f1.getAbsolutePath())){
+                        }else if(f1.getAbsolutePath().endsWith(".mp4")){
 
                             publishProgress(new sts(f1.getAbsolutePath(),f1.getName(),"video/*"));
 
@@ -307,39 +300,9 @@ public class FragmentStaus extends Fragment {
 
     }
 
-    class Dlx extends AsyncTask<Void,Void,Void>
-    {   sts status;
-        public Dlx(sts status)
-        {
-            this.status=status;
-        }
-
-     
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-             try {
-                    new File(status.source).delete();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-             return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
-            refreshItems();
-            //refresh();
-        }
-    }
-
-
     @Override
     public void onResume() {
         super.onResume();
-       // Toast.makeText(getContext(), "resumed", Toast.LENGTH_SHORT).show();
         refreshItems();
     }
 }

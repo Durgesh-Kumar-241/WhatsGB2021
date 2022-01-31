@@ -19,14 +19,9 @@
     <string name="invalidinputtext">Invalid input,must not be empty</string>
 
 
-    <string name="accessibility_service_description">GB What s App 22.0</string>
-    <string name="group_msg_send_warning" tools:ignore="TypographyEllipsis">Chat with groups is not available currently...wait for next updates</string>
-    <string name="channel_name">GB WhatsApp</string>
-    <string name="channel_description">Tap to chat without appearing online</string>
     <string name="more_features">More features</string>
     <string name="direct_chat">Direct Chat</string>
     <string name="status_saver">Status saver</string>
-    <string name="offline_chat">Offline Chat</string>
     <string name="rate_the_app">Rate the App</string>
     <string name="title_activity_settings">SettingsActivity</string>
 

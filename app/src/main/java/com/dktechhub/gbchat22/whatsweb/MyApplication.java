@@ -1,12 +1,12 @@
 package com.dktechhub.gbchat22.whatsweb;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.multidex.MultiDexApplication;
 import androidx.preference.PreferenceManager;
 
 import com.dktechhub.gbchat22.whatsweb.Utils.AdmobConf;
@@ -22,10 +22,8 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.vanniktech.emoji.EmojiManager;
-import com.vanniktech.emoji.google.GoogleEmojiProvider;
 
-public class MyApplication extends MultiDexApplication {
+public class MyApplication extends Application {
     FirebaseFirestore db;
     AdmobConf admobConf=new AdmobConf();
     public int adSerial =3;
@@ -34,7 +32,6 @@ public class MyApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        EmojiManager.install(new GoogleEmojiProvider());
         setTheme();
 
 
@@ -60,12 +57,7 @@ public class MyApplication extends MultiDexApplication {
     {
         loadAdmobConf();
         admobConf.setRequests(admobConf.getRequests()+1);
-        admob_conf.set(admobConf).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Log.d("firebase admob","request updated");
-            }
-        });
+        admob_conf.set(admobConf).addOnSuccessListener(unused -> Log.d("firebase admob","request updated"));
     }
 
     public void setTheme()

@@ -29,9 +29,6 @@ public class DCat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_direct_chat);
-
-        //new Handler().postDelayed(this::loadAd,4000);
-        //loadAd();
         ccp=findViewById(R.id.spinner);
         number=findViewById(R.id.number);
         message=findViewById(R.id.message);
@@ -83,28 +80,6 @@ public class DCat extends AppCompatActivity {
 
 
 
-    /*
-    @Override
-    protected void onDestroy() {
-        if (adView != null) {
-            adView.destroy();
-        }
-        super.onDestroy();
-    }
-
-    public void loadAd()
-    {
-        LinearLayout linearLayout = findViewById(R.id.banner_container);
-        ((MyApplication) getApplication()).loadBanner(linearLayout);
-        try {
-            ((MyApplication) getApplication()).showInterstitial(this);
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-     */
 
 
 
