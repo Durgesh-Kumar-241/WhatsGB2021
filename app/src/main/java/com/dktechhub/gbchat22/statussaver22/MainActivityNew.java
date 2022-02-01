@@ -25,15 +25,15 @@ public class MainActivityNew extends AppCompatActivity {
             LinearLayout rate_us;
 
 
-    MyApplication myApplication;
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_new);
-        myApplication= (MyApplication) getApplication();
-        ((MyApplication)getApplication()).showInterstitialIfReady(this);
+        //myApplication= (MyApplication) getApplication();
+        //((MyApplication)getApplication()).showInterstitialIfReady(this);
         direct =findViewById(R.id.dchat);
         statussaver=findViewById(R.id.statussaver);
         more = findViewById(R.id.more);

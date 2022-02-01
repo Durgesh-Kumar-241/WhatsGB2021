@@ -1,7 +1,11 @@
 package com.dktechhub.gbchat22.statussaver22;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.UriPermission;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -9,7 +13,9 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,27 +32,75 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.List;
 
 
 public class FragmentStaus extends Fragment {
-
+    int GET_DOCUMENT_TREE_CODE = 222043;
     stsadpr adapter;
+    String TAG = "Durgesh";
     private final boolean inSavedMode;
     public FragmentStaus(boolean inSavedMode) {
         this.inSavedMode=inSavedMode;
     }
-
-
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M&&getActivity().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
+    }
+
+    public boolean isReadPermission()
+    {
+        if(Build.VERSION.SDK_INT<Build.VERSION_CODES.M)
         {
-            requestPermissions(new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO},WRITE_EXTERNAL_STORAGE_CODE);
+            return true;
+        }else if(Build.VERSION.SDK_INT<Build.VERSION_CODES.Q)
+        {
+            return getActivity().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED;
+        }else {
+            List<UriPermission> all = getActivity().getContentResolver().getPersistedUriPermissions();
+            for(UriPermission p : all)
+            {
+                if(p.getUri().toString().equals("content://com.android.externalstorage.documents/tree/primary%3A"))
+                    return true;
+            }
+         return false;
         }
     }
+
+    public void checkPermissions()
+    {
+        Log.d(TAG,"Check perm");
+        if(!isReadPermission())
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("Alert");
+            builder.setMessage("Grant permission to read External storage to see your recent stories");
+            builder.setPositiveButton("Grant", (dialogInterface, i) -> {
+                requestPermissions();
+                dialogInterface.dismiss();
+            });
+            builder.setNegativeButton("Not now", (dialogInterface, i) -> {
+                dialogInterface.dismiss();
+                Toast.makeText(getContext(), "Storage permission is required to work this app properly", Toast.LENGTH_SHORT).show();
+                getActivity().finish();
+            });
+
+            builder.create().show();
+        }
+    }
+    public void requestPermissions()
+    {
+        if(Build.VERSION.SDK_INT<Build.VERSION_CODES.Q)
+        {
+            requestPermissions(new String[] { Manifest.permission.READ_EXTERNAL_STORAGE},WRITE_EXTERNAL_STORAGE_CODE);
+        }else{
+            Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            i.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            startActivityForResult(i,GET_DOCUMENT_TREE_CODE);
+        }
+    }
+
     RecyclerView recyclerView;
     TextView empty;
     SwipeRefreshLayout srl ;
@@ -54,7 +108,6 @@ public class FragmentStaus extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View root= inflater.inflate(R.layout.fragment_staus, container, false);
         recyclerView=root.findViewById(R.id.recycler);
         empty=root.findViewById(R.id.empty);
@@ -90,6 +143,13 @@ public class FragmentStaus extends Fragment {
         srl.setOnRefreshListener(this::refreshItems);
         //refreshItems();
         return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if(!inSavedMode)
+        checkPermissions();
     }
 
     public void refreshItems()
@@ -208,6 +268,21 @@ public class FragmentStaus extends Fragment {
     }
     private static final int WRITE_EXTERNAL_STORAGE_CODE = 257;
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==GET_DOCUMENT_TREE_CODE)
+        {
+            if(resultCode== Activity.RESULT_OK)
+            {
+                Log.d(TAG,data.getData().toString());
+                getActivity().getContentResolver().takePersistableUriPermission(data.getData(),Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }else {
+                Toast.makeText(getContext(), "External storage read permission is not Available", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
     public static class Ldx extends AsyncTask<Void, sts,Void> {
         OnLoadCompleteListener onLoadCompleteListener;

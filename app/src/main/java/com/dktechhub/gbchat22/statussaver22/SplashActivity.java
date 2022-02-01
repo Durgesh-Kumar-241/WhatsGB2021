@@ -17,12 +17,13 @@ public class SplashActivity extends AppCompatActivity {
             actionBar.hide();
         }
         setContentView(R.layout.activity_splash);
-        ((MyApplication)getApplication()).initializeSdk(this::loadInert);
+        goToMain();
+        //((MyApplication)getApplication()).initializeSdk(this::loadInert);
     }
 
     public void loadInert()
     {
-        ((MyApplication)getApplication()).loadInterstitial(this::goToMain);
+        //((MyApplication)getApplication()).loadInterstitial(this::goToMain);
     }
 
     public void goToMain()

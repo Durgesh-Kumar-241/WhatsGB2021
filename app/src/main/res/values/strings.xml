@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name" translatable="false">GB Whats Offline Chat</string>
+    <string name="app_name" translatable="false">GB Version 21.0</string>
 
 
     <string name="enter_phone_number">Enter phone number</string>

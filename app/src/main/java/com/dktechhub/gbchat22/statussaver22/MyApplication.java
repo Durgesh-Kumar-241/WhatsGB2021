@@ -1,33 +1,21 @@
 package com.dktechhub.gbchat22.statussaver22;
 
-import android.app.Activity;
+import android.app.Application;
 import android.content.SharedPreferences;
-import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.multidex.MultiDexApplication;
+
 import androidx.preference.PreferenceManager;
 
-import com.dktechhub.gbchat22.statussaver22.Utils.AdmobConf;
-import com.google.android.gms.ads.AdError;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.FullScreenContentCallback;
-import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.interstitial.InterstitialAd;
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-public class MyApplication extends MultiDexApplication {
+public class MyApplication extends Application {
+    /*
     FirebaseFirestore db;
     AdmobConf admobConf=new AdmobConf();
     public int adSerial =3;
     DocumentReference admob_conf;
     InterstitialAd interstitialAd;
+
+     */
     @Override
     public void onCreate() {
         super.onCreate();
@@ -35,7 +23,7 @@ public class MyApplication extends MultiDexApplication {
 
 
     }
-
+    /*
     public void loadAdmobConf()
     {
         admob_conf.get().addOnCompleteListener(task -> {
@@ -59,6 +47,8 @@ public class MyApplication extends MultiDexApplication {
         admob_conf.set(admobConf).addOnSuccessListener(unused -> Log.d("firebase admob","request updated"));
     }
 
+
+     */
     public void setTheme()
     {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -67,7 +57,7 @@ public class MyApplication extends MultiDexApplication {
 
     }
 
-
+/*
     public void loadInterstitial(SDKInterface sdkInterface)
     {   adSerial++;
         Log.d("firebase admob","adserial "+adSerial);
@@ -134,4 +124,6 @@ public class MyApplication extends MultiDexApplication {
     public interface SDKInterface{
         void onInitCompleted();
     }
+
+ */
 }

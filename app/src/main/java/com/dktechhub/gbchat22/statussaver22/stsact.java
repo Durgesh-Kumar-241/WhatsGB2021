@@ -18,7 +18,7 @@ public class stsact extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status);
 
-        ((MyApplication)getApplication()).showInterstitialIfReady(this);
+        //((MyApplication)getApplication()).showInterstitialIfReady(this);
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         sectionsPagerAdapter.addFragment(new FragmentStaus(false),"Recent Statuses");
