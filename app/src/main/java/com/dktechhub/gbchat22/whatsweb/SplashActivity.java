@@ -20,12 +20,8 @@ public class SplashActivity extends AppCompatActivity {
             actionBar.hide();
         }
 
-        //((MyApplication)getApplication()).adSerial++;
-        //((MyApplication)getApplication()).loadInterstitial();
-        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         setContentView(R.layout.activity_splash);
-        ((MyApplication)getApplication()).initializeSdk(this::loadInert);
-
+        new Handler().postDelayed(() -> ((MyApplication)getApplication()).initializeSdk(this::loadInert),500);
 
     }
 

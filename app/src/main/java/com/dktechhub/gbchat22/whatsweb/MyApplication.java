@@ -28,7 +28,7 @@ import com.vanniktech.emoji.google.GoogleEmojiProvider;
 public class MyApplication extends MultiDexApplication {
     FirebaseFirestore db;
     AdmobConf admobConf=new AdmobConf();
-    public int adSerial =3;
+    public int adSerial =2;
     DocumentReference admob_conf;
     InterstitialAd interstitialAd;
     @Override

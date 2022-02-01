@@ -6,7 +6,10 @@ public class AdmobConf {
     private int maxRequestsDaily =0;
     private int maxImpressionsDaily = 0;
 
+     public AdmobConf()
+     {
 
+     }
     public int getRequests() {
         return requests;
     }

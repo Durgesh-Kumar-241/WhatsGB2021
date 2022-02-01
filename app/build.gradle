@@ -12,8 +12,8 @@ android {
         applicationId "com.dktechhub.gbchat22.whatsweb"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 4
-        versionName "4.0"
+        versionCode 5
+        versionName "5.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
