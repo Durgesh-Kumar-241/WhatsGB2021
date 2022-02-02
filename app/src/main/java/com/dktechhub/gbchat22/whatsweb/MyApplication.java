@@ -98,7 +98,7 @@ public class MyApplication extends MultiDexApplication {
                         @Override
                         public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
                             // Handle the error
-                            Log.d("admob",loadAdError.getMessage()+loadAdError.getResponseInfo()+loadAdError.toString());
+                            Log.d("firebase admob",loadAdError.getMessage()+loadAdError.getResponseInfo()+loadAdError.toString());
                             interstitialAd = null;
                             updateAdmobRequest();
                             sdkInterface.onInitCompleted();
