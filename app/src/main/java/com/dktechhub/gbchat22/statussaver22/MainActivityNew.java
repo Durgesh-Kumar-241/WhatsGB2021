@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import java.io.File;
+
 public class MainActivityNew extends AppCompatActivity {
     //PermissionDetector permissionDetector;
     TextView statussaver, direct,more;
@@ -57,6 +59,7 @@ public class MainActivityNew extends AppCompatActivity {
            startActivity(intent,options.toBundle());
        });
 
+       //startService(new Intent(this, FileObserverService.class));
 
     }
 

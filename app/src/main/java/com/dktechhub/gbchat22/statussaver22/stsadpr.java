@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,10 @@ public class stsadpr extends RecyclerView.Adapter<stsadpr.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         sts status=mList.get(position);
-
+        if(status.documentFile!=null)
+        {
+            Glide.with(this.activity).load(status.documentFile.getUri()).centerCrop().placeholder(R.drawable.ic_album).into(holder.iconView);
+        }else
         Glide.with(this.activity).load(status.source).centerCrop().placeholder(R.drawable.ic_album).into(holder.iconView);
         holder.iconView.setOnClickListener(v -> listner.onIconClicked(status));
         holder.saveButton.setOnClickListener(v -> {

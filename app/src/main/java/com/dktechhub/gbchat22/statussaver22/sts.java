@@ -1,26 +1,23 @@
 package com.dktechhub.gbchat22.statussaver22;
 
-import android.graphics.Bitmap;
+
+import androidx.documentfile.provider.DocumentFile;
 
 public class sts {
     public String source;
-Bitmap thumbnail;
-public String mime="*/*";
-public String name;
-public sts(String source, Bitmap thumbnail, String name){
-    this.thumbnail=thumbnail;
-    this.source=source;
-    this.name=name;
-}
-public sts(String source, Bitmap thumbnail, String name, String mime)
-{
-    this(source,thumbnail,name);
-    this.mime=mime;
-}
+    public String mime="*/*";
+    public String name;
+    public DocumentFile documentFile;
     public sts(String source, String name, String mime)
     {
         this.source=source;
         this.name=name;
         this.mime=mime;
+    }
+    public sts(DocumentFile documentFile)
+    {
+        this.documentFile = documentFile;
+        this.name = documentFile.getName();
+        this.mime = documentFile.getType();
     }
 }

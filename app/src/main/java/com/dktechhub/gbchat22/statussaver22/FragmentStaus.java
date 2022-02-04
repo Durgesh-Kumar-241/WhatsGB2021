@@ -3,7 +3,6 @@ package com.dktechhub.gbchat22.statussaver22;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.UriPermission;
 import android.content.pm.PackageManager;
@@ -11,16 +10,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +17,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
+import androidx.documentfile.provider.DocumentFile;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.dktechhub.gbchat22.statussaver22.Utils.AsynkLoader;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -40,6 +40,7 @@ public class FragmentStaus extends Fragment {
     stsadpr adapter;
     String TAG = "Durgesh";
     private final boolean inSavedMode;
+    private DocumentFile documentFile;
     public FragmentStaus(boolean inSavedMode) {
         this.inSavedMode=inSavedMode;
     }
@@ -61,7 +62,10 @@ public class FragmentStaus extends Fragment {
             for(UriPermission p : all)
             {
                 if(p.getUri().toString().equals("content://com.android.externalstorage.documents/tree/primary%3A"))
+                {
+                    this.documentFile = DocumentFile.fromTreeUri(getContext(),p.getUri());
                     return true;
+                }
             }
          return false;
         }
@@ -92,11 +96,11 @@ public class FragmentStaus extends Fragment {
     {
         if(Build.VERSION.SDK_INT<Build.VERSION_CODES.Q)
         {
-            requestPermissions(new String[] { Manifest.permission.READ_EXTERNAL_STORAGE},WRITE_EXTERNAL_STORAGE_CODE);
+            requestPermissions(new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE},WRITE_EXTERNAL_STORAGE_CODE);
         }else{
             Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             i.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            i.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             startActivityForResult(i,GET_DOCUMENT_TREE_CODE);
         }
     }
@@ -129,6 +133,9 @@ public class FragmentStaus extends Fragment {
 
             @Override
             public void onDeleteButtonClicked(sts status) {
+                if(status.documentFile!=null)
+                    status.documentFile.delete();
+                else
                 new File(status.source).delete();
                 Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
                 refreshItems();
@@ -148,29 +155,25 @@ public class FragmentStaus extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if(!inSavedMode)
         checkPermissions();
     }
 
     public void refreshItems()
     {   adapter.reset();
-       // showEmpty(true);
-        //adapter.notifyDataSetChanged();
-        new Ldx(new OnLoadCompleteListener() {
+        new AsynkLoader(inSavedMode, new AsynkLoader.AsynkLoaderInterface() {
             @Override
-            public void onLoaded(sts status) {
-                adapter.addStatusItem(status);
-                //adapter.notifyDataSetChanged();
+            public void onProgress(sts sts) {
+                adapter.addStatusItem(sts);
             }
 
             @Override
-            public void onLoadCompleted() {
+            public void onFinished() {
                 showEmpty(adapter.getItemCount()==0);
                 //Toast.makeText(getContext(), "Updated", Toast.LENGTH_SHORT).show();
                 srl.setRefreshing(false);
                 adapter.notifyDataSetChanged();
             }
-        },inSavedMode).execute();
+        },this.documentFile).execute();
     }
 
     public void showEmpty(boolean show)
@@ -192,9 +195,11 @@ public class FragmentStaus extends Fragment {
     {
         //Toast.makeText(this, getString(R.string.opening)+status.name, Toast.LENGTH_SHORT).show();
         Intent i = new Intent();
-        Uri uri = FileProvider.getUriForFile(getContext(),BuildConfig.APPLICATION_ID+".provider", new File(status.source));
+        Uri uri;
+        if (status.documentFile==null)
+            uri= FileProvider.getUriForFile(getContext(),BuildConfig.APPLICATION_ID+".provider", new File(status.source));
+        else uri = status.documentFile.getUri();
         i.setAction(Intent.ACTION_VIEW);
-
         i.setDataAndType(uri,status.mime);
         i.putExtra(Intent.EXTRA_STREAM,uri);
         i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -212,27 +217,49 @@ public class FragmentStaus extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/GB What s App/Saved Statuses/");
-            f.mkdirs();
+            FileInputStream inputStream;
+            FileOutputStream outputStream;
+            Uri outUri;
             byte[] buffer = new byte[512];
                 try{
-                    FileInputStream is = new FileInputStream(status.source);
-                    FileOutputStream os = new FileOutputStream(f.getAbsolutePath()+"/"+status.name);
-                    int read;
-                    while ((read=is.read(buffer))>0)
+                    if(status.documentFile==null)
                     {
-                        os.write(buffer,0,read);
+                        inputStream = new FileInputStream(status.source);
+                        File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"GB Version 21.0/Saved Statuses/");
+                        f.mkdirs();
+                        outputStream = new FileOutputStream(f.getAbsolutePath()+"/"+status.name);
+                        outUri= Uri.fromFile(new File(status.source));
+                    }else
+                    {
+                        inputStream = (FileInputStream) getContext().getContentResolver().openInputStream(status.documentFile.getUri());
+                        DocumentFile folder = documentFile.findFile("GB Version 21.0");
+                        if(folder==null)
+                        {
+                            folder = documentFile.createDirectory("GB Version 21.0");
+                        }
+                        DocumentFile folder2 = folder.findFile("Saved Statuses");
+                        if(folder2==null)
+                        {
+                            folder2 = folder.createDirectory("Saved Statuses");
+                        }
+                        DocumentFile out = folder2.createFile("*/*",status.name);
+                        outUri=out.getUri();
+                        outputStream = (FileOutputStream) getContext().getContentResolver().openOutputStream(out.getUri());
+                    }
+                   int read;
+                    while ((read=inputStream.read(buffer))>0)
+                    {
+                        outputStream.write(buffer,0,read);
                         //Log.d("COPY", String.valueOf(read));
                     }
-                    os.flush();
-                    os.close();
-                    is.close();
-                    addToGallery(f);
+                    outputStream.flush();
+                    outputStream.close();
+                    inputStream.close();
+                    addToGallery(outUri);
                 }catch (Exception e)
                 {
                     e.printStackTrace();
                 }
-
             return null;
         }
 
@@ -240,16 +267,11 @@ public class FragmentStaus extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             Toast.makeText(getContext(), "Saved to \"/GB What s App/Saved Statuses/\"", Toast.LENGTH_SHORT).show();
-            //addToGallery();
-           // Toast toast = new Toast(getContext());
-           // toast.setText("Saved to \"/GB What s App/Saved Statuses/\"");
-
         }
-        private void addToGallery(File f)
+        private void addToGallery(Uri uri)
         {
             Intent m = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-            Uri contentUri = Uri.fromFile(f);
-            m.setData(contentUri);
+            m.setData(uri);
             getActivity().sendBroadcast(m);
         }
 
@@ -278,78 +300,14 @@ public class FragmentStaus extends Fragment {
             {
                 Log.d(TAG,data.getData().toString());
                 getActivity().getContentResolver().takePersistableUriPermission(data.getData(),Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                this.documentFile = DocumentFile.fromTreeUri(getContext(),data.getData());
             }else {
                 Toast.makeText(getContext(), "External storage read permission is not Available", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    public static class Ldx extends AsyncTask<Void, sts,Void> {
-        OnLoadCompleteListener onLoadCompleteListener;
-        boolean loadSaved;
 
-        Ldx(OnLoadCompleteListener onLoadCompleteListener, boolean loadSaved){
-            this.onLoadCompleteListener=onLoadCompleteListener;
-            this.loadSaved=loadSaved;
-        }
-
-        public void loadStatusFromDir(File file)
-        {   //Log.d("Loader","loading now from"+ file.getAbsolutePath());
-            try{
-                if(!file.isDirectory())
-                    return;
-                File[] list= file.listFiles();
-                if(list!=null)
-                {
-                    for (File f1 : list) {
-                        if (f1.getAbsolutePath().endsWith(".png") || f1.getAbsolutePath().endsWith(".jpg")) {
-                            publishProgress(new sts(f1.getAbsolutePath(),f1.getName(),"image/*"));
-
-                        }else if(f1.getAbsolutePath().endsWith(".mp4")){
-
-                            publishProgress(new sts(f1.getAbsolutePath(),f1.getName(),"video/*"));
-
-
-                        }
-                        //Log.d("Loader","loading now "+ f1.getAbsolutePath());
-                    }
-                }
-            }catch (Exception ignored)
-            {
-
-            }
-        }
-
-
-        @Override
-        protected void onProgressUpdate(sts... values) {
-            super.onProgressUpdate(values);
-            onLoadCompleteListener.onLoaded(values[0]);
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            //Log.d("Loader","Executing loader now with "+this.loadSaved);
-            if(loadSaved)
-            {
-                loadStatusFromDir(new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/GB What s App/Saved Statuses/"));
-            }else {
-                loadStatusFromDir(new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/WhatsApp/Media/.Statuses/"));
-                loadStatusFromDir(new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/WhatsApp Business/Media/.Statuses/"));
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void unused) {
-            super.onPostExecute(unused);
-            onLoadCompleteListener.onLoadCompleted();
-        }
-    }
-    public interface OnLoadCompleteListener{
-        void onLoaded(sts status);
-        void onLoadCompleted();
-    }
 
 
 
@@ -361,7 +319,10 @@ public class FragmentStaus extends Fragment {
                     Intent i = new Intent(Intent.ACTION_SEND);
                     //  i.setDataAndType( FileProvider.getUriForFile(getApplicationContext(),BuildConfig.APPLICATION_ID+".provider", apkPath2),"*/*");
                     i.setType("*/*");
-                    Uri uri = FileProvider.getUriForFile(getContext(), BuildConfig.APPLICATION_ID + ".provider", new File(s.source));
+                    Uri uri;
+                    if(s.documentFile==null)
+                        uri = FileProvider.getUriForFile(getContext(), BuildConfig.APPLICATION_ID + ".provider", new File(s.source));
+                    else uri = s.documentFile.getUri();
                     Log.d("Invite", uri.toString());
                     i.putExtra(Intent.EXTRA_STREAM, uri);
                     i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
